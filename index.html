@@ -31,16 +31,17 @@
       <p>W for West</p>
       <p>N for North</p>
       <p>S for South</p>
-    
+</div>    
+
+<center>
+    <div id="histCmd"></div>
 
     <form action="#">
       <label for="command"></label>
       <input type="text" name="command" id="command">
       <button id="btnConfirm">Confirm your command</button>
     </form>
-    <div id="histCmd"></div>
-  </div>
-
+</center>
   
   <script>
     const command = document.getElementById("command");
@@ -80,7 +81,7 @@
           break;
         case "s":
         case "S":
-          positionY += 1;
+          positionY -= 1;
           break;
         default:
           display("We didn't understand your command Chef!");
@@ -91,8 +92,10 @@
     const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
       //move(command.value)
       event.preventDefault();
-      move(command.value)
-      display(pos())
+      move(command.value);
+      display("Your command: "+command.value);
+      display(pos());
+      command.value = "";
     });
 
 
