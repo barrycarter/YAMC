@@ -1,2 +1,5 @@
 Please ignore this test file I am creating to confirm I have setup
 this repo correctly on my home machine.
+
+This is an edit to confirm emacs droppings aren't copied over.
+
