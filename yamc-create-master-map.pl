@@ -40,6 +40,8 @@ for $i (keys %rgb2ltp) {
   debug("*$i* -> *$val*");
 }
 
+debug(%rgb2chr);
+
 while (<>) {
   unless (/\(([\s\d\,]+)\)/) {warn "BAD LINE: $_"; next;}
   my($val) = $1;

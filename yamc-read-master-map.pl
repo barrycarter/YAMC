@@ -15,28 +15,36 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($x,$y) = @ARGV;
-my($val);
+open(A, "/home/user/20190125/west.bin");
+open(B, "/home/user/20190125/east.bin");
+
+my($x, $y);
+
+# random tests
+
+for $i (1..100) {
+  $x = int(rand(43200));
+  $y = int(rand(21600));
+  my($val) = get_pixel_value($x, $y);
+  debug("$x, $y, $val");
+}
 
 # TODO: this file will eventually reside on a server, not local
 
-my($wfile) = "/home/user/20190125/west.bin";
-my($efile) = "/home/user/20190125/east.bin";
-my($file);
+# gets value of given pixel, assumes A and B are both open filehandles
+# and A is west.bin and B is east.bin
 
-if ($x >= 21600) {$file = $efile; $x-=21600;} else {$file = $wfile;}
+sub get_pixel_value {
 
-my($pos) = $y*21600 + $x;
-debug("POS: $pos");
+  my($x, $y) = @_;
+  my($fh, $val);
 
-open(A, $file)||die("Can't open file, $!");
+  if ($x >= 21600) {$fh = B; $x-=21600;} else {$fh = A;}
 
-seek(A, $pos, 0);
+  my($pos) = $y*21600 + $x;
+  debug("POS: $pos");
 
-my($ret) = read(A, $val, 1);
-
-print ord($val),"\n";
-
-
-
-
+  seek($fh, $pos, 0);
+  my($ret) = read($fh, $val, 1);
+  return ord($val);
+}
