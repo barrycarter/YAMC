@@ -1,9 +1,22 @@
 <script>
 
-console.log("test");
+// console.log("test");
 
-const readURL = async (url) => {return await fetch(url);};
+let url = "http://test.barrycarter.info/cors-test.pl";
+var promise = fetch(url);
+promise.then(yay,nay);
 
-console.log(readURL("https://aws.amazon.com/"));
+function yay(data) {
+  var prom = data.text();
+  prom.then(yay2,nay2);
+}
+
+function yay2(data) {console.log(data);}
+
+function nay2(data) {console.log("bad things");}
+
+function nay(data) {console.log("I got nothing");}
+
+// console.log(promise);
 
 </script>
