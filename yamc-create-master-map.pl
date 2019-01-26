@@ -6,6 +6,7 @@
 
 # TODO: no spaces between commas
 my(%rgb2ltp) = (
+		"229,242,255" => "Water|0",
 		"255,214,0" => "Savannas|9",
 		"70,130,178" => "Permanent Wetlands|11",
 		"143,187,143" => "Mixed Forest|5",
@@ -19,6 +20,9 @@ my(%rgb2ltp) = (
 		"245,222,179" => "Open Shrublands|7",
 		"250,237,115" => "Croplands|12",
 		"255,249,249" => "Snow and Ice|15",
+		"33,138,33" => "Evergreen Needleleaf Forest|1",
+		"49,205,49" => "Evergreen Broadleaf Forest|2",
+		"255,0,0" => "Urban and Built-up|13",
 		);
 
 # TODO: assign short names to be first caps of each word
