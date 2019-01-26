@@ -43,7 +43,7 @@
     </form>
 </center>
   
-  <script>
+<script>
     const command = document.getElementById("command");
     const histCmd = document.getElementById("histCmd");
 
@@ -57,6 +57,14 @@
       histCmd.appendChild(document.createTextNode(element));
       histCmd.appendChild(document.createElement("br"));
     }
+
+  // send command to server and write response to console (for now)
+  function send_command(command) {
+     fetch("http://test.barrycarter.info/game-engine.pl?"+command)
+  .then((response) => response.text())
+  .then((body) => console.log(body))
+  .catch(console.error)
+}
 
     // Return the message of the current position
     function pos() {
@@ -94,7 +102,8 @@
     const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
       //move(command.value)
       event.preventDefault();
-      move(command.value);
+//      move(command.value);
+      send_command(command.value);
       display("Your command: "+command.value);
       display(pos());
       command.value = "";
