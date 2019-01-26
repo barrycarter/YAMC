@@ -58,10 +58,23 @@ philanthropy = helps other people, improve quality of life
 
 no water crossing = bridge
 
+Pixel to latitude/longitude translation
+=======================================
 
+x pixels go from 0 to 43199 (for 43200 pixels total)
+y pixels go from 0 to 21599 (for 21600 pixels total)
 
+each pixel is 1/120 degree wide and 1/120 degree high
 
+x pixel to lon: (2x-43199)/240 [center of pixel]
 
+lon to x pixel: (43199+240x)/2
 
+y pixel to lat: (21599-2x)/240
 
+lat to y pixel: (21599-240x)/2
 
+Files Here
+==========
+
+lcc.png: 43200x21600 image representing earth land types, cylinderical proj
