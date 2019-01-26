@@ -62,13 +62,13 @@
   function send_command(command) {
      fetch("http://test.barrycarter.info/game-engine.pl?"+command)
   .then((response) => response.text())
-  .then((body) => console.log(body))
+  .then((body) => display(body))
   .catch(console.error)
 }
 
     // Return the message of the current position
     function pos() {
-      return (`You are at ${positionX}, ${positionY}`);
+//      return (`You are at ${positionX}, ${positionY}`);
     }
    
     // Display the position in the beginning

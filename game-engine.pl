@@ -1,7 +1,12 @@
 #!/bin/perl
 
-# This script runs on test.barrycarter.info and does nothing
-# except test CORS headers so that people can view test.html and
-# similar files from anywhere, not just on my server
+# This script runs on test.barrycarter.info and will be the game engine
 
-print "Access-Control-Allow-Origin: *\nContent-type: text/plain\n\nthis is some text\n";
+require "/usr/local/lib/bclib.pl";
+
+print "Access-Control-Allow-Origin: *\nContent-type: text/plain\n\n";
+
+my($query) = $ENV{QUERY_STRING};
+
+print "You sent me: $query\n";
+print "The time is ".strftime("%Y%m%d.%H%M%S UTC", gmtime(time()))."\n";
