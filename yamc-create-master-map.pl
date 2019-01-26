@@ -1,6 +1,11 @@
 #!/bin/perl
 
+require "/usr/local/lib/bclib.pl";
+
 # this hash converts RGB csv to land type (long name/short name/number)
+
+# 0,0,0 is an error (so giving it the highest 5-bit value possible)
+# but does appear at the end of east.txt
 
 my(%rgb2ltp) = (
 
@@ -21,13 +26,31 @@ my(%rgb2ltp) = (
 		"33,138,33" => "Evergreen Needleleaf Forest|1",
 		"49,205,49" => "Evergreen Broadleaf Forest|2",
 		"70,130,178" => "Permanent Wetlands|11",
-
+		"0,0,0" => "Error|31"
 		);
 
+# hash just for numbers (using char codes)
 
+my(%rgb2chr);
+
+for $i (keys %rgb2ltp) {
+  my($val) = $rgb2ltp{$i};
+  $val=~s/^.*\|//;
+  $rgb2chr{$i} = chr($val);
+  debug("*$i* -> *$val*");
+}
+
+while (<>) {
+  unless (/\(([\s\d\,]+)\)/) {warn "BAD LINE: $_"; next;}
+  my($val) = $1;
+  $val=~s/\s//g;
+  unless (defined($rgb2chr{$val})) {die ("BAD VAL: $_");}
+  print $rgb2chr{$val};
+}
 
 # TODO: assign short names to be first caps of each word
 # TODO: check for conflict
+# TODO: convert to JS?
 
 =item comments
 
