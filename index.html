@@ -60,57 +60,20 @@
 
   // send command to server and write response to console (for now)
   function send_command(command) {
-     fetch("http://test.barrycarter.info/game-engine.pl?"+command)
+     fetch("http://test.barrycarter.info/game-engine.pl?cmd="+command)
   .then((response) => response.text())
   .then((body) => display(body))
   .catch(console.error)
 }
-
-    // Return the message of the current position
-    function pos() {
-//      return (`You are at ${positionX}, ${positionY}`);
-    }
    
-    // Display the position in the beginning
-    display(pos())
-
-    // Moving the robot
-    function move(direction) {
-      switch (direction) {
-        case "e":
-        case "E":
-          positionX += 1;
-          break;
-        case "w":
-        case "W":
-          positionX -= 1;
-          break;
-        case "n":
-        case "N":
-          positionY += 1;
-          break;
-        case "s":
-        case "S":
-          positionY -= 1;
-          break;
-        default:
-          display("We didn't understand your command Chef!");
-      }
-      
-    }
-
     const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
-      //move(command.value)
       event.preventDefault();
-//      move(command.value);
       send_command(command.value);
       display("Your command: "+command.value);
-      display(pos());
       command.value = "";
     });
 
-
-  </script>
+</script>
 </body>
 
 </html>
