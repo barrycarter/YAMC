@@ -14,15 +14,26 @@
 # Initial usage (will change): x,y pixel to retrieve
 
 require "/usr/local/lib/bclib.pl";
+require "/home/user/20190125/YAMC/yamc-lib.pl";
 
-open(A, "/home/user/20190125/west.bin");
-open(B, "/home/user/20190125/east.bin");
+open(A, "/home/user/20190125/westeast.bin");
+
+test1();
+
+die "TESTING";
 
 my($x, $y);
 
+# for $x (3000..4000) {
+#  for $y (5000..6000) {
+#    my($val) = get_pixel_value($x,$y);
+#    debug("$x, $y, $val");
+#  }
+# }
+
 # random tests
 
-for $i (1..100) {
+for $i (1..1000000) {
   $x = int(rand(43200));
   $y = int(rand(21600));
   my($val) = get_pixel_value($x, $y);
@@ -37,14 +48,37 @@ for $i (1..100) {
 sub get_pixel_value {
 
   my($x, $y) = @_;
-  my($fh, $val);
+  my($val, $flag);
 
-  if ($x >= 21600) {$fh = B; $x-=21600;} else {$fh = A;}
+  if ($x >= 21600) {$flag = 1;} else {$flag = 0;}
 
-  my($pos) = $y*21600 + $x;
+  my($pos) = $y*21600 + $x + $flag*466560000;
   debug("POS: $pos");
 
-  seek($fh, $pos, 0);
-  my($ret) = read($fh, $val, 1);
+  # TODO: hardcoding `A` here is probably bad
+  seek(A, $pos, 0);
+  my($ret) = read(A, $val, 1);
   return ord($val);
 }
+
+# test draws tasmania (AUS is too big)
+
+sub test1 {
+
+  my($sx, $sy, $ex, $ey) = (38812, 15458, 39487, 16210);
+
+  print "new\n";
+  print "size ",$ex-$sx+1,",",$ey-$sy+1,"\n";
+  
+  for ($i = $sx; $i <= $ex; $i++) {
+    for ($j = $sy; $j <= $ey; $j++) {
+      my($pix) = get_pixel_value($i,$j);
+      debug("PIX: $pix");
+      my($color) = $landcolors[$pix];
+      my($px) = $i-$sx;
+      my($py) = $j-$sy;
+      print "setpixel $px,$py,$color\n";
+    }
+  }
+}
+  
