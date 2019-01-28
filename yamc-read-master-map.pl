@@ -61,11 +61,14 @@ sub get_pixel_value {
   return ord($val);
 }
 
-# test draws tasmania (AUS is too big)
+# test draws tasmania and others for testing
 
 sub test1 {
 
-  my($sx, $sy, $ex, $ey) = (38812, 15458, 39487, 16210);
+#  my($sx, $sy, $ex, $ey) = (38812, 15458, 39487, 16210);
+#  my($sx, $sy, $ex, $ey) = (11812, 7552, 12150, 7856);
+  my($sx, $sy, $ex, $ey) = (21600, 4605, 21937, 4819);
+
 
   print "new\n";
   print "size ",$ex-$sx+1,",",$ey-$sy+1,"\n";
