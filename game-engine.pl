@@ -70,6 +70,8 @@ MARK
 
 =item schema
 
+# TODO: renormalize to user, variable, value (RDF triples!)
+
 This will be the user's location and inventory (resources are very
 subject to change, p_n means preserved resource)
 
