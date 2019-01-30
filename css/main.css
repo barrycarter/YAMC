@@ -1,0 +1,161 @@
+body {
+    text-align: center;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #eee;
+    color: #333;
+  }
+  .container{
+    margin: auto;
+    width: 90%;
+    display: grid;
+    grid-template-areas:
+      'header header header header'
+      'sidebar main main main'
+      'log log log log';
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-gap: 10px;
+  }
+  header {
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 2em;
+    text-align: center;
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+  }
+ 
+  
+  header div a {
+    font-size: 130px;
+    color:lightslategrey;
+  }
+  
+  sidebar{
+    grid-area: sidebar;
+  }
+  /* accordion */
+  .bar{
+    padding: 10px;
+    color : #fff;
+    background :#333;
+    display : block;
+    text-decoration : none;
+  
+  }
+  .content{
+    height : 0;
+    transition:1s;
+    overflow:hidden;
+  }
+  .content:target{
+    height: 600px;
+  }
+    /* end accordion   */
+  #profile {
+      height: 600px;
+      overflow:auto; 
+  }
+  #tiles {
+      height: 600px;
+      overflow:auto; 
+  }
+
+  main {
+    grid-area: main;
+    height: 100%;
+  } 
+  
+  #map {
+    width: 100%;
+    height: 600px;
+  }
+  #command {
+    padding: 15px;
+    text-align: center;
+  }
+  #command input {
+    width: 300px;
+    font-size: 20px;
+  }
+  #command button {
+    font-size: 15px;
+    height: 55px;
+    width: 100px;
+  }
+  
+  #log {
+    grid-area: log;
+    font-size: 20px;
+    height: 200px;
+  }
+
+
+  /* show help */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .popupHelp {
+    text-align: left;
+    padding: 30px;
+    visibility: hidden;
+    opacity: 0.9;
+    width: 700px;
+    height: 900px;
+    border-radius: 20px;
+    background-color: #555;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 300%;
+    font-size: 1.5em;
+  }
+  .popupLogin {
+    text-align: center;
+    padding: 30px;
+    visibility: hidden;
+    opacity: 0.9;
+    width: 400px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: #555;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    bottom: 600px;
+    left: 0%;
+    font-size: 1.5em;
+  }
+  .popupLogin * {
+      
+      margin-bottom: 25px;
+  }
+  .popupLogin button {
+      width: 100px;
+      height: 50px;
+  }
+  
+  /* Toggle this class - hide and show the popup */
+  .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+  
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 0.9;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:0.9 ;}
+  }
