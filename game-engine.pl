@@ -70,33 +70,39 @@ MARK
 
 =item schema
 
-# TODO: renormalize to user, variable, value (RDF triples!)
+CREATE TABLE users (
+ username TEXT,
+ variable TEXT,
+ value DOUBLE,
+ ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
+);
 
-This will be the user's location and inventory (resources are very
-subject to change, p_n means preserved resource)
+-- below are exact copies of users to save games mid-turn or to
+-- restore previous turn
 
-CREATE TABLE user (
- username TEXT, x INT, y INT, 
- energy DOUBLE, food DOUBLE, people DOUBLE, wood DOUBLE, leaves DOUBLE,
- p_energy DOUBLE, p_food DOUBLE, p_people dOUBLE, p_wood DOUBLE, 
- p_leaves DOUBLE, roads DOUBLE, houses DOUBLE, 
+CREATE TABLE saved_users (
+ username TEXT,
+ variable TEXT,
+ value DOUBLE,
+ ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
+);
+
+CREATE TABLE turned_users (
+ username TEXT,
+ variable TEXT,
+ value DOUBLE,
+ ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
+);
+
+-- This table only lists land tiles that have been improved in some way
+
+CREATE TABLE land (
+ x INT, y INT, variable TEXT, value DOUBLE,
  ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-This table only lists land tiles that have been improved in some way
 
-TODO: this won't work if we allow multiple players to own a tile
-
-NOTE: Energy = amount of energy required to cross this tile (possibly
-redundant with roads)
-
-CREATE TABLE tiles (
- x INT, y INT,
- roads INT, people INT, energy DOUBLE, owner INT,
- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
-
-NOTE: oid is an automatically defined column in SQLite3, but not in MySQL
+-- NOTE: oid is an automatically defined column in SQLite3, but not in MySQL
 
 =cut
 
