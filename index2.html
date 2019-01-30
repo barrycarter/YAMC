@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Barry game</title>
+
+  <style>
+    .container {
+    margin: auto;
+    background-color: bisque;
+    width: 80%;
+    text-align: center;
+  }
+
+</style>
+
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Game M.U.L.E Clone</h1>
+
+    <p>Hi, welcome to our game</p>
+    <p>To move type:</p>
+    
+      <p>E for East</p>
+      <p>W for West</p>
+      <p>N for North</p>
+      <p>S for South</p>
+</div>    
+
+<center>
+    <form action="#">
+
+     <label for="username"></label>
+     <input type="text" name="username" id="username"><p><p>
+
+    <hr noshade>
+
+    <div id="histCmd"></div>
+
+      <label for="command"></label>
+      <input type="text" name="command" id="command">
+      <button id="btnConfirm">Confirm your command</button>
+    </form>
+</center>
+  
+<script>
+    const command = document.getElementById("command");
+    const histCmd = document.getElementById("histCmd");
+    const userame = document.getElementById("username");
+console.log("username is",username, "command is",command);
+
+    // Initial position of the robot
+    // this start position is ~ Gibralatar
+    // (http://test.barrycarter.info/bc-gettileyamc.php)
+    let positionX = 20934, positionY = 6467;
+
+    // show the text in history log
+    function display(element) {
+      histCmd.appendChild(document.createTextNode(element));
+      histCmd.appendChild(document.createElement("br"));
+    }
+
+  // send command to server and write response to console (for now)
+  function send_command(command) {
+     fetch("http://test.barrycarter.info/game-engine.pl?cmd="+command+"&username="+username.value)
+  .then((response) => response.text())
+  .then((body) => display(body))
+  .catch(console.error)
+}
+   
+    const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
+      event.preventDefault();
+      send_command(command.value);
+      display("Your command: "+command.value);
+      command.value = "";
+    });
+
+</script>
+</body>
+
+</html>
