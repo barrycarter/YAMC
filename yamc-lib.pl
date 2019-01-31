@@ -35,4 +35,20 @@ for $i (keys %rgb2ltp) {
   $landcolors[$1] = $i;
 }
 
+# TODO: all of the subroutines below are the same for now, but will be
+# customized when the time comes
+
+# tell error: tell the user something went wrong and terminate
+sub tell_error {
+  my($error) = @_;
+  print $error;
+  exit(0);
+}
+
+# tell user: tell the user something and continue
+sub tell_error {
+  my($str) = @_;
+  print $str;
+}
+
 return 1;
