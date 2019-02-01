@@ -5,33 +5,26 @@
 use Net::WebSocket::Server;
 require "/usr/local/lib/bclib.pl";
  
-sub setup_server {
-  # $conn is of class Net::WebSocket::Server::Connection
-  debug("AT IS: ",@_);
-  my($serv, $conn) = @_;
-  debug("SERV: $serv, CONN: $conn");
-#  $conn->on(utf8 => got_message);
-}
-
-my($ws) = Net::WebSocket::Server->new(
- listen => 8000,  on_connect =>
- \&setup_server
-# sub {my ($serv, $conn) = @_; debug("SERV: $serv, CONN: $conn");}
-);
+my($ws)=Net::WebSocket::Server->new(listen=>8000,on_connect => \&connection);
 
 debug("WS: $ws");
 
-
-
 # this happens when connection occurs
 
-sub got_message {
+sub connection {
+  my($serv, $conn) = @_;
+  debug("SERV: $serv, CONN: $conn");
+  $conn->on(utf8 => \&message);
+}
+
+# this happens when we get a message
+sub message {
   my($conn, $msg) = @_;
-  $conn->send_utf8("You said: $msg");
+  debug("GOT: $msg");
+  $conn->send_utf8("You said: $msg, the time is".`date`);
 }
 
 $ws->start;
-
 
 =item sample_code
 
