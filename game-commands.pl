@@ -64,7 +64,7 @@ sub create {
   exit(0);
 }
 
-
+# TODO: pw should be stored as string, not integer value (but perhaps sha1?)
 
 # TODO: distinguish between functions user can call and GUI can call
 
