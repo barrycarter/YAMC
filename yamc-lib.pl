@@ -1,7 +1,13 @@
 #!/bin/perl
 
+# this lets me use the functions in bclib.pl as though they were in this file
+do "/usr/local/lib/bclib.pl";
+
 # db file
 our($dbfile) = "/sites/DB/yamc.db";
+
+# default starting x and y values
+our($defx, $defy) = (20934, 6467);
 
 # since all of our queries are to single file, allow 1 arg call
 
@@ -45,20 +51,22 @@ for $i (keys %rgb2ltp) {
   $landcolors[$1] = $i;
 }
 
+# TODO: both tell_ functions should preserve HTML and use <br> or <p>
+
 # TODO: all of the subroutines below are the same for now, but will be
 # customized when the time comes
 
 # tell error: tell the user something went wrong and terminate
 sub tell_error {
   my($error) = @_;
-  print $error;
+  print "$error\n";
   exit(0);
 }
 
 # tell user: tell the user something and continue
 sub tell_user {
   my($str) = @_;
-  print $str;
+  print "$str\n";
 }
 
 return 1;

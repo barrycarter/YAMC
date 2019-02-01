@@ -6,6 +6,9 @@
 
 package gamecommands;
 
+# this lets me use the functions in yamc-lib.pl as if they were local
+do "/sites/YAMC/yamc-lib.pl";
+
 =item notes
 
 TODO: move_dir should be called by n, e, s, w
@@ -32,9 +35,6 @@ TODO: assume argument defaults if player/client doesnt specify
 
 sub create {
   my($username, $pw) = @_;
-
-  # see if user already exists
-  if ($user) {tell_error("User $username already exists");}
 
   tell_user("Creating user: $username");
 
@@ -63,6 +63,12 @@ sub create {
   tell_user("User $username created with default position and resources");
   exit(0);
 }
+
+
+
+# TODO: distinguish between functions user can call and GUI can call
+
+# TODO: consider using methods vs functions
 
 # perl libs must return truth
 true;

@@ -8,10 +8,7 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: this is seriously ugly
 require "/sites/YAMC/yamc-lib.pl";
-require "/sites/YAMC/game-commands.pl";
-
-# default starting x and y values
-my($defx, $defy) = (20934, 6467);
+require "/sites/YAMC/gamecommands.pm";
 
 # can access from local browser if desired
 print "Access-Control-Allow-Origin: *\nContent-type: text/html\n\n";
@@ -28,9 +25,7 @@ $query=~s/%20/ /g;
 # parse into hash
 my(%query) = parse_form($query);
 
-unless ($query{username}) {
-  tell_error("Please enter a username");
-}
+unless ($query{username}) {tell_error("Please enter a username");}
 
 # username
 my($user) = $query{username};
@@ -49,10 +44,13 @@ my(@user) = sqlite3hashlist("SELECT * FROM users WHERE
 username='$user'", $dbfile);
 
 # special case for create
-if ($cmd eq "create") {eval($eval);}
+if ($cmd eq "create") {
+  if (@user) {tell_error("User $user already exists");}
+  eval($eval);
+}
 
 if ($#user == -1) {
-  tell_error("User $user does not exist, please use 'create $user password' to create");
+  tell_error("User $user does not exist: 'create $user password' to create");
 }
 
 print "[$time] Your command: $query{cmd}\n";
