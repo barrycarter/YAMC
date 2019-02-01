@@ -1,5 +1,15 @@
 #!/bin/perl
 
+# db file
+our($dbfile) = "/sites/DB/yamc.db";
+
+# since all of our queries are to single file, allow 1 arg call
+
+sub sqlite3_local {
+  my($query) = @_;
+  return sqlite3($query, $dbfile);
+}
+
 # this hash converts RGB csv to land type (long name/short name/number)
 
 # 0,0,0 is an error (so giving it the highest 5-bit value possible)
@@ -46,7 +56,7 @@ sub tell_error {
 }
 
 # tell user: tell the user something and continue
-sub tell_error {
+sub tell_user {
   my($str) = @_;
   print $str;
 }

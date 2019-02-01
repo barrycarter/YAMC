@@ -10,9 +10,6 @@ require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/yamc-lib.pl";
 require "/sites/YAMC/game-commands.pl";
 
-# db file
-my($dbfile) = "/sites/DB/yamc.db";
-
 # default starting x and y values
 my($defx, $defy) = (20934, 6467);
 
@@ -24,6 +21,9 @@ my($time) = strftime("%Y%m%d.%H%M%S UTC", gmtime(time()));
 
 # what the user requested
 my($query) = $ENV{QUERY_STRING};
+
+# fix html?
+$query=~s/%20/ /g;
 
 # parse into hash
 my(%query) = parse_form($query);
@@ -86,44 +86,6 @@ MARK
 
 # TODO: return JSON
 # print "[$time] Message received: $query\n";
-
-=item schema
-
-CREATE TABLE users (
- username TEXT,
- variable TEXT,
- value DOUBLE,
- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
-);
-
--- below are exact copies of users to save games mid-turn or to
--- restore previous turn
-
-CREATE TABLE saved_users (
- username TEXT,
- variable TEXT,
- value DOUBLE,
- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
-);
-
-CREATE TABLE turned_users (
- username TEXT,
- variable TEXT,
- value DOUBLE,
- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL 
-);
-
--- This table only lists land tiles that have been improved in some way
-
-CREATE TABLE land (
- x INT, y INT, variable TEXT, value DOUBLE,
- ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
-
-
--- NOTE: oid is an automatically defined column in SQLite3, but not in MySQL
-
-=cut
 
 =item comments
 
