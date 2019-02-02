@@ -68,6 +68,7 @@ sub create {
 # inventory
 
 sub inventory {
+  my($user) = @_;
   tell_user("CALLED: inventory, v10, user is: $user");
   my($query) = "SELECT GROUP_CONCAT(variable||': '||value, ',') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
   my($val) = sqlite3val($query, $dbfile);
@@ -76,41 +77,7 @@ sub inventory {
   tell_user("VAL: $val");
 }
 
-sub get_pixel_value {
-
-  unless (-r A) {open(A,"/sites/YAMC/westeast.bin");}
-
-  my($x, $y) = @_;
-  my($val, $flag);
-
-  if ($x >= 21600) {$flag = 1;} else {$flag = 0;}
-
-  my($pos) = $y*21600 + $x + $flag*466560000;
-
-  # TODO: hardcoding `A` here is probably bad
-  seek(A, $pos, 0);
-  my($ret) = read(A, $val, 1);
-  return ord($val);
-}
-
-
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
-
-# return hash of tile type info for rectangle only (not improvements)
-
-# TODO: cache, since tileinfo doesn't change
-
-sub tileinfo {
-
-  my(%tileinfo);
-  my($x1,$y1,$x2,$y2) = @_;
-  for ($i = $x1; $i <= $x2; $i++) {
-    for ($j = $y1; $j <= $y2; $j++) {
-      $tileinfo{$i}{$j} = get_pixel_value($i, $j);
-    }
-  }
-  return \%tileinfo;
-}
 
 # the test{n} commands are just for testing
 

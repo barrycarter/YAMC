@@ -4,10 +4,8 @@
 # web connection
 
 require "/usr/local/lib/bclib.pl";
-
-# TODO: this is seriously ugly
 require "/sites/YAMC/yamc-lib.pl";
-require "/sites/YAMC/gamecommands.pm";
+require "/sites/YAMC/game-commands.pl";
 
 # TODO: hardcoding user for now
 our($user) = "local_user";
@@ -28,7 +26,7 @@ while (1) {
   my(@cmd) = split(/\s+/, $cmd);
   my($cmd) = shift(@cmd);
   if ($aliases{$cmd}) {$cmd = $aliases{$cmd};}
-  my($args) = join(", ",@cmd);
+  my($args) = join(", ",($user, @cmd));
   my($eval) = "gamecommands::$cmd($args)";
   tell_user("Eval: $eval");
 

@@ -1,6 +1,9 @@
 #!/bin/perl
 
+# these are functions and variables the user can't call directly
+
 # this lets me use the functions in bclib.pl as though they were in this file
+
 do "/usr/local/lib/bclib.pl";
 
 # db file
@@ -55,6 +58,40 @@ our(@landcolors);
 for $i (keys %rgb2ltp) {
   $rgb2ltp{$i}=~m/^.*\|(.*?)$/m;
   $landcolors[$1] = $i;
+}
+
+sub get_pixel_value {
+
+  unless (-r A) {open(A,"/sites/YAMC/westeast.bin");}
+
+  my($x, $y) = @_;
+  my($val, $flag);
+
+  if ($x >= 21600) {$flag = 1;} else {$flag = 0;}
+
+  my($pos) = $y*21600 + $x + $flag*466560000;
+
+  # TODO: hardcoding `A` here is probably bad
+  seek(A, $pos, 0);
+  my($ret) = read(A, $val, 1);
+  return ord($val);
+}
+
+
+# return hash of tile type info for rectangle only (not improvements)
+
+# TODO: cache, since tileinfo doesn't change
+
+sub tileinfo {
+
+  my(%tileinfo);
+  my($x1,$y1,$x2,$y2) = @_;
+  for ($i = $x1; $i <= $x2; $i++) {
+    for ($j = $y1; $j <= $y2; $j++) {
+      $tileinfo{$i}{$j} = get_pixel_value($i, $j);
+    }
+  }
+  return \%tileinfo;
 }
 
 # TODO: both tell_ functions should preserve HTML and use <br> or <p>
