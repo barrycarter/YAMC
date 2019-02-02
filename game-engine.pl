@@ -36,8 +36,6 @@ my($cmd) = shift(@cmd);
 my($args) = join(", ",@cmd);
 my($eval) = "gamecommands::$cmd($args)";
 
-tell_user("Plan to call: $eval");
-
 # read information about the user
 
 my(@user) = sqlite3hashlist("SELECT * FROM users WHERE
@@ -54,6 +52,10 @@ if ($#user == -1) {
 }
 
 print "[$time] Your command: $query{cmd}\n";
+
+tell_user("Plan to call: $eval");
+eval($eval);
+tell_user("Eval returns $@");
 
 sub help {
   return << "MARK";

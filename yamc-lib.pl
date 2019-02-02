@@ -9,6 +9,12 @@ our($dbfile) = "/sites/DB/yamc.db";
 # default starting x and y values
 our($defx, $defy) = (20934, 6467);
 
+# command aliases
+
+our(%aliases) = (
+		 "i" => "inventory"
+);
+
 # since all of our queries are to single file, allow 1 arg call
 
 sub sqlite3_local {
@@ -59,7 +65,7 @@ for $i (keys %rgb2ltp) {
 # tell error: tell the user something went wrong and terminate
 sub tell_error {
   my($error) = @_;
-  print "$error\n";
+  print "ERROR: $error\n";
   exit(0);
 }
 
@@ -67,6 +73,12 @@ sub tell_error {
 sub tell_user {
   my($str) = @_;
   print "$str\n";
+}
+
+# TODO: only do this if debugging is turned on
+sub tell_debug {
+  my($str) = @_;
+  print "DEBUG: $str\n";
 }
 
 return 1;
