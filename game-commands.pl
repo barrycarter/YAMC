@@ -68,9 +68,8 @@ sub create {
 # inventory
 
 sub inventory {
-  tell_user("CALLED: inventory, v10");
-  debug(var_dump("user", \%user));
-  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, ',') FROM users WHERE username='$user{username}' AND variable NOT IN ('pw', 'x', 'y')";
+  tell_user("CALLED: inventory, v10, user is: $user");
+  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, ',') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
   my($val) = sqlite3val($query, $dbfile);
   # my($query) = "SELECT GROUP_CONCAT";
   tell_user("QUERY: $query");

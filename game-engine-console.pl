@@ -9,8 +9,8 @@ require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/yamc-lib.pl";
 require "/sites/YAMC/gamecommands.pm";
 
-# TODO: hardcoding user for now, global var
-$user = "local_user";
+# TODO: hardcoding user for now
+our($user) = "local_user";
 
 # read input line by line
 $|=1;
@@ -19,11 +19,9 @@ $|=1;
 
 # forever...
 
-my($cmd);
-
 while (1) {
   print "Command > ";
-  $cmd = <>;
+  my $cmd = <>;
   debug("CMD: $cmd");
 
   # parse the command
@@ -49,6 +47,8 @@ username='$user'", $dbfile);
     tell_user("User $user does not exist: 'create $user password' to create");
     next;
   }
+
+  debug("USER: $user");
 
   # this is global
 #  %user = %{$user[0]};
