@@ -83,7 +83,6 @@ sub get_pixel_value {
 # TODO: cache, since tileinfo doesn't change
 
 sub tileinfo {
-
   my(%tileinfo);
   my($x1,$y1,$x2,$y2) = @_;
   for ($i = $x1; $i <= $x2; $i++) {
@@ -92,6 +91,19 @@ sub tileinfo {
     }
   }
   return \%tileinfo;
+}
+
+=item tile_energy_cost($x,$y)
+
+The energy cost to cross tile $x,$y
+
+TODO: currently hardcoded
+
+=cut
+
+sub tile_energy_cost {
+  my($x,$y) = @_;
+  return 1;
 }
 
 # TODO: both tell_ functions should preserve HTML and use <br> or <p>
@@ -109,6 +121,7 @@ sub tell_error {
 # tell user: tell the user something and continue
 sub tell_user {
   my($str) = @_;
+  $str=~s/\\n/\n/g;
   print "$str\n";
 }
 

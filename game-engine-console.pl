@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# TODO: consider word wrapping output
+
 # Runs the game from a console (very similar to game-engine.pl, but no
 # web connection
 

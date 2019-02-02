@@ -69,26 +69,15 @@ sub create {
 
 sub inventory {
   my($user) = @_;
-  tell_user("CALLED: inventory, v10, user is: $user");
-  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, ',') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
+  # NOTE: \\n prints a literal \n but tell_user interprets it
+  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, '\\n') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
   my($val) = sqlite3val($query, $dbfile);
-  # my($query) = "SELECT GROUP_CONCAT";
-  tell_user("QUERY: $query");
-  tell_user("VAL: $val");
+  tell_user("Inventory:\n\n$val");
 }
 
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
 
 # the test{n} commands are just for testing
-
-sub test1 {
-  my(%hash) = %{tileinfo($user{x}-5, $user{y}-5, $user{x}+5, $user{y}+5)};
-  for $i (keys %hash) {
-    for $j (keys %{$hash{$i}}) {
-      tell_user("KEY $i, $j TO: $hash{$i}{$j}");
-    }
-  }
-}
 
 sub exit {exit(0);}
 
