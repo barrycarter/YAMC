@@ -87,6 +87,28 @@ sub command_inventory {
   tell_user("Inventory:\n\n$val");
 }
 
+sub command_help {
+  my($help) = << "MARK";
+
+n, e, w, s - move in cardinal direction
+i - inventory
+me - information about you
+claim - claim current tile
+tile - information about current tile
+bridge [n|e|s|w] - build bridge on tile in given direction
+put (road|person|etc) - place item on this tile
+remove (road|person|etc) - remove item from this tile
+harvest - harvest resources from this tile (once per turn)
+turn - end current turn
+reset - reset to start of this turn
+save - save current state
+restore - restore from last save
+
+MARK
+;
+  tell_user($help);
+}
+
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
 
 # the test{n} commands are just for testing
