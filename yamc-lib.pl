@@ -12,12 +12,6 @@ our($dbfile) = "/sites/DB/yamc.db";
 # default starting x and y values
 our($defx, $defy) = (20934, 6467);
 
-# command aliases
-
-our(%aliases) = (
-		 "i" => "inventory"
-);
-
 # since all of our queries are to single file, allow 1 arg call
 
 sub sqlite3_local {

@@ -1,13 +1,28 @@
 # When the player types in a command or the client requests it, calls
 # the appropriate function in this file
 
+# TODO: rewrite this to be a package, but that caused a lot of
+# problems when I tried it
+
 # TODO: maybe write script that checks sqlite3 is never used and only
 # sqlite3_local
 
-package gamecommands;
-
 # this lets me use the functions in yamc-lib.pl as if they were local
-do "/sites/YAMC/yamc-lib.pl";
+# do "/sites/YAMC/yamc-lib.pl";
+
+# command aliases
+
+our(%command_aliases) = (
+ "i" => "inventory",
+ "e" => "east",
+ "w" => "west",
+ "s" => "south",
+ "n" => "north"
+);
+
+# can be called without user
+
+our(%no_user_required) = list2hash("exit", "reload", "create");
 
 =item notes
 
@@ -33,8 +48,13 @@ TODO: assume argument defaults if player/client doesnt specify
 
 # create a new user with a given password
 
-sub create {
+sub command_create {
   my($username, $pw) = @_;
+
+  unless ($user{null}) {
+    tell_user("User $username already exists");
+    return;
+  }
 
   tell_user("Creating user: $username");
 
@@ -67,8 +87,9 @@ sub create {
 # TODO: create aliases (like 'i' for inventory) as needed
 # inventory
 
-sub inventory {
+sub command_inventory {
   my($user) = @_;
+  # TODO: no need to look this up, since I pull user info already
   # NOTE: \\n prints a literal \n but tell_user interprets it
   my($query) = "SELECT GROUP_CONCAT(variable||': '||value, '\\n') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
   my($val) = sqlite3val($query, $dbfile);
@@ -79,11 +100,15 @@ sub inventory {
 
 # the test{n} commands are just for testing
 
-sub exit {exit(0);}
+sub command_exit {exit(0);}
 
 # only use this in console mode
 
-sub reload {tell_user("Restarting..."); system("clear"); exec("$0 --debug");}
+sub command_reload {
+  tell_user("Restarting...");
+  system("clear");
+  exec("$0 --debug");
+}
 
 # TODO: distinguish between functions user can call and GUI can call
 
