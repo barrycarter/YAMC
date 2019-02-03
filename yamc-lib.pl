@@ -9,6 +9,15 @@ do "/usr/local/lib/bclib.pl";
 # db file
 our($dbfile) = "/sites/DB/yamc.db";
 
+# default user values
+# NOTE: must set all possible items that user could theoretically have here
+
+%default_user = ("x" => 20934, "y" => 6467, "wood" => 0, "food" => 10,
+		 "people" => 10, "leaves" => 10, "grass" => 10, 
+		 "energy" => 10, "houses" => 0, "roads" => 0
+		 );
+		 
+
 # default starting x and y values
 our($defx, $defy) = (20934, 6467);
 
@@ -116,7 +125,17 @@ sub tell_error {
 sub tell_user {
   my($str) = @_;
   $str=~s/\\n/\n/g;
-  print "$str\n";
+  
+  # TODO: allow more variation here and maybe merge debug/error into this
+  # TODO: for broadcast, make it clear which user is being told something
+  # if global $globopts{websocket} is set, use broadcast instead
+  if ($globopts{websocket}) {
+    debug("ALPHA");
+    broadcast("(to $user): $str");
+  } else {
+    debug("BETA");
+    print "$str\n";
+  }
 }
 
 # TODO: only do this if debugging is turned on

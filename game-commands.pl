@@ -67,17 +67,9 @@ sub command_create {
            ('$username', 'pw', $pw);");
 
   # TODO: this needs to be changed a lot
-
-  # put the user at default position (20934, 6467) [TODO: not this]
-  sqlite3_local("INSERT INTO users (username, variable, value) VALUES
-           ('$username', 'x', $defx);");
-  sqlite3_local("INSERT INTO users (username, variable, value) VALUES
-           ('$username', 'y', $defy);");
-
-  # and 1000 of some resources (TODO: major changes here)
-  for $i ("wood", "food", "people", "leaves", "grass", "energy") {
+  for $i (keys %default_user) {
     sqlite3_local("INSERT INTO users (username, variable, value) VALUES
-           ('$username', '$i', 1000);");
+           ('$username', '$i', $default_user{$i});");
   }
 
   tell_user("User $username created with default position and resources");
@@ -88,7 +80,6 @@ sub command_create {
 # inventory
 
 sub command_inventory {
-  my($user) = @_;
   # TODO: no need to look this up, since I pull user info already
   # NOTE: \\n prints a literal \n but tell_user interprets it
   my($query) = "SELECT GROUP_CONCAT(variable||': '||value, '\\n') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
