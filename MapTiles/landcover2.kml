@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+
+<GroundOverlay>
+<Icon>
+<href>http://terramapadventure.com/lcc_west_00.png</href>
+</Icon>
+<LatLonBox>
+<north>90</north>
+<south>45</south>
+<west>-180</west>
+<east>-135</east>
+</LatLonBox>
+</GroundOverlay>
+
+<GroundOverlay>
+<Icon>
+<href>http://terramapadventure.com/lcc_west_01.png</href>
+</Icon>
+<LatLonBox>
+<north>90</north>
+<south>45</south>
+<west>-135</west>
+<east>-90</east>
+</LatLonBox>
+</GroundOverlay>
+
+</Document>
+</kml>
