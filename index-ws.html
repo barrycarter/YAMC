@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TerraMapAdventure</title>
+
+  <style>
+    .container {
+    margin: auto;
+    background-color: bisque;
+    width: 80%;
+    text-align: center;
+  }
+
+</style>
+
+
+</head>
+
+<body>
+
+<center>
+    <form action="#">
+
+     <label for="username">Username</label>
+     <input type="text" name="username" id="username"><p><p>
+
+    <hr noshade>
+
+    <div id="histCmd"></div>
+
+      <label for="command">Command</label>
+      <input type="text" name="command" id="command">
+      <button id="btnConfirm">Confirm your command</button>
+    </form>
+</center>
+  
+<script>
+    var ws = new WebSocket("ws://127.0.0.1:8000");
+
+    ws.onmessage = function (event) {display(event.data);}
+
+    const command = document.getElementById("command");
+    const histCmd = document.getElementById("histCmd");
+    const userame = document.getElementById("username");
+
+    // show the text in history log
+    function display(element) {
+      histCmd.appendChild(document.createTextNode(element));
+      histCmd.appendChild(document.createElement("br"));
+    }
+
+  // send command to server and write response to console (for now)
+  function send_command(command) {
+     ws.send(command);
+}
+
+    const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
+      event.preventDefault();
+      send_command(command.value);
+      command.value = "";
+    });
+
+</script>
+</body>
+
+</html>
