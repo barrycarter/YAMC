@@ -17,15 +17,29 @@ sub connection {
 sub message {
   my($conn, $msg) = @_;
 
-  debug("Got message: $msg");
+  # parse the message and broadcast it
+  my(%hash) = parse_form($msg);
+  broadcast("$hash{user}: $hash{command}");
+
+#  debug("Got message: $msg");
 
   # TODO: broadcast message in addition to parsing it
-  for $i ($ws->connections) {
-    my($msg2) = "Server echo: $msg";
-    debug("SENDING TO: $i");
-    $i->send_utf8($msg2);
-  }
+#  for $i ($ws->connections) {
+#    my($msg2) = "Server echo: $msg";
+#    debug("SENDING TO: $i");
+#    $i->send_utf8($msg2);
+#  }
 }
 
 $ws->start;
 
+# broadcast to all connections
+
+sub broadcast {
+  my($msg) = @_;
+
+  my($time) = stardate();
+  $msg = "[$time] $msg";
+
+  for $i ($ws->connections) {$i->send_utf8($msg);}
+}
