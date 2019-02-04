@@ -92,9 +92,9 @@ sub process_msg {
     return;
   }
 
-  tell_user("Plan to call: $eval");
-  eval($eval);
-  tell_user("Eval returns $@");
+  debug("eval($eval)");
+  my($res) = eval($eval);
+  debug("RES: $res, $@");
 }
 
 sub get_user_info {

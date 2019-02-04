@@ -24,8 +24,8 @@ chdir("/home/user/20190125/YAMC/MapTiles")||die("Can't chdir");
 # declare arrays
 
 print << "MARK";
-var bounds = {};
-var tiles = {};
+var bounds = [];
+var tiles = [];
 MARK
 ;
 
@@ -55,6 +55,8 @@ bounds[$count] = new google.maps.LatLngBounds(
 tiles[$count] = new google.maps.GroundOverlay(
  "http://terramapadventure.com/MapTiles/lcc_west_$w.png", bounds[$count]);
 
+tiles[$count].setOpacity(0.5);
+
 tiles[$count].setMap(map);
 
 MARK
@@ -83,6 +85,8 @@ tiles[$count] = new google.maps.GroundOverlay(
  "http://terramapadventure.com/MapTiles/lcc_east_$e.png", bounds[$count]);
 
 tiles[$count].setMap(map);
+
+tiles[$count].setOpacity(0.5);
 
 MARK
 ;

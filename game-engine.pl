@@ -57,25 +57,6 @@ tell_user("Plan to call: $eval");
 eval($eval);
 tell_user("Eval returns $@");
 
-sub help {
-  return << "MARK";
-n, e, w, s - move in cardinal direction
-i - inventory
-me - information about you
-claim - claim current tile
-tile - information about current tile
-bridge [n|e|s|w] - build bridge on tile in given direction
-put (road|person|etc) - place item on this tile
-remove (road|person|etc) - remove item from this tile
-harvest - harvest resources from this tile (once per turn)
-turn - end current turn
-reset - reset to start of this turn
-save - save current state
-restore - restore from last save
-MARK
-;
-}
-
 # TODO: allow ";" to separate commands, but check for errors
 
 # TODO: disallow diagonal moves explicitly

@@ -9,6 +9,8 @@ do "/usr/local/lib/bclib.pl";
 # db file
 our($dbfile) = "/sites/DB/yamc.db";
 
+# (20934, 6467) corresponds to lon/lat: -5.5458333333, 36.1041666666
+
 # default user values
 # NOTE: must set all possible items that user could theoretically have here
 
@@ -17,9 +19,6 @@ our($dbfile) = "/sites/DB/yamc.db";
 		 "energy" => 10, "houses" => 0, "roads" => 0
 		 );
 		 
-
-# default starting x and y values
-our($defx, $defy) = (20934, 6467);
 
 # since all of our queries are to single file, allow 1 arg call
 
@@ -130,7 +129,6 @@ sub tell_user {
   # TODO: for broadcast, make it clear which user is being told something
   # if global $globopts{websocket} is set, use broadcast instead
   if ($globopts{websocket}) {
-    debug("ALPHA");
     broadcast("(to $user): $str");
   } else {
     debug("BETA");

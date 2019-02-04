@@ -109,6 +109,20 @@ MARK
   tell_user($help);
 }
 
+sub command_show_rectangle {
+  my($x1, $y1, $x2, $y2) = @_;
+  debug("X1: $x1, Y1: $y1, X2: $x2, Y2: $y2");
+  my(@rep);
+
+  for $i ($x1..$x2) {
+    for $j ($y1..$y2) {
+      push(@rep, "{$j, $i, ".get_pixel_value($i, $j)."}");
+    }
+  }
+
+  tell_user(join(", ", @rep));
+}
+
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
 
 # the test{n} commands are just for testing
