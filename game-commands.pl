@@ -111,16 +111,17 @@ MARK
 
 sub command_show_rectangle {
   my($x1, $y1, $x2, $y2) = @_;
-  debug("X1: $x1, Y1: $y1, X2: $x2, Y2: $y2");
-  my(@rep);
+  my(@x, @y);
 
   for $i ($x1..$x2) {
+    @x = ();
     for $j ($y1..$y2) {
-      push(@rep, "{$j, $i, ".get_pixel_value($i, $j)."}");
+      push(@x, get_pixel_value($i, $j));
     }
+    push(@y, "[".join(",", @x)."]");
   }
 
-  tell_user(join(", ", @rep));
+  tell_user(join(", ", @y));
 }
 
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
