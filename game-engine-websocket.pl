@@ -48,15 +48,20 @@ sub process_msg {
   my($msg) = @_;
   debug("PROCESS_MSG($msg)");
 
-  # sanitize
-  unless ($msg=~/^[a-z0-9_ &=]*$/i) {
-    tell_user("Input *$msg* contained invalid characters, ignoring");
-    return;
+  if ($msg=~/([^a-z0-9_:,\s\"\{\}])/i) {
+    tell_user("Input *$msg* contained invalid characters: $1");
   }
 
-  my(%hash) = parse_form($msg);
-  my($fullcmd) = $hash{cmd};
-  our($user) = $hash{user};
+  # sanitize
+#  unless ($msg=~/^[a-z0-9_:,\s\"\{\}]*$/i) {
+#    tell_user("Input *$msg* contained invalid characters, ignoring");
+#    return;
+#  }
+
+
+  my $hash = JSON::from_json($msg);
+  my($fullcmd) = $hash->{cmd};
+  our($user) = $hash->{user};
 
   unless ($user) {
     tell_user("Please enter a username");
