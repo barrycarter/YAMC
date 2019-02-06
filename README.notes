@@ -110,7 +110,7 @@ http://learn.arcgis.com/en/gallery/?adbsc=social_gisday20182606571&adbid=1061302
 
 https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/5-ways-to-make-your-overview-map-sizzling-hot/ 5 Ways to Make Your Overview Map Sizzling Hot
 
-https://www.prio.org/Data/Geographical-and-Resource-Datasets/Petroleum-Dataset/
+https://www.prio.org/Data/Geographical-and-Resource-Datasets/Petroleum-Dataset/ Gas and Petroleum Data
 
 https://mrdata.usgs.gov/mrds/
  
@@ -118,10 +118,11 @@ I noticed some of the pixels in lcc_west_1km.tif and lcc_east_1km.tif appear to 
 
 Is this an error? If so, what values should I assume for black pixels?
 
-# population density data:
+http://sedac.ciesin.columbia.edu/data/collection/gpw-v4/sets/browse population density data
 
-http://sedac.ciesin.columbia.edu/data/collection/gpw-v4/sets/browse
+https://globalsolaratlas.info/ (solar energy data)
 
 other thoughts: wood, stone, metal, oil/gas
+
 
 
