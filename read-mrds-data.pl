@@ -6,18 +6,26 @@
 require "/usr/local/lib/bclib.pl";
 
 # getting and printing the header solely to see which fields I'm interested in
-
-my @header = csv(<>);
-
-for $i (0..$#header) {debug("$i: $header[$i]");}
+# my @header = csv(<>);
+# for $i (0..$#header) {debug("$i: $header[$i]");}
 
 # just printing for now
 
 while (<>) {
-   debug($_);
+  my(@fields) = csv($_);
+
+  my($mins) = join(", ", @fields[12..14]);
+
+  $mins=~s/[\,\s]+/\n/g;
+
+  # sort -u the output to get list of minerals
+  print $mins;
+
 }
 
 =item comments
+
+Source: https://mrdata.usgs.gov/mrds/
 
 header:
 
