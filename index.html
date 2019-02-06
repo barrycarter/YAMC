@@ -1,210 +1,336 @@
-<!doctype html>
-<html class="no-js" lang="">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TerraMapAdventure</title>
+  <style>
+    * {
+      box-sizing: border-box;
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-    crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" rel="stylesheet">
+    }
+    #map_container{
+      width: 600px;
+      height: 400px;
+      position: relative;
+    }
+    #player {
+      opacity: .7;
+      background-color: purple;
+      width: 40px;
+      height: 40px;
+      border: 2px solid black;
+      position: absolute;
+    }
+    .row {
+      display: inline-flex;
+      background-color: green;
+    }
+    .tile {
+      background-color: yellow;
+      width: 40px;
+      height: 40px;
+    }
+    .tile p {
+      visibility: hidden;
+    }
+    
+    .MixedForest{
+      background-color: rgb(143,187,143)
+    }
+    .DeciduousBroadleafForest{
+      background-color: rgb(151,250,151)
+    }
+    .CroplandNaturalVegetationMosaic{
+      background-color: rgb(153,147,85)
+    }
+    .DeciduousNeedleleafForest{
+      background-color: rgb(154,205,49)
+    }
+    .ClosedShrubland{
+      background-color: rgb(187,143,14)
+    }
+    .BarrenorSparselyVegetated{
+      background-color: rgb(189,189,189)
+    }
+    .WoodySavannas{
+      background-color: rgb(219,235,157)
+    }
+    .Water{
+      background-color: rgb(229,242,255)
+    }
+    .Grasslands{
+      background-color: rgb(239,183,102)
+    }
+    .OpenShrublands{
+      background-color: rgb(245,222,17)
+    }
+    .Croplands{
+      background-color: rgb(250,237,115)
+    }
+    .UrbanandBuiltup{
+      background-color: rgb(255,0,0)
+    }
+    .Savannas{
+      background-color: rgb(255,214,0)
+    }
+    .SnowandIce{
+      background-color: rgb(255,249,249)
+    }
+    .EvergreenNeedleleafForest{
+      background-color: rgb(33,138,33)
+    }
+    .EvergreenBroadleafForest{
+      background-color: rgb(49,205,49)
+    }
+    .PermanentWetlands{
+      background-color: rgb(70,130,178)
+    }
+    .Error{
+      background-color: rgb(0,0,0)
+    }
+  
+  
+  
+  </style>
 </head>
 
 <body>
-  <!--[if lte IE 9]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
 
+  <div>
+    <p>User position: <span id='user_position'></span></p>
+    <p>Square position: <span id='square_position'></span></p>
+    <p>Square Size: <span id="square_size"></span></p>
 
-  <div class="container">
+  </div>
+  <div>
+    <fieldset>
 
-    <div class="popup" onclick="showHelp()">
-      <div class="popupHelp" id="myHelp">
-        <h3>Help</h3>
-        <p>Command you can use: </p>
-        <p>n, e, w, s - move in cardinal direction</p>
-        <p>i - inventory </p>
-        <p>me - information about you</p>
-        <p>claim - claim current tile</p>
-        <p>tile - information about current tile</p>
-        <p>bridge [n|e|s|w] - build bridge on tile in given direction</p>
-        <p>put (road|person|etc) - place item on this tile</p>
-        <p>remove (road|person|etc) - remove item from this tile</p>
-        <p>harvest - harvest resources from this tile (once per turn)</p>
-        <p>turn - end current turn</p>
-        <p>reset - reset to start of this turn</p>
-        <p>save - save current state</p>
-        <p>restore - restore from last save</p>
-      </div>
-    </div>
+      <legend>Square</legend>
+      <form action="#">
 
-    <div class="popup">
-      <div class="popupLogin" id="myLogin">
-        <h3>Login</h3>
-        <form action="#">
-          <label for="user"></label>
-          <input id="username" type="text" placeholder="Enter your username">
-          <br>
-          <label for="password"></label>
-          <input id="password" type="text" placeholder="Enter your password">
-          <br>
-          <button onclick="showLogin()">Login</button>
-        </form>
-      </div>
-    </div>
+        <label for="square_x">X: </label>
+        <input type="text" name="square_x" id="square_x" required>
+        <label for="square_y">Y: </label>
+        <input type="text" name="square_y" id="square_y" required>
+        <br>
+        <label for="width">Width: </label>
+        <input type="text" name="square_width" id="square_width" required>
+        <label for="square_height">Height: </label>
+        <input type="text" name="square_height" id="square_height" required>
+        <br>
+        <button id="square_req">Change Square</button>
+        <button id="preventScreenToScroll"></button>
+      </form>
+    </fieldset>
+  </div>
 
-
-    <header>
-      <div id="user" onclick="showLogin()"><a href="#"><i class="fas fa-user"></i></a></div>
-      <h1>TerraMapAdventure</h1>
-      <div class="popup" onclick="showHelp()" id="help"><a href="#"><i class="fas fa-question"></i></a>
-      </div>
-
-    </header>
-    <sidebar>
-      <div class="acordion">
-
-        <div class="fold">
-          <a class="bar" href="#tab1">Profile</a>
-          <div class="content" id="tab1">
-            <div id="profile">
-
-              <div id="position">
-                <h2>Your position</h2>
-                <p>Longitude = 1000</p>
-                <p>Latitude = 1000</p>
-              </div>
-              <div id="resources">
-                <h2>Resources</h2>
-                <p>wood = 1000</p>
-                <p>food = 1000</p>
-                <p>people = 1000</p>
-                <p>leaves = 1000</p>
-                <p>grass = 1000</p>
-                <p>energy = 1000</p>
-
-              </div>
-              <div id="goods">
-                <h2>Goods</h2>
-                <p>houses = 1000</p>
-                <p>streets = 1000</p>
-                <p>streets = 1000</p>
-                <p>streets = 1000</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="fold">
-          <a class="bar" href="#tab2">Tiles</a>
-          <div class="content" id="tab2">
-            <div id="tiles">
-              <h2>Tiles</h2>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-
-
-    </sidebar>
-    <main>
-      <div id="map" class="map"></div>
-      <div id="command">
-        <form action="#">
-          <input name="command" id="command" type="text" placeholder="Enter your command Here">
-          <button id="btnConfirm">Confirm</button>
-        </form>
-      </div>
-
-    </main>
-    <div id="log">
-      Log History
-      <div id="histCmd"></div>
-    </div>
+  <div id="map_container">
+    <div id='map_matrix'></div>
+    <div id='player'></div>
   </div>
 
 
 
-  <!-- Map Api-->
-  <script src="js/main.js"></script>
-  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 
-  <script type="text/javascript">
-    var osmSource = new ol.source.OSM();
-    var map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        }),
-        new ol.layer.Tile({
-          source: new ol.source.TileDebug({
-            projection: 'EPSG:3857',
-            tileGrid: osmSource.getTileGrid()
-          })
+
+
+
+
+  <script>
+
+    var ws = new WebSocket("ws://terramapadventure.com:8000");
+
+    //ws.onmessage = function (event) { display(event.data); }
+
+    const command = document.getElementById("command");
+    const username = document.getElementById("username");
+
+    // send command to server and write response to console (for now)
+    function send_command(command) {
+      ws.send("user=" + "user" + "&cmd=" + command);
+    }
+
+    // const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
+    //   event.preventDefault();
+    //   send_command(command.value);
+    //   command.value = "";
+    // });
+
+    // square request
+
+
+
+
+
+
+    // User Info
+    const user_position = document.getElementById('user_position')
+    const square_position = document.getElementById('square_position')
+    const square_size = document.getElementById('square_size')
+
+    user_position.textContent = '0'
+    square_position.textContent = '0'
+    square_size.textContent = '0'
+
+    //ws.onmessage = function (e) { console.log(e) }
+
+    // request Square
+    let square_x = Number(document.getElementById('square_x').value)
+    let square_y = Number(document.getElementById('square_y').value)
+    let square_width = Number(document.getElementById('square_width').value) - 1
+    let square_height = Number(document.getElementById('square_height').value) - 1
+    let square_data = ''
+
+
+
+    // Fetch matrix map array from server
+    const square_req = document.getElementById('square_req').addEventListener('click', e => {
+      e.preventDefault()
+      send_command('show_rectangle' + ' ' + square_x + ' ' + square_y + ' ' + (square_x + square_width) + ' ' + (square_y + square_height))
+      ws.onmessage = e => {
+        square_data = e.data.slice(e.data.indexOf(':') + 2).split(', ').map(e => JSON.parse(e))
+        console.log(square_data)
+        matrix_draw()
+      }
+    })
+
+    // Create & display the matrix
+    const matrix = document.getElementById('map_matrix')
+    const tile_size = 40
+    const map_matrix_width = (square_width + 1) * tile_size
+    const map_matrix_height = (square_height + 1) * tile_size
+    console.log(map_matrix_height, map_matrix_width)
+
+    // set size of the map matrix
+    matrix.style.width = map_matrix_width + 'px'
+    matrix.style.height = map_matrix_height + 'px'
+
+    // draw the matrix
+    function matrix_draw() {
+
+      matrix.innerHTML = ''
+      square_data.forEach(element => {
+        let row = document.createElement('div')
+        row.className = 'row'
+        element.forEach(tile => {
+          let t = document.createElement('div')
+          t.className = 'tile ' + tile_color(tile)
+          t.innerHTML = '<p>' + tile + '</p>'
+          row.appendChild(t)
         })
 
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 2
-      })
-    });
-  </script>
+        matrix.appendChild(row)
+      });
+
+    }
+
+    // Assign color to each tile
+    function tile_color(value) {
+      switch (value) {
+        case 5:
+          return 'MixedForest'
+        case 4:
+          return 'DeciduousBroadleafForest'
+        case 14:
+          return 'CroplandNaturalVegetationMosaic'
+        case 3:
+          return 'DeciduousNeedleleafForest'
+        case 6:
+          return 'ClosedShrubland'
+        case 16:
+          return 'BarrenorSparselyVegetated'
+        case 8:
+          return 'WoodySavannas'
+        case 0:
+          return 'Water'
+        case 10:
+          return 'Grasslands'
+        case 7:
+          return 'OpenShrublands'
+        case 12:
+          return 'Croplands'
+        case 13:
+          return 'UrbanandBuiltup'
+        case 9:
+          return 'Savannas'
+        case 15:
+          return 'SnowandIce'
+        case 1:
+          return 'EvergreenNeedleleafForest'
+        case 2:
+          return 'EvergreenBroadleafForest'
+        case 11:
+          return 'PermanentWetlands'
+        default:
+          return 'Error'
+      }
+    }
 
 
-  <!-- Show help -->
-  <script>
-    function showHelp() {
-      var popup = document.getElementById("myHelp");
-      popup.classList.toggle("show");
+		// "143,187,143" => "Mixed Forest|5",
+		// "151,250,151" => "Deciduous Broadleaf Forest|4",
+		// "153,147,85" => "Cropland/Natural Vegetation Mosaic|14",
+		// "154,205,49" => "Deciduous Needleleaf Forest|3",
+		// "187,143,143" => "Closed Shrublands|6",
+		// "189,189,189" => "Barren or Sparsely Vegetated|16",
+		// "219,235,157" => "Woody Savannas|8",
+		// "229,242,255" => "Water|0",
+		// "239,183,102" => "Grasslands|10",
+		// "245,222,179" => "Open Shrublands|7",
+		// "250,237,115" => "Croplands|12",
+		// "255,0,0" => "Urban and Built-up|13",
+		// "255,214,0" => "Savannas|9",
+		// "255,249,249" => "Snow and Ice|15",
+		// "33,138,33" => "Evergreen Needleleaf Forest|1",
+		// "49,205,49" => "Evergreen Broadleaf Forest|2",
+		// "70,130,178" => "Permanent Wetlands|11",
+		// "0,0,0" => "Error|31"
+
+
+    // Move the player
+    let player = document.getElementById('player')
+    let top_p = 0;
+    let left_p = 0;    
+    player.style.left = left_p
+    player.style.top = top_p
+    window.addEventListener('keydown', (e) => {
+      handleKeyDown(e)
+    })
+
+    function handleKeyDown(e) {
+      // e.preventDefault() // prevent to page to scroll down
+        switch(e.keyCode) {
+          case 37:
+              if(left_p <= 0) return
+              left_p -= 40
+              player.style.left = left_p+"px"
+              console.log("w")
+              return ('w')          
+          case 38:
+            if(top_p <= 0) return
+            top_p -= 40
+            player.style.top = top_p+"px"
+            console.log("n")
+            return ('n')
+          case 39:
+          if(left_p > map_matrix_width -80) return
+            left_p += 40
+            player.style.left = left_p+"px"
+            console.log("o")
+            return ('o')
+          case 40:
+          if(top_p > map_matrix_height - 80) return
+            top_p += 40
+            player.style.top = top_p+"px"
+            console.log("s")
+            return ('s')
+          default:
+            return
+        }
     }
-    function showLogin() {
-      var popup = document.getElementById("myLogin");
-      popup.classList.toggle("show");
-    }
-    
 
   </script>
 </body>
