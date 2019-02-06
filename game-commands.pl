@@ -113,9 +113,9 @@ sub command_show_rectangle {
   my($x1, $y1, $x2, $y2) = @_;
   my(@x, @y);
 
-  for $i ($x1..$x2) {
+  for $j ($y1..$y2) {
     @x = ();
-    for $j ($y1..$y2) {
+    for $i ($x1..$x2) {
       push(@x, get_pixel_value($i, $j));
     }
     push(@y, "[".join(",", @x)."]");
