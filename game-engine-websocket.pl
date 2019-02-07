@@ -60,19 +60,23 @@ sub process_msg {
 
 
   my $hash = JSON::from_json($msg);
-  my($fullcmd) = $hash->{cmd};
+  my($fullcmd) = $hash->{message};
   our($user) = $hash->{user};
+  debug("FULLCMD: $fullcmd");
 
   unless ($user) {
     tell_user("Please enter a username");
     return;
   }
 
+  # TODO: if command is "x y z" should try calling x_y_z() first, then
+  # x_y(z), then x(y,z)
   # parse the command, so that "a b c" becomes "command_a(b,c)"
   my(@cmd) = split(/\s+/, $fullcmd);
   $cmd = shift(@cmd);
+  debug("CMD: $cmd");
 
-  broadcast("(from $user): $fullcmd");
+#  broadcast("(from $user): $fullcmd");
 
   # allow command aliasing
   if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}

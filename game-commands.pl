@@ -118,10 +118,15 @@ sub command_show_rectangle {
     for $i ($x1..$x2) {
       push(@x, get_pixel_value($i, $j));
     }
-    push(@y, "[".join(",", @x)."]");
+    push(@y, \@x);
   }
 
-  tell_user(join(", ", @y));
+  my(%reply_hash) = ();
+  $reply_hash{user} = $user;
+  $reply_hash{message} = \@y;
+  $reply_hash{to_gui} = true;
+
+  tell_user(JSON::to_json(\%reply_hash));
 }
 
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)

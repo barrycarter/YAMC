@@ -99,9 +99,9 @@
 // }
 
 // TODO: make this easier to switch between local and real
-    var ws = new WebSocket("ws://127.0.0.1:8000");
+//    var ws = new WebSocket("ws://127.0.0.1:8000");
 
-//    var ws = new WebSocket("ws://terramapadventure.com:8000");
+    var ws = new WebSocket("ws://terramapadventure.com:8000");
 
     ws.onmessage = function (event) {display(event.data);}
 
