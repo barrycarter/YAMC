@@ -138,7 +138,13 @@ mountain: cold, dry, covered with stone
 
 savanna: medium temperature, dry, covered with dry yellow grass
 
-grassland: medium temperature/humidity, covered with green/blue grass
+grassland/prairie: medium temperature/humidity, covered with green/blue grass
+
+tundra: cold, dry, covered with dead soil
+
+polar: cold, medium humidity, covered with ice and snow
+
+beach: medium temperature/humidity, covered with sand
 
 
 
