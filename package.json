@@ -2,10 +2,10 @@
 	"name": "y",
 	"version": "1.0.0",
 	"description": "y",
-	"main": "index.js",
+	"main": "node-server/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.js"
+		"start": "nodemon node-server/index.js"
 	},
 	"repository": {
 		"type": "git",
