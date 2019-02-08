@@ -65,26 +65,6 @@
  var map = new google.maps.Map(document.getElementById("google_map"),
   myOptions);
 
-/****** commenting this part out, now handled by maptiles.js
-
-// NOTE: using imageoverlay here because KML doesn't easily allow
-// opacity control
-
-// TODO: allow user to control opacity
-
-// TODO: generate all of these
-
- var imageBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(45,-179.99999),
-    new google.maps.LatLng(90,-135));
-
- gl = new google.maps.GroundOverlay(
-    "http://terramapadventure.com/MapTiles/lcc_west_00.png", imageBounds);
- gl.setOpacity(1);
- gl.setMap(map);
-
-*/
-
 </script>
   
 <script src="maptiles.js"></script>

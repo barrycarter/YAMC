@@ -82,9 +82,10 @@ sub command_create {
 sub command_inventory {
   # TODO: no need to look this up, since I pull user info already
   # NOTE: \\n prints a literal \n but tell_user interprets it
-  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, '\\n') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
-  my($val) = sqlite3val($query, $dbfile);
-  tell_user("Inventory:\n\n$val");
+#  my($query) = "SELECT GROUP_CONCAT(variable||': '||value, '\\n') FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
+  my($query) = "SELECT variable, value FROM users WHERE username='$user' AND variable NOT IN ('pw', 'x', 'y')";
+  my(@val) = sqlite3hashlist($query, $dbfile);
+  tell_user(JSON::to_json(\@val));
 }
 
 sub command_help {
@@ -133,15 +134,15 @@ sub command_show_rectangle {
 
 # the test{n} commands are just for testing
 
-sub command_exit {exit(0);}
+# sub command_exit {exit(0);}
 
 # only use this in console mode
 
-sub command_reload {
-  tell_user("Restarting...");
-  system("clear");
-  exec("$0 --debug");
-}
+# sub command_reload {
+#  tell_user("Restarting...");
+#  system("clear");
+#  exec("$0 --debug");
+# }
 
 # TODO: distinguish between functions user can call and GUI can call
 

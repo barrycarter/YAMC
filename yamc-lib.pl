@@ -64,9 +64,10 @@ for $i (keys %rgb2ltp) {
 
 sub get_pixel_value {
 
-  unless (-r A) {open(A,"/sites/YAMC/westeast.bin");}
+  unless (-r A) {open(A,"/sites/YAMC/westeast.bin")||die("Can't open /sites/YAMC/westeast.bin");}
 
   my($x, $y) = @_;
+  debug("get_pixel_value($x,$y)");
   my($val, $flag);
 
   if ($x >= 21600) {$flag = 1;} else {$flag = 0;}

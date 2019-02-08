@@ -50,6 +50,7 @@ sub process_msg {
 
   if ($msg=~/([^a-z0-9_:,\s\"\{\}])/i) {
     tell_user("Input *$msg* contained invalid characters: $1");
+    return;
   }
 
   # sanitize
@@ -58,8 +59,15 @@ sub process_msg {
 #    return;
 #  }
 
+#  my($hash);
+#  my($res) = eval('$hash = JSON::from_json($msg);');
 
-  my $hash = JSON::from_json($msg);
+# TODO: it bugs me that the below doesnt work
+#  eval {my $hash = JSON::from_json($msg)};
+
+  my $hash;
+  eval {$hash = JSON::from_json($msg)};
+  if ($@) {broadcast("Not a JSON string: $msg"); return;}
   my($fullcmd) = $hash->{message};
   our($user) = $hash->{user};
   debug("FULLCMD: $fullcmd");
@@ -80,6 +88,11 @@ sub process_msg {
 
   # allow command aliasing
   if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
+
+  unless (defined(&{"command_$cmd"})) {
+    tell_user("No such function: $cmd, use 'help' for help");
+    return;
+  }
 
   my($args) = join(", ",@cmd);
   my($eval) = "command_$cmd($args)";
@@ -119,7 +132,4 @@ sub get_user_info {
 
   return %user;
 }
-
-
-  
 
