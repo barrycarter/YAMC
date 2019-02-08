@@ -20,10 +20,7 @@ wss.on('connection', function(ws) {
 	}, 1000);
 
 	ws.on('message', str => {
-		//console.log(str);
 		ws.send('hey');
-
-		// ('hello watson');
 	});
 
 	console.log('websocket connection open');
