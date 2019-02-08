@@ -73,7 +73,7 @@ sub process_msg {
   debug("FULLCMD: $fullcmd");
 
   unless ($user) {
-    tell_user("Please enter a username");
+    tell_user(convert_message_json("", false, "Please enter a username"));
     return;
   }
 
@@ -90,7 +90,7 @@ sub process_msg {
   if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
 
   unless (defined(&{"command_$cmd"})) {
-    tell_user("No such function: $cmd, use 'help' for help");
+    tell_user(convert_message_json($user, false, "No such function: $cmd, use 'help' for help"));
     return;
   }
 
@@ -110,7 +110,7 @@ sub process_msg {
   }
 
   if ($user{null}) {
-    tell_user("User $user does not exist: 'create $user password' to create");
+    tell_user(convert_message_json("$user", false, "User $user does not exist: 'create $user password' to create"));
     return;
   }
 
@@ -132,4 +132,32 @@ sub get_user_info {
 
   return %user;
 }
+
+# convert message to JSON
+
+sub convert_message_json {
+  my($user, $guiq, $message) = @_;
+  my(%hash) = ("user" => $user, "to_gui" => $guiq, "message" => $message);
+  return JSON::to_json(\%hash);
+}
+
+# TODO: everything, this is a placeholder function
+
+sub tile_energy_cost {
+  my($x,$y) = @_;
+  return(get_pixel_value($x,$y));
+}
+
+# get info on the tile (but does not tell if a player is standing on tile)
+
+sub tile_info {
+  my($x,$y) = @_;
+  my($pix) = get_pixel_value($x,$y);
+
+  my(@list) = sqlite3hashlist("SELECT variable, value FROM land WHERE x=$x AND y=$y UNION SELECT 'pixel_value', $pix", $db);
+
+  return \@list;
+}
+
+
 

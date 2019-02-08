@@ -52,11 +52,11 @@ sub command_create {
   my($username, $pw) = @_;
 
   unless ($user{null}) {
-    tell_user("User $username already exists");
+    tell_user(convert_message_json($user, false, "User $username already exists"));
     return;
   }
 
-  tell_user("Creating user: $username");
+  tell_user(convert_message_json($user, false, "Creating user: $username"));
 
   # TODO: if below is slow, consider transaction
   # TODO: error checking
@@ -72,7 +72,7 @@ sub command_create {
            ('$username', '$i', $default_user{$i});");
   }
 
-  tell_user("User $username created with default position and resources");
+  tell_user(convert_message_json($user, $guiq, "User $username created with default position and resources"));
   return;
 }
 
@@ -91,23 +91,27 @@ sub command_inventory {
 sub command_help {
   my($help) = << "MARK";
 
-n, e, w, s - move in cardinal direction
+* = not implemented yet
++ = will be restricted to admins only
+
 i - inventory
-me - information about you
-claim - claim current tile
-tile - information about current tile
-bridge [n|e|s|w] - build bridge on tile in given direction
-put (road|person|etc) - place item on this tile
-remove (road|person|etc) - remove item from this tile
-harvest - harvest resources from this tile (once per turn)
-turn - end current turn
-reset - reset to start of this turn
-save - save current state
-restore - restore from last save
+* n(orth), e(ast), w(est), s(outh) - move in cardinal direction
+* info user [user] - information about given user (default: you)
+* info users - information about all users (+)
+* info tile [tile] - information about tile (default: tile you are on)
+* info tiles [x1 y1 x2 y2] - information about all tiles in rectangle (default: all tiles in game)
+* claim tile [tile] - claim tile (default: tile you are on)
+* bridge (n|e|s|w) - build bridge on tile in given direction and move there
+* put tile (road|person|etc) - place item on given tile (default: tile you are on)
+* remove (road|person|etc) - remove item from this tile
+* turn - end current turn
+* reset - reset to start of this turn
+* save - save current state
+* restore - restore from last save
 
 MARK
 ;
-  tell_user($help);
+  tell_user(convert_message_json($user, false, $help));
 }
 
 sub command_show_rectangle {
@@ -128,6 +132,19 @@ sub command_show_rectangle {
   $reply_hash{to_gui} = true;
 
   tell_user(JSON::to_json(\%reply_hash));
+}
+
+sub command_east {
+
+  # TODO: worry about torus rollover?
+  sqlite3("UPDATE users SET value=value+1 WHERE user='$user' AND variable = 'x'");
+
+  my(%reply); 
+  $reply{message} = \get_user_info($user);
+  $reply{user} = $user;
+  $reply{to_gui} = false;
+
+  tell_user(JSON::to_json(\%reply));
 }
 
 # TODO: pw should be stored as string, not integer value (but perhaps sha1?)
