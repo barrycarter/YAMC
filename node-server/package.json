@@ -1,0 +1,25 @@
+{
+	"name": "y",
+	"version": "1.0.0",
+	"description": "y",
+	"main": "node-server/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node node-server/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"keywords": [
+		"y"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"nodemon": "^1.18.9"
+	},
+	"dependencies": {
+		"express": "^4.16.4"
+	}
+}
