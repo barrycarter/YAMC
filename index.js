@@ -19,6 +19,13 @@ wss.on('connection', function(ws) {
 		ws.send(JSON.stringify(new Date()), function() {});
 	}, 1000);
 
+	ws.on('message', str => {
+		//console.log(str);
+		ws.send('hey');
+
+		// ('hello watson');
+	});
+
 	console.log('websocket connection open');
 
 	ws.on('close', function() {
