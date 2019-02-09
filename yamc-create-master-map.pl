@@ -36,7 +36,6 @@ The files east.txt and west.txt are generated via:
 convert lcc_east_1km.tif east.txt
 convert lcc_west_1km.tif west.txt
 
-
 Format: last 5 bit are land type (0-16 = 17 values)
 
 bit 6 = extra info available
