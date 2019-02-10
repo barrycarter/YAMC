@@ -79,8 +79,12 @@ Files Here
 
 lcc.png: 43200x21600 image representing earth land types, cylinderical proj
 
-Notes
-=====
+Map Notes
+=========
+
+population density: 30" resolution
+
+mineral occurence: arbitrary resolution
 
 Resources
 =========
@@ -146,5 +150,85 @@ polar: cold, medium humidity, covered with ice and snow
 
 beach: medium temperature/humidity, covered with sand
 
+cities
 
+salt water
 
+fresh water
+
+Barry Carter Simplified Proposal
+================================
+
+  - Combine all forest types into one type: forest
+
+  - Combine all shrublands/grasslands/savannas into oen type: grasslands
+
+  - Permenant wetlands remains as is
+
+  - Combine croplands into single type: cropland
+
+  - Leave urban, snow/ice, and barren as is
+
+  - Game resources: sand, energy, food, water, mud, people, metal
+
+  - mud = sand + water (but can also harvest directly)
+
+  - Tile improvements:
+
+    - 5 mud + 5 metal = improve housing; each improvement doubles the
+    number of people who can live on that tile (level 0 = default = 1
+    person; max: level 10 = 1024 people)
+
+    - 10 metal = improve road; movement cost 1/(n+1) times original
+    movement cost, where n is the number of road improvments; no
+    maximum to road improvements but they become worthless after a
+    while
+
+  - Tile resources:
+
+    - total harvest = number of people on tile times defaults below
+
+    - metal: 5 metal on specified tiles (by metal db)
+
+    - all tiles: energy based on solar energy map
+
+    - forest: 2 food, 2 mud
+
+    - grass: 1 food, 1 mud
+
+    - wetlands: 2 water
+
+    - water (with bridge): 3 water, 1 food
+
+    - cropland: 3 food
+
+    - urban: 1 person
+
+    - snow/ice: 2 water
+
+    - barren: 3 sand
+
+  - Energy cost (default) to move through tiles:
+
+    - forest: 2 energy
+
+    - grass: 1 energy
+
+    - wetlands: 3 energy
+
+    - cropland: 0.5 energy
+
+    - urban: 0.25 energy
+
+    - snow/ice: 4 energy
+
+    - barren: 5 energy
+
+  - Starvation: if people get less than 1 food each, their production
+  rate drops to (average food)^2; so, if each person gets 0.5 food,
+  the production reduces to 0.25 of original
+
+Donation: after you claim a tile, you can donate it to the common
+good; you will no longer receive resources from that tile, but the
+"common good" will; your "score" is ultimately how much you donate to
+the common good

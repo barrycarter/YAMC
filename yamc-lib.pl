@@ -32,6 +32,8 @@ sub sqlite3_local {
 # 0,0,0 is an error (so giving it the highest 5-bit value possible)
 # but does appear at the end of east.txt
 
+# 23, 23, 115 is the color the 8192 tif uses for water
+
 our(%rgb2ltp) = (
 		"143,187,143" => "Mixed Forest|5",
 		"151,250,151" => "Deciduous Broadleaf Forest|4",
@@ -41,6 +43,9 @@ our(%rgb2ltp) = (
 		"189,189,189" => "Barren or Sparsely Vegetated|16",
 		"219,235,157" => "Woody Savannas|8",
 		"229,242,255" => "Water|0",
+		"23,23,114" => "Water|0",
+		"23,23,115" => "Water|0",
+		"23,23,116" => "Water|0",
 		"239,183,102" => "Grasslands|10",
 		"245,222,179" => "Open Shrublands|7",
 		"250,237,115" => "Croplands|12",
