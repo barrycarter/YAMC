@@ -1,5 +1,6 @@
 *~
 .#*
 [#]*
-
-node_modules/
+# below removed by BC, we need it
+# these arent real comments but since no file matches, we're ok
+# node_modules/
