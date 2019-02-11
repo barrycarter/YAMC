@@ -1,6 +1,9 @@
 var WebSocketServer = require('ws').Server;
 var http = require('http');
 var express = require('express');
+var fs = require('fs');
+var jimp = require('jimp');
+
 var app = express();
 var port = process.env.PORT || 5000;
 
@@ -9,6 +12,9 @@ var port = process.env.PORT || 5000;
 var mongodb = require('mongodb');
 // var MongoClient = mongodb.MongoClient;
 // var url = process.env.MONGODB_URI;
+
+// other libs loaded solely to force "npm install" to grab them
+var png = require('pngjs');
 
 // MongoClient.connect(url, function (err, db) {
 //    if (err) {
