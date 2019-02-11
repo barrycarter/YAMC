@@ -1,0 +1,7 @@
+Some tips and tricks to play w/ heroku
+
+TODO: make "-a terramapdaventure" automatic
+
+# run the ls command on heroku (or any other unix command)
+
+heroku run ls -a terramapdaventure 
