@@ -1,7 +1,10 @@
 var jimp = require('jimp');
 
+console.log("alpha");
+
 jimp.read('lcc_east_1km.tif', (err, lenna) => {
     if (err) throw err;
+    console.log("image loaded");
     console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
   }
   );
