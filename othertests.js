@@ -3,12 +3,41 @@ var jimp = require('jimp');
 console.log("alpha");
 
 // jimp.read('lcc_east_1km.tif', (err, lenna) => {
+
 jimp.read('MapTiles/lcc_east_04.png', (err, lenna) => {
     if (err) throw err;
     console.log("image loaded");
     console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
   }
-  );
+);
+
+jimp.read('MapTiles/lcc_east_01.png', (err, lenna) => {
+    if (err) throw err;
+    console.log("image loaded");
+    console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
+  }
+);
+
+jimp.read('MapTiles/lcc_east_02.png', (err, lenna) => {
+    if (err) throw err;
+    console.log("image loaded");
+    console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
+  }
+);
+
+jimp.read('MapTiles/lcc_east_03.png', (err, lenna) => {
+    if (err) throw err;
+    console.log("image loaded");
+    console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
+  }
+);
+
+jimp.read('MapTiles/lcc_east_05.png', (err, lenna) => {
+    if (err) throw err;
+    console.log("image loaded");
+    console.log(jimp.intToRGBA(lenna.getPixelColor(10,10)));
+  }
+);
 
 /* failed code
 
