@@ -5,7 +5,8 @@ var app = express();
 var port = process.env.PORT || 5000;
 
 // mongo db testing
-// var mongodb = require('mongodb');
+// no actual testing here, just forcing npm install to recognize mongodb
+var mongodb = require('mongodb');
 // var MongoClient = mongodb.MongoClient;
 // var url = process.env.MONGODB_URI;
 
