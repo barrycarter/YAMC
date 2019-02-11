@@ -5,9 +5,9 @@ var app = express();
 var port = process.env.PORT || 5000;
 
 // mongo db testing
-var mongodb = require('mongodb');
-var MongoClient = mongodb.MongoClient;
-var url = process.env.MONGODB_URI;
+// var mongodb = require('mongodb');
+// var MongoClient = mongodb.MongoClient;
+// var url = process.env.MONGODB_URI;
 
 // MongoClient.connect(url, function (err, db) {
 //    if (err) {
