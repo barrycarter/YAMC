@@ -7,3 +7,4 @@ TODO: make "-a terramapdaventure" automatic
 heroku run ls -a terramapdaventure 
 
 ws://terramapadventure.herokuapp.com/ should work
+
