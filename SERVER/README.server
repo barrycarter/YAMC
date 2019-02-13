@@ -1,0 +1,36 @@
+This is the README/notes for how I set up 167.99.95.147 a VPS that
+*may* host terramapadventure.com
+
+# yum installs
+
+yum -y install git bzip2 cpan gcc
+
+# this pulls the repo terramapadventure repo locally
+
+mkdir /root/YAMC
+cd /root/YAMC
+git init
+git pull https://github.com/barrycarter/YAMC.git
+
+# this pulls bcapps locally though I only need part of it
+
+mkdir /root/BCAPPS
+cd /root/BCAPPS
+git init
+git pull https://github.com/barrycarter/bcapps.git
+
+# push this large file from my local machine (not in git, too big)
+
+rsync -Pavz westeast.bin.bz2 root@167.99.95.147:/root/YAMC/
+
+# and then, back on the remote machine
+
+bunzip2 -v /root/YAMC/westeast.bin.bz2
+
+# copy bclib.pl to /usr/local/lib
+
+cp /root/BCAPPS/bclib.pl /usr/local/lib/
+
+# creates a symlink so that /sites/YAMC is same as /root/YAMC
+
+ln -s /root /sites
