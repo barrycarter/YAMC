@@ -72,10 +72,10 @@ sub process_msg {
   our($user) = $hash->{user};
   debug("FULLCMD: $fullcmd");
 
-  unless ($user) {
-    tell_user(convert_message_json("", false, "Please enter a username"));
-    return;
-  }
+#  unless ($user) {
+#    tell_user(convert_message_json("", false, "Please enter a username"));
+#    return;
+#  }
 
   # TODO: if command is "x y z" should try calling x_y_z() first, then
   # x_y(z), then x(y,z)
@@ -154,7 +154,7 @@ sub tile_info {
   my($x,$y) = @_;
   my($pix) = get_pixel_value($x,$y);
 
-  my(@list) = sqlite3hashlist("SELECT variable, value FROM land WHERE x=$x AND y=$y UNION SELECT 'pixel_value', $pix", $db);
+  my(@list) = sqlite3hashlist("SELECT variable, value FROM land WHERE x=$x AND y=$y UNION SELECT 'pixel_value', $pix", $dbfile);
 
   return \@list;
 }

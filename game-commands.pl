@@ -12,6 +12,9 @@
 
 # command aliases
 
+require "/usr/local/lib/bclib.pl";
+require "/sites/YAMC/yamc-lib.pl";
+
 our(%command_aliases) = (
  "i" => "inventory",
  "e" => "east",
@@ -46,10 +49,25 @@ TODO: assume argument defaults if player/client doesnt specify
 
 =cut
 
+sub command_puttile {
+  my($thing, $x, $y) = @_;
+  my($query) = "INSERT INTO land (x, y, variable, value) VALUES ('$x', '$y', '$thing', 1)";
+  sqlite3($query, $dbfile);
+  command_tileinfo($x,$y);
+}
+
+# TODO: this should be a subcommand of info
+
+sub command_tileinfo {
+  my($x, $y) = @_;
+  my(@val) = tile_info($x, $y);
+  tell_user(JSON::to_json(\@val));
+}
+
 # create a new user with a given password
 
 sub command_create {
-  my($username, $pw) = @_;
+  my($keyword, $username, $pw) = @_;
 
   unless ($user{null}) {
     tell_user(convert_message_json($user, false, "User $username already exists"));
@@ -95,6 +113,7 @@ sub command_help {
 + = will be restricted to admins only
 
 i - inventory
+* create user <username> <password> - create a new user
 * n(orth), e(ast), w(est), s(outh) - move in cardinal direction
 * info user [user] - information about given user (default: you)
 * info users - information about all users (+)
@@ -137,10 +156,11 @@ sub command_show_rectangle {
 sub command_east {
 
   # TODO: worry about torus rollover?
-  sqlite3("UPDATE users SET value=value+1 WHERE user='$user' AND variable = 'x'");
+  sqlite3("UPDATE users SET value=value+1 WHERE username='$user' AND variable = 'x'", $dbfile);
 
-  my(%reply); 
-  $reply{message} = \get_user_info($user);
+  my(%reply) = ();
+  my(%message) = get_user_info($user);
+  $reply{message} = JSON::to_json(\%message);
   $reply{user} = $user;
   $reply{to_gui} = false;
 

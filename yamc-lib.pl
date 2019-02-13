@@ -135,7 +135,7 @@ sub tell_user {
   # TODO: for broadcast, make it clear which user is being told something
   # if global $globopts{websocket} is set, use broadcast instead
   if ($globopts{websocket}) {
-    broadcast("(to $user): $str");
+    broadcast($str);
   } else {
     debug("BETA");
     print "$str\n";
