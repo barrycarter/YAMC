@@ -1,15 +1,14 @@
 #!/bin/perl
 
+# NOTE: msg = everything user sends, cmd = command user sends
 # TODO: don't broadcast password sent by player on create
+# TODO: replace all tell_ with tell_msg
 
 use Net::WebSocket::Server;
 # TODO: get a local copy of bclib.pl
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
-
-# TODO: is this an improper use of globopts?
-$globopts{websocket} = 1;
 
 my($ws)=Net::WebSocket::Server->new(listen=>8000,on_connect => \&connection);
 $ws->start;
@@ -23,24 +22,8 @@ sub connection {
 # this happens when we get a message
 sub message {
   my($conn, $msg) = @_;
-
   # processes the msg
   process_msg($msg);
-
-  # parse the message and broadcast it
-#  my(%hash) = parse_form($msg);
-#  broadcast("$hash{user}: $hash{command}");
-}
-
-
-# broadcast to all connections w/ timestamp
-sub broadcast {
-  my($msg) = @_;
-
-  my($time) = stardate();
-  $msg = "[$time] $msg";
-
-  for $i ($ws->connections) {$i->send_utf8($msg);}
 }
 
 # TODO: client should warn if disconnected
@@ -54,52 +37,18 @@ sub process_msg {
     return;
   }
 
-  # sanitize
-#  unless ($msg=~/^[a-z0-9_:,\s\"\{\}]*$/i) {
-#    tell_user("Input *$msg* contained invalid characters, ignoring");
-#    return;
-#  }
-
-#  my($hash);
-#  my($res) = eval('$hash = JSON::from_json($msg);');
-
-# TODO: it bugs me that the below doesnt work
-#  eval {my $hash = JSON::from_json($msg)};
-
   my $hash;
   eval {$hash = JSON::from_json($msg)};
-  if ($@) {broadcast("Not a JSON string: $msg"); return;}
+  if ($@) {tell("Not a JSON string: $msg"); return;}
   my($fullcmd) = $hash->{message};
   our($user) = $hash->{user};
   debug("FULLCMD: $fullcmd");
+  my(%code) = %{parse_command($fullcmd)};
+  debug("CODE", %code);
+  debug("CODE: $code{str}");
 
-#  unless ($user) {
-#    tell_user(convert_message_json("", false, "Please enter a username"));
-#    return;
-#  }
-
-  # TODO: if command is "x y z" should try calling x_y_z() first, then
-  # x_y(z), then x(y,z)
-  # parse the command, so that "a b c" becomes "command_a(b,c)"
-  my(@cmd) = split(/\s+/, $fullcmd);
-  $cmd = shift(@cmd);
-  debug("CMD: $cmd");
-
-#  broadcast("(from $user): $fullcmd");
-
-  # allow command aliasing
-  if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
-
-  unless (defined(&{"command_$cmd"})) {
-    tell_user(convert_message_json($user, false, "No such function: $cmd, use 'help' for help"));
-    return;
-  }
-
-  my($args) = join(", ",@cmd);
-  my($eval) = "command_$cmd($args)";
-
-  # this is what we plan to evaluate
-#  tell_user("Eval: $eval");
+  warn("TESTING");
+  return;
 
   # check user info and store in global hash
   our(%user) = get_user_info($user);

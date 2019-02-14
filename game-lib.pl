@@ -2,9 +2,8 @@
 
 # these are functions and variables the user can't call directly
 
-# this lets me use the functions in bclib.pl as though they were in this file
-
-do "/usr/local/lib/bclib.pl";
+require "/usr/local/lib/bclib.pl";
+require "/sites/YAMC/game-commands.pl";
 
 # db file
 our($dbfile) = "/sites/DB/yamc.db";
@@ -19,6 +18,19 @@ our($dbfile) = "/sites/DB/yamc.db";
 		 "energy" => 10, "houses" => 0, "roads" => 0
 		 );
 		 
+# command aliases
+
+our(%command_aliases) = (
+ "i" => "inventory",
+ "e" => "east",
+ "w" => "west",
+ "s" => "south",
+ "n" => "north"
+);
+
+# these commands can be called without user
+
+our(%no_user_required) = list2hash("create");
 
 # since all of our queries are to single file, allow 1 arg call
 
@@ -202,6 +214,10 @@ sub parse_command {
   while ($cmd) {
 
     debug("CHECKING: command_$cmd");
+
+    # if command is alissed, used alias
+    if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
+
     if (defined(&{"command_$cmd"})) {last;}
 
     # if $cmd has no more _ and isn't defined, drop out of looop
