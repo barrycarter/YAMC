@@ -7,13 +7,10 @@
 # TODO: maybe write script that checks sqlite3 is never used and only
 # sqlite3_local
 
-# this lets me use the functions in yamc-lib.pl as if they were local
-# do "/sites/YAMC/yamc-lib.pl";
+require "/usr/local/lib/bclib.pl";
+require "/sites/YAMC/game-lib.pl";
 
 # command aliases
-
-require "/usr/local/lib/bclib.pl";
-require "/sites/YAMC/yamc-lib.pl";
 
 our(%command_aliases) = (
  "i" => "inventory",

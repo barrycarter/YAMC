@@ -14,7 +14,7 @@
 # Initial usage (will change): x,y pixel to retrieve
 
 require "/usr/local/lib/bclib.pl";
-require "/home/user/20190125/YAMC/yamc-lib.pl";
+require "/home/user/20190125/YAMC/game-lib.pl";
 
 open(A, "/home/user/20190125/westeast.bin");
 

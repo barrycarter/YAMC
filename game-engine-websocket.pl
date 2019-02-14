@@ -4,7 +4,7 @@
 
 use Net::WebSocket::Server;
 require "/usr/local/lib/bclib.pl";
-require "/sites/YAMC/yamc-lib.pl";
+require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
 
 # TODO: is this an improper use of globopts?
