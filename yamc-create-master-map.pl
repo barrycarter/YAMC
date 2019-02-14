@@ -4,18 +4,47 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/user/20190125/YAMC/game-lib.pl";
 
+# this is the new hash of values for the "Barry Carter Simplified Proposal"
+
+# the new types and numbers I am assigning to them and icky colors I
+# am giving them
+
+# TODO: cleanup colors using ImageMagick, xv, or similar
+
+# water/error = 0 (blue)
+# forest = 1 (green)
+# grasslands = 2 (yellow)
+# wetlands = 3 (cyan)
+# croplands = 4 (orange)
+# urban = 5 (red)
+# snow/ice = 6 (white)
+# barren = 7 (gray50)
+
+# this hash converts from the old number to the simplified number
+
+my(%simplify) = (
+		 0 => 0,
+		 1 => 1, 2 => 1, 3 => 1, 4 => 1, 5 => 1,
+		 6 => 2, 7 => 2, 8 => 2, 9 => 2, 10 => 2,
+		 11 => 3,
+		 12 => 4, 14 => 4,
+		 13 => 5, 15 => 6, 16 => 7,
+		 31 => 0);
+
 # hash just for numbers (using char codes)
 
 my(%rgb2chr);
 
 for $i (keys %rgb2ltp) {
-  my($val) = $rgb2ltp{$i};
+  my($val) = $simplify{$rgb2ltp{$i}};
   $val=~s/^.*\|//;
   $rgb2chr{$i} = chr($val);
   debug("*$i* -> *$val*");
 }
 
 debug(%rgb2chr);
+
+die "TESTING";
 
 while (<>) {
   unless (/\(([\s\d\,]+)\)/) {warn "BAD LINE: $_"; next;}
