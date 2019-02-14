@@ -114,6 +114,33 @@ sub tile_energy_cost {
   return 1;
 }
 
+=item tell_msg(\%hash)
+
+Tells the hash's "msg" key to .... (for now, it just gets broadcast
+with a timestamp, but will have many options in the future)
+
+=cut
+
+sub tell_msg {
+  my($hashref) = @_;
+  my(%hash) %$hashref;
+  $hash{timestamp} = stardate();
+  broadcast(\%hash);
+}
+
+=item broadcast(\%hash)
+
+Placeholder function to broadcast 'msg' key to all connected users
+
+=cut
+
+sub broadcast_msg {
+  my($hashref) = @_;
+  my(%hash) %$hashref;
+  my($msg) = $hash{msg};
+  for $i ($ws->connections) {$i->send_utf8($msg);}
+}
+
 # TODO: both tell_ functions should preserve HTML and use <br> or <p>
 
 # TODO: all of the subroutines below are the same for now, but will be
@@ -146,6 +173,50 @@ sub tell_user {
 sub tell_debug {
   my($str) = @_;
   print "DEBUG: $str\n";
+}
+
+
+=item parse_command(\%hash)
+
+Parses the input hash's "cmd" key as a command.
+
+Example: "a b c d" first checks if function command_a_b_c_d exists and
+returns "command_a_b_c_d()"; if not, checks if command_a_b_c exists
+and returns "command_a_b_c(d)", then command_a_b(c,d), then
+command_a(b,c,d) and finally command_null(a,b,c,d). Returns as "str" in hash
+
+=cut
+
+sub parse_command {
+
+  my($hashref) = @_;
+  my(%hash) = %$hashref;
+  my(%ret);
+  my($cmd) = $hash{"cmd"};
+
+  # convert spaces to _
+  $cmd=~s/\s/_/g;
+  debug("CMD: $cmd");
+  my(@args) = ();
+
+  while ($cmd) {
+
+    debug("CHECKING: command_$cmd");
+    if (defined(&{"command_$cmd"})) {last;}
+
+    # if $cmd has no more _ and isn't defined, drop out of looop
+    unless ($cmd=~s/_([^_]*?)$//) {
+      unshift(@args,$cmd);
+      $cmd="";
+    }
+
+    unshift(@args, $1);
+  };
+
+  $cmd = "command_$cmd";
+
+  $ret{str} = "$cmd(".join(", ",@args).")";
+  return \%ret;
 }
 
 return 1;
