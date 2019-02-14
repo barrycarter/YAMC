@@ -6,11 +6,11 @@ use Image::Magick;
 
 my $image = Image::Magick->new;
 
-# $image->Read("/home/user/20190125/YAMC/lcc.png");
+# $image->Read("/sites/YAMC/lcc.png");
 
 # smaller image for testing
 warn "TESTING";
-$image->Read("/home/user/20190125/YAMC/MapTiles/lcc_west_05.png");
+$image->Read("/sites/YAMC/MapTiles/lcc_west_05.png");
 
 
 for $i (0..100) {

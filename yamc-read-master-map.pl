@@ -14,8 +14,9 @@
 # Initial usage (will change): x,y pixel to retrieve
 
 require "/usr/local/lib/bclib.pl";
-require "/home/user/20190125/YAMC/game-lib.pl";
+require "/sites/YAMC/game-lib.pl";
 
+# this large file is NOT in /sites/YAMC in git
 open(A, "/home/user/20190125/westeast.bin");
 
 test1();

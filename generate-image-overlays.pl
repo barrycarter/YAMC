@@ -19,7 +19,7 @@ require "/usr/local/lib/bclib.pl";
 
 =cut
 
-chdir("/home/user/20190125/YAMC/MapTiles")||die("Can't chdir");
+chdir("/sites/YAMC/MapTiles")||die("Can't chdir");
 
 # declare arrays
 

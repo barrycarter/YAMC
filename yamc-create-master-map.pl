@@ -2,7 +2,7 @@
 
 # TODO: normalize paths to these libs
 require "/usr/local/lib/bclib.pl";
-require "/home/user/20190125/YAMC/game-lib.pl";
+require "/sites/YAMC/game-lib.pl";
 
 # this is the new hash of values for the "Barry Carter Simplified Proposal"
 
