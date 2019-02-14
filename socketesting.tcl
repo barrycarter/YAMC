@@ -5,13 +5,13 @@
 
 spawn ws ws://127.0.0.1:8000/
 
-send "foo\n"
+send "{\"user\": \"tommy\", \"message\": \"i\"}\n"
 
 send "bar\n"
 
 send "test\n"
 
-expect "{"
+expect "999"
 
 
 

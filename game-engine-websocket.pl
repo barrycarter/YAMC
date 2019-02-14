@@ -3,6 +3,7 @@
 # TODO: don't broadcast password sent by player on create
 
 use Net::WebSocket::Server;
+# TODO: get a local copy of bclib.pl
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
