@@ -2,11 +2,16 @@ TODO: move project to digitalocean (from bcinfo3) [repoint DNS]
 
 TODO: run httpd server on digitalocean
 
-TODO: name digitalocean machine
+TODO: name digitalocean machine (tma? terramapadventure?)
 
 TODO: set up https on digitalocean server
 
 TODO: reduce map to 8 land regions
 
 TODO: incorporate solar energy data into separate(?) map
+
+TODO: consider having digital ocean machine run git server so updates
+can be pushed automatically (but we'll still need a webhook to restart
+the game when that happens)
+
 
