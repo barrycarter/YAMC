@@ -5,6 +5,10 @@
 
 <script>
 
+// listen to div
+
+document.getElementById("google_map").addEventListener("keydown", keyfunc);
+
 centlat = 36.1041666666;
 centlon = -5.5458333333;
 
@@ -22,10 +26,14 @@ for (i=-25; i<=25; i++) {
     g = toHex(Math.floor(Math.random()*256));
     b = toHex(Math.floor(Math.random()*256));
     col = '#'+r+g+b;
-    new google.maps.Rectangle({strokeColor: col, map: map, 
+    new google.maps.Rectangle({strokeOpacity: 0, fillColor: col, map: map, 
   fillOpacity: 0.5, bounds: {north: centlat+i*delta, south: centlat+(i-1)*delta,
  east: centlon+j*delta, west: centlon+(j-1)*delta}});
   }
+}
+
+function keyfunc(e) {
+  console.log(dump(e.key));
 }
 
 </script>
