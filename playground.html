@@ -1,7 +1,7 @@
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA"></script>
 <script src="game-lib.js"></script>
 
-<div id="google_map" style="width:1200px; height:600px"></div>
+<div id="google_map" style="width:1600px; height:900px"></div>
 
 <script>
 
@@ -20,20 +20,35 @@ var map = new google.maps.Map(document.getElementById("google_map"), myOptions);
 
 delta = 360/43200.;
 
+count = 0;
+rect = [];
+
+// TODO: make these numbers bigger later
+
 for (i=-25; i<=25; i++) {
-  for (j=-40; j<=40; j++) {
+  for (j=-25; j<=25; j++) {
     r = toHex(Math.floor(Math.random()*256));
     g = toHex(Math.floor(Math.random()*256));
     b = toHex(Math.floor(Math.random()*256));
     col = '#'+r+g+b;
-    new google.maps.Rectangle({strokeOpacity: 0, fillColor: col, map: map, 
-  fillOpacity: 0.5, bounds: {north: centlat+i*delta, south: centlat+(i-1)*delta,
- east: centlon+j*delta, west: centlon+(j-1)*delta}});
+    rect[count++] = new google.maps.Rectangle({strokeOpacity: 0, 
+  fillColor: col, map: map, 
+  fillOpacity: 0.5, bounds: {north: centlat+i*delta,
+  south: centlat+(i-1)*delta, east: centlon+j*delta, 
+  west: centlon+(j-1)*delta}});
   }
 }
 
 function keyfunc(e) {
-  console.log(dump(e.key));
+
+  o = rect[0].fillOpacity;
+  console.log(o);
+
+  for (i=0; i < rect.length; i++) {
+     rect[i].setOptions({fillOpacity: o+0.1});
+  }
+
+
 }
 
 </script>
