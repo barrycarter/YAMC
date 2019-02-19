@@ -232,3 +232,12 @@ Donation: after you claim a tile, you can donate it to the common
 good; you will no longer receive resources from that tile, but the
 "common good" will; your "score" is ultimately how much you donate to
 the common good
+
+Useful Unix commands
+====================
+
+convert lcc_west_1km.png -crop 5400x5400 +repage +adjoin lcc_west_%02d.png
+convert lcc_east_1km.png -crop 5400x5400 +repage +adjoin lcc_east_%02d.png
+
+convert ../lcc-reduced.png -crop 5400x5400 +repage +adjoin lcc-reduced-%02d.png
+
