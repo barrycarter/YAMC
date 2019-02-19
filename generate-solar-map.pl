@@ -14,15 +14,21 @@ open(A, "bzcat /home/user/20190125/YAMC/Data/PVOUT-[12].asc.bz2|");
 
 # NOTE: image will come out upside-down but can easily be rectified
 
-my($y) = 0;
-
 # fly needs this
 print << "MARK";
 new
-size 43200,13800
+size 43200,21600
 setpixel 0,0,0,0,0
 MARK
 ;
+
+# this fills in black for latitudes 90 to 55
+
+for ($y=0; $y<3900; $y++) {
+  for $x (0..43199) {
+    print "setpixel $x,$y,0,0,0\n";
+  }
+}
 
 while (<A>) {
 
@@ -35,8 +41,8 @@ while (<A>) {
   for $i (0..$#pts) {
     if ($pts[$i] == -9999) {$pts[$i] = 0;}
 
-    # for testing, 0 is boring
-    if ($pts[$i] == 0) {next;}
+    # leave pure 0 (and rare less than 0 errors) as black
+    if ($pts[$i] <= 0) {next;}
 
     # split into 0.48 chunks (so 0-15)
     my($level) = min(15, floor($pts[$i]/0.48));
@@ -53,7 +59,14 @@ while (<A>) {
   }
   $y++;
   print STDERR "Y: $y\n";
-
-  if ($y > 500) {warn "TESTING"; last;}
 }
+
+# this fills in black for latitudes -90 to -55
+
+for ($y=17700; $y<21600; $y++) {
+  for $x (0..43199) {
+    print "setpixel $x,$y,0,0,0\n";
+  }
+}
+
 
