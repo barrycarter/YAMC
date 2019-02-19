@@ -86,6 +86,9 @@ population density: 30" resolution
 
 mineral occurence: arbitrary resolution
 
+solar values in AAIGRID file range from 7.682 down to 0.057 (but only
+1 of each of those, 0.24 or 0.25 might be a good cut)
+
 Resources
 =========
 
