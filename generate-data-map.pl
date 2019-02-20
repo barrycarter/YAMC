@@ -15,19 +15,39 @@ my $image = Image::Magick->new;
 warn "TESTING";
 $image->Read("/sites/YAMC/MapTiles/lcc_west_05.png");
 
+# 3150, 900 to 4000, 1500 is know to have various land types so testing there
+
+for $y (900..1500) {
+  for $x (3150..4000) {
+    my($str) = join("", "pixel[", $x, ",", $y, "]");
+    debug("STR: $str");
+    my($a) = $image->Get($str);
+    my($b) = $image->Get($str);
+    my($c) = $image->getPixel(x => $j, y => $i);
+    my($d) = $image->getPixel(x => $i, y => $j);
+    debug("$a, $b, $c, $d");
+  }
+}
+
+die "TESTING";
+
 for $i (0..5399) {
   for $j (0..5399) {
 
-    # this divides the return pixels by 256 to convert to 8-bit +
-    # rejoins the first two elements
+    # $image->Get returns values that are 256x the values I need + returns
+    # a 4th alpha value I don't need; this fixes all that
+    my(@var) = map($_ = floor($_/256), split(/\,\s*/, $image->Get('pixel[$j,$i]')));
+    my($var) = join(",", @var[0..2]);
 
-#    my(@var) = map($_ = floor($_/256), split(/\,\s*/, $image->Get('pixel[$i,$j]')));
-    my(@var) = @{map($_ = floor($_/256), split(/\,\s*/, $image->Get('pixel[$i,$j]')))}[0..2];
-    my($var) = join(",", @var);
+    my($type) = $rgb2ltp{$var};
+    $type=~s/^.*?\|//;
+    if (length($type) == 0) {warn "BAD TILE: $var";}
 
-    unless ($rgb2ltp{$var}) {warn "BAD TILE: $var";}
-    debug("$i, $j", @var);
-#    debug($image->getPixel(x => $i, y => $j));
+    # avoid printing dull values
+#    if ($type == 0) {next;}
+
+    debug("$j, $i, $type, $var");
+    debug($image->getPixel(x => $j, y => $i));
   }
 }
 
