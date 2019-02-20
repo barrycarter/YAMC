@@ -244,3 +244,5 @@ convert lcc_east_1km.png -crop 5400x5400 +repage +adjoin lcc_east_%02d.png
 
 convert ../lcc-reduced.png -crop 5400x5400 +repage +adjoin lcc-reduced-%02d.png
 
+convert ../solar.png -crop 5400x5400 +repage +adjoin solar-%02d.png
+

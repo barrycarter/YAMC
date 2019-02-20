@@ -52,8 +52,8 @@ while (<A>) {
     if ($level > 15) {$level = 15;}
     if ($level < 1) {$level = 1;}
 
-    # hue range: 0 = red = highest; 7/8 = violet = lowest
-    my($h) = 7/8 - ($level-1)/16;
+    # hue range: 0 = red = highest; 3/4 = dark violet = lowest
+    my($h) = 3/4 - 3*($level-1)/56;
 
     debug("H: $h");
 
