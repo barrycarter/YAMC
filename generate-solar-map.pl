@@ -5,7 +5,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # the file has 13806 rows of 43200 pixels each, representing latitudes
-# -55 to +55 (first 6 rows are header rows)
+# -55 to +60 (first 6 rows are header rows)
 
 # I used 'split -l 6906` to split the original file into two pieces
 # before uploading it to github to avoid large file issues
@@ -22,9 +22,9 @@ setpixel 0,0,0,0,0
 MARK
 ;
 
-# this fills in black for latitudes 90 to 55
+# this fills in black for latitudes 90 to 60
 
-for ($y=0; $y<3900; $y++) {
+for ($y=0; $y<3600; $y++) {
   for $x (0..43199) {
     print "setpixel $x,$y,0,0,0\n";
   }
@@ -70,7 +70,7 @@ while (<A>) {
 
 # this fills in black for latitudes -90 to -55
 
-for ($y=17700; $y<21600; $y++) {
+for ($y=17400; $y<21600; $y++) {
   for $x (0..43199) {
     print "setpixel $x,$y,0,0,0\n";
   }
