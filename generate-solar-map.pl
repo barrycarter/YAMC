@@ -44,11 +44,18 @@ while (<A>) {
     # leave pure 0 (and rare less than 0 errors) as black
     if ($pts[$i] <= 0) {next;}
 
-    # split into 0.48 chunks (so 0-15)
-    my($level) = min(15, floor($pts[$i]/0.48));
+    # this converts 5.527, the 99th percentile, to 16 and
+    # 2.464, the 1st percentile to 1 so our floor result is 1-15
+    # we need to reserve 0 for the black dots
+
+    my($level) = floor(($pts[$i]-2.464)/(5.527-2.464)*15+1);
+    if ($level > 15) {$level = 15;}
+    if ($level < 1) {$level = 1;}
 
     # hue range: 0 = red = highest; 7/8 = violet = lowest
-    my($h) = 7/8 - $level*7/120;
+    my($h) = 7/8 - ($level-1)/16;
+
+    debug("H: $h");
 
     # this is fake, but useful
     my($rgb) = hsv2rgb($h, 1, 1, "format=decimal");
