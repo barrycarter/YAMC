@@ -246,3 +246,9 @@ convert ../lcc-reduced.png -crop 5400x5400 +repage +adjoin lcc-reduced-%02d.png
 
 convert ../solar.png -crop 5400x5400 +repage +adjoin solar-%02d.png
 
+Coloration Notes
+================
+
+These are notes I (Barry) made to myself when recoloring the terrains
+to reduce the number of land types
+

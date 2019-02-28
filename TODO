@@ -14,4 +14,10 @@ TODO: consider having digital ocean machine run git server so updates
 can be pushed automatically (but we'll still need a webhook to restart
 the game when that happens)
 
+TODO: turn this into a "facebook game"?
+
+TODO: can we create a special git for heroku and openode.io that
+contain only a minimal set of files required to run the game (probably
+not, and, since we're not using node.js anymore, probably not worth
+trying)
 

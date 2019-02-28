@@ -1,0 +1,7 @@
+What does user want to do?,move,Does user have enough energy to make this move?,yes,Is user trying to move to unbridged water tile?,no,update db: move user + subtract energy,,update client interface,,What does user want to do?
+What does user want to do?,claim tile,Who owns tile?,no one,update db: assign tile to user + subtract energy,,update client interface,,What does user want to do?
+What does user want to do?,improve road on tile,Does user have resources to improve road?,yes,Is tile at road level 10 (1024x)?,no,Who owns tile to be improved?,unowned or other player or public land,User: are you sure you want to improve someone else's land?,yes,update db: improve tile + subtract resources,,update client interface,,What does user want to do?
+Who owns tile to be improved?,user,update db: improve tile + subtract resources,,update client interface,,What does user want to do?
+
+
+

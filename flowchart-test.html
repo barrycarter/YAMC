@@ -1,0 +1,21 @@
+<script src="raphael.min.js"></script>
+<script src="flowchart.min.js"></script>
+
+<script>
+var diagram = flowchart.parse(`
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?:>http://www.google.com
+io=>inputoutput: catch something...
+para=>parallel: parallel tasks
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->para
+para(path1, bottom)->sub1(right)->op1
+para(path2, top)->op1
+`);
+
+diagram.drawSVG('diagram');
+
+</script>
