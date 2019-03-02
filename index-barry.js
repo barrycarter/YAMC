@@ -1,19 +1,11 @@
 var WebSocketServer = require('ws').Server;
 var http = require('http');
-var express = require('express');
 var fs = require('fs');
-var app = express();
 var port = 5000;
 
-app.use(express.static(__dirname + '/'));
-
-var server = http.createServer(app);
+var server = http.createServer();
 server.listen(port);
-
-console.log('http server listening on %d', port);
-
 var wss = new WebSocketServer({ server: server });
-console.log('websocket server created');
 
 wss.on('connection', function(ws) {
 	var id = setInterval(function() {
@@ -31,3 +23,21 @@ wss.on('connection', function(ws) {
 		clearInterval(id);
 	});
 });
+
+// everything above this line is just to force JS into an infinite
+// loop, I don't actually use it right now
+
+console.log("Starting file read test");
+
+// fs.readFile("game-lib.js", 'utf8', function(err, contents) {console.log(contents);});
+
+buffer = new Buffer.alloc(10000);
+fs.open('game-lib.js', 'r', function(status, fd) {
+    fs.read(fd, buffer, 0, 17, 22, function(err, bytesRead, buffer) {
+	console.log(buffer.toString());
+      })
+      });
+
+console.log("Test ends");
+
+function nada() {}
