@@ -31,7 +31,20 @@ console.log("Starting file read test");
 
 // fs.readFile("game-lib.js", 'utf8', function(err, contents) {console.log(contents);});
 
+// define fd to be the file descriptor for our main file
+
+var fd;
+
+fs.open('game-lib.js', 'r', function(status, fdd) {console.log(status); console.log(fdd); fd=fdd});
+
+for (;;) {if (fd) {console.log(fd);}}
+
+
+/*
 buffer = new Buffer.alloc(10000);
+
+
+
 fs.open('game-lib.js', 'r', function(status, fd) {
     fs.read(fd, buffer, 0, 17, 22, function(err, bytesRead, buffer) {
 	console.log(buffer.toString());
@@ -41,3 +54,4 @@ fs.open('game-lib.js', 'r', function(status, fd) {
 console.log("Test ends");
 
 function nada() {}
+*/
