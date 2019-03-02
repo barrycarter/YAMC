@@ -29,15 +29,34 @@ wss.on('connection', function(ws) {
 
 console.log("Starting file read test");
 
+//create a one character buffer and set fd equal to file descriptor
+
+var buf = Buffer.alloc(1);
+
+// TODO: this should be our huge file
+var fd = fs.openSync('game-lib.js', 'r');
+
+console.log(fd);
+
+// get the nth byte from a given file descriptor
+function byteFromFD(byte, fd) {
+  fs.readSync(fd, buf, 0, 1, byte);
+  return buf[0];
+}
+
+for (var i=0; i < 500; i++) {
+  console.log(byteFromFD(i, fd));
+ }
+
 // fs.readFile("game-lib.js", 'utf8', function(err, contents) {console.log(contents);});
 
 // define fd to be the file descriptor for our main file
 
-var fd;
+// var fd;
 
-fs.open('game-lib.js', 'r', function(status, fdd) {console.log(status); console.log(fdd); fd=fdd});
 
-for (;;) {if (fd) {console.log(fd);}}
+
+// for (;;) {if (fd) {console.log(fd);}}
 
 
 /*
