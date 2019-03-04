@@ -252,3 +252,9 @@ Coloration Notes
 These are notes I (Barry) made to myself when recoloring the terrains
 to reduce the number of land types
 
+Testing Notes
+=============
+
+If testing websockets locally, use the websocket-test.html file in
+this directory; do NOT use https://www.websocket.org/echo.html because
+you may get a security error trying to connect to 127.0.0.1
