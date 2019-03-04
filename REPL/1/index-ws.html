@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TerraMapAdventure</title>
+
+  <style>
+    .container {
+    margin: auto;
+    background-color: bisque;
+    width: 80%;
+    text-align: center;
+  }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- TODO: scale this better, relatively, not absolute pixels -->
+
+<div id="google_map" style="width:1200px; height:600px"></div>
+
+    <form action="#">
+
+<!-- commenting out opacity control, not working anyway
+ <label for="opacity">Opacity</label>
+<input type="text" name="opacity" id="opacity">
+<button id="opacConfirm">Confirm opacity change</button>
+-->
+
+     <label for="username">Username</label>
+     <input type="text" name="username" id="username"><p><p>
+
+    <hr noshade>
+
+    <div id="histCmd"></div>
+
+      <label for="command">Command</label>
+      <input type="text" name="command" id="command">
+      <button id="btnConfirm">Confirm your command</button>
+    </form>
+
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA"></script>
+
+<!-- TODO: use an include for this, don't inline! -->
+
+<script>
+
+// creates a google map with overlay of land type
+
+// TODO: initial center should NOT be equator/meridian
+
+
+ // this is center point of our initial testing
+ var myLatLng = new google.maps.LatLng(36.1041666666, -5.5458333333);
+ var myOptions = {zoom: 10, center: myLatLng,
+  mapTypeId: google.maps.MapTypeId.ROADMAP, scaleControl: true,
+  rotateControl: true, overviewMapControl: true};
+ var map = new google.maps.Map(document.getElementById("google_map"),
+  myOptions);
+
+</script>
+  
+<script src="maptiles.js"></script>
+
+<script>
+
+// console.log("Alpha", tiles.length);
+
+// for (var i=0; i < tiles.length; i++) {
+// console.log("setting opacity of ",i);
+//  tiles[i].setOpacity(1);
+// }
+
+// TODO: make this easier to switch between local and real
+//    var ws = new WebSocket("ws://127.0.0.1:8000");
+
+    var ws = new WebSocket("ws://terramapadventure.com:8000");
+
+    ws.onmessage = function (event) {display(event.data);}
+
+    const command = document.getElementById("command");
+    const histCmd = document.getElementById("histCmd");
+    const username = document.getElementById("username");
+
+    // show the text in history log
+    function display(element) {
+      histCmd.appendChild(document.createTextNode(element));
+      histCmd.appendChild(document.createElement("br"));
+    }
+
+  // send command to server and write response to console (for now)
+  function send_command(command) {
+     ws.send(command);
+}
+
+    const btnConfirm = document.getElementById("btnConfirm").addEventListener("click", function (event) {
+      event.preventDefault();
+      send_command(command.value);
+      command.value = "";
+    });
+
+// TODO: put this into a subroutine where user can control opacity
+
+//    const opacConfirm = document.getElementById("opacConfirm").addEventListener("click", function (event) {
+//      event.preventDefault();
+//      tiles.forEach(function (item, index) {item.setOpacity(opacity.value);})
+// });
+
+</script>
+</body>
+
+</html>

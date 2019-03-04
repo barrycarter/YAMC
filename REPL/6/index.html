@@ -1,0 +1,94 @@
+<script src="game-lib.js">
+</script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA">
+</script>
+<textarea id="box" cols=80 rows=25></textarea>
+<canvas id="game-canvas" width=1200px height=450px></canvas>
+<div id="google_map" style="width:1200px; height:600px"></div>
+<script>
+
+
+
+var myLatLng = new google.maps.LatLng(36.1041666666, -5.5458333333);
+ var myOptions = {zoom: 10, center: myLatLng,
+  mapTypeId: google.maps.MapTypeId.ROADMAP, scaleControl: true,
+  rotateControl: true, overviewMapControl: true};
+ var map = new google.maps.Map(document.getElementById("google_map"), myOptions);
+
+var rect = new google.maps.Rectangle({strokeColor: '#00ffff', map: map, fillOpacity: 0});
+
+var c = document.querySelector('#game-canvas');
+var tbox = document.querySelector('#box');
+tbox.disabled = true;
+// tbox.value = "Hello";
+// tbox.value += "goodbye";
+var ctx = c.getContext('2d');
+ctx.textAlign = "center";
+ctx.textBaseline = "middle"; 
+var n = 10;
+
+
+// console.log(var_dump(c), var_dump(div), var_dump(ctx));
+
+function resizeCanvas(e) {
+  if (e.key == "-") {n++;}
+  if (e.key == "+") {n--;}
+  n = Math.max(1, n);
+
+tbox.value += `You pressed: ${e.key}\n`;
+
+
+  var lat = map.getCenter().lat();
+  var lon = map.getCenter().lng();
+
+  var epsilon = 0.1*n/10;
+
+  rect.setBounds({north: lat+epsilon, south: lat-epsilon, east: lon+epsilon, west: lon-epsilon});
+
+  drawTiles(n);
+}
+
+// c.onkeypress('keydown', resizeCanvas);
+// c.addEventListener('onkeypress', resizeCanvas);
+document.addEventListener('keydown', resizeCanvas);
+
+var lt = [];
+
+function drawTiles(n) {
+
+px = Math.round(25*(10/n)*c.width/1600);
+// px = Math.round(25*(10/n)*c.width/1600/2);
+console.log(px);
+ctx.font = `${px}px Times`;
+
+var istart = 0;
+var jstart = 0;
+
+for (i = istart; i < istart+n; i++) {
+  for (j = jstart; j < jstart+n; j++) {
+    width = c.width/n;
+    height = c.height/n;
+    pos = i+","+j;
+    if (!lt[pos]) {lt[pos] = Math.floor(Math.random()*8);}
+
+    var color = '#'+land[lt[pos]].color.map(toHex).join("");
+    ctx.fillStyle = color;
+    ctx.fillRect(i*width, j*height, width, height);
+    ctx.fillStyle = '#000000';
+    tx = (i+0.5)*width;
+    ty = (j+0.5)*height;
+    t = `${land[lt[pos]].type} 2\u231B`;
+    ctx.fillText(t, tx, ty);
+    } 
+  }
+}
+
+function toHex(d) {
+  s = d.toString(16);
+  if (s.length < 2) {s = "0"+s;}
+  return s;
+}
+
+drawTiles(n);
+
+</script>

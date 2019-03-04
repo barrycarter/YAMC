@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>repl.it</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<script src="https://maps.google.com/maps/api/js?key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA">
+	</script>
+	<script src="game-lib.js">
+	</script>
+
+	<div id="google_map" style="width:1200px; height:600px"></div>
+
+	<script>
+		// creates a google map with overlay of land type
+
+// TODO: initial center should NOT be equator/meridian
+
+
+ // this is center point of our initial testing
+ var myLatLng = new google.maps.LatLng(36.1041666666, -5.5458333333);
+ var myOptions = {zoom: 10, center: myLatLng,
+  mapTypeId: google.maps.MapTypeId.ROADMAP, scaleControl: true,
+  rotateControl: true, overviewMapControl: true};
+ var map = new google.maps.Map(document.getElementById("google_map"), myOptions);
+
+function movePlayer(event) {
+
+  var lat = map.getCenter().lat();
+  var lon = map.getCenter().lng();
+
+  var code = event.code;
+  console.log(code);
+  var delta = 0.01;
+
+  if (code == "Numpad4") {
+    lon -= delta;
+  } else if (code == "Numpad6") {
+    lon += delta;
+  } else if (code == "Numpad2") {
+    lat -= delta;
+  } else if (code == "Numpad8") {
+    lat += delta;
+  } else {
+    return;
+  }
+
+  map.setCenter({lat: lat, lng: lon});
+
+}
+
+document.addEventListener('keydown', movePlayer)
+
+	</script>
+
+	<script src="maptiles.js">
+	</script>
+	<script src="script.js">
+	</script>
+</body>
+
+</html>

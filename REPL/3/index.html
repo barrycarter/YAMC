@@ -1,0 +1,52 @@
+<script src="game-lib.js"></script>
+<div id ="canvas">
+<canvas id="game-canvas" width=1600 height=900></canvas> 
+</div>
+<script>
+
+var c = document.querySelector('#game-canvas');
+var div = document.querySelector('#canvas');
+var ctx = c.getContext('2d');
+
+var n = 10;
+
+// console.log(var_dump(c), var_dump(div), var_dump(ctx));
+
+function resizeCanvas(e) {
+  if (e.key == "-") {n++;}
+  if (e.key == "+") {n--;}
+  n = Math.max(1, n);
+  drawTiles(n);
+}
+
+// c.onkeypress('keydown', resizeCanvas);
+// c.addEventListener('onkeypress', resizeCanvas);
+document.addEventListener('keydown', resizeCanvas);
+
+var colors = [];
+
+function drawTiles(n) {
+for (i = 0; i < n; i++) {
+  for (j = 0; j < n; j++) {
+    width = 1600/n;
+    height = 900/n;
+    r = toHex(Math.floor(Math.random()*256));
+    g = toHex(Math.floor(Math.random()*256));
+    b = toHex(Math.floor(Math.random()*256));
+    pos = i+","+j;
+
+    if (!colors[pos]) {colors[pos] = '#'+r+g+b;}
+    ctx.fillStyle = colors[pos];
+    ctx.fillRect(i*width, j*height, width, height);
+    ctx.fillText(pos, i*width, j*height);
+    } 
+  }
+}
+
+function toHex(d) {
+  s = d.toString(16);
+  if (s.length < 2) {s = "0"+s;}
+  return s;
+}
+
+</script>
