@@ -1,212 +1,57 @@
-<!doctype html>
-<html class="no-js" lang="">
+<script src="game-lib.js">
+</script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA">
+</script>
+<script src="maptiles.js">
+</script>
+<link rel="stylesheet" type="text/css" href="style.css">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>TerraMapAdventure</title>
+<textarea id="box" cols=80 rows=25></textarea>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<p>
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-    crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" rel="stylesheet">
-</head>
+<label for="command">Command</label>
+<input type="text" name="command" id="command"><p>
 
-<body>
-  <!--[if lte IE 9]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
+<div id="response"></div>
 
+<button id="plus">+</button>
+<button id="minus">-</button>
+<button id="north">N</button>
+<button id="south">S</button>
+<button id="east">E</button>
+<button id="west">W</button>
+<button id="darker" class="gmap">darker</button>
+<button id="lighter" class="gmap">lighter</button>
+<canvas id="game-canvas" width=1200px height=450px></canvas>
+<div id="google_map" style="width:1200px; height:600px"></div>
+<script src="google-map-stuff.js"></script>
+<script src="gametiles.js"></script>
 
-  <div class="container">
+<script>
+var ws = new WebSocket("ws://167.99.95.147:8000");
+console.log(ws);
 
-    <div class="popup" onclick="showHelp()">
-      <div class="popupHelp" id="myHelp">
-        <h3>Help</h3>
-        <p>Command you can use: </p>
-        <p>n, e, w, s - move in cardinal direction</p>
-        <p>i - inventory </p>
-        <p>me - information about you</p>
-        <p>claim - claim current tile</p>
-        <p>tile - information about current tile</p>
-        <p>bridge [n|e|s|w] - build bridge on tile in given direction</p>
-        <p>put (road|person|etc) - place item on this tile</p>
-        <p>remove (road|person|etc) - remove item from this tile</p>
-        <p>harvest - harvest resources from this tile (once per turn)</p>
-        <p>turn - end current turn</p>
-        <p>reset - reset to start of this turn</p>
-        <p>save - save current state</p>
-        <p>restore - restore from last save</p>
-      </div>
-    </div>
+var output = document.getElementById("response");
+var tbox = document.querySelector('#box');
+tbox.disabled = true;
 
-    <div class="popup">
-      <div class="popupLogin" id="myLogin">
-        <h3>Login</h3>
-        <form action="#">
-          <label for="user"></label>
-          <input id="username" type="text" placeholder="Enter your username">
-          <br>
-          <label for="password"></label>
-          <input id="password" type="text" placeholder="Enter your password">
-          <br>
-          <button onclick="showLogin()">Login</button>
-        </form>
-      </div>
-    </div>
+ws.onmessage = function (event) {
+  console.log(event);
+  tbox.innerHTML += event.data+"\n";
+  }
 
+var cmdLine = document.getElementById("command")
+cmdLine.addEventListener("keydown", command);
 
-    <header>
-      <div id="user" onclick="showLogin()"><a href="#"><i class="fas fa-user"></i></a></div>
-      <h1>TerraMapAdventure</h1>
-      <div class="popup" onclick="showHelp()" id="help"><a href="#"><i class="fas fa-question"></i></a>
-      </div>
-
-    </header>
-    <sidebar>
-      <div class="acordion">
-
-        <div class="fold">
-          <a class="bar" href="#tab1">Profile</a>
-          <div class="content" id="tab1">
-            <div id="profile">
-
-              <div id="position">
-                <h2>Your position</h2>
-                <p>Longitude = 1000</p>
-                <p>Latitude = 1000</p>
-              </div>
-              <div id="resources">
-                <h2>Resources</h2>
-                <p>wood = 1000</p>
-                <p>food = 1000</p>
-                <p>people = 1000</p>
-                <p>leaves = 1000</p>
-                <p>grass = 1000</p>
-                <p>energy = 1000</p>
-
-              </div>
-              <div id="goods">
-                <h2>Goods</h2>
-                <p>houses = 1000</p>
-                <p>streets = 1000</p>
-                <p>streets = 1000</p>
-                <p>streets = 1000</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="fold">
-          <a class="bar" href="#tab2">Tiles</a>
-          <div class="content" id="tab2">
-            <div id="tiles">
-              <h2>Tiles</h2>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              <p><a href="#">343443/34334 </a></p>
-              
-            </div>
-          </div>
-        </div>
-
-      </div>
+function command(e) {
+  if (e.key == "Enter") {
+    var hash = {message: cmdLine.value, user: "barrycarter"};
+    ws.send(JSON.stringify(hash));
+    cmdLine.value = "";
+  }
+}
 
 
 
-    </sidebar>
-    <main>
-      <div id="map" class="map"></div>
-      <div id="command">
-        <form action="#">
-          <input name="command" id="command" type="text" placeholder="Enter your command Here">
-          <button id="btnConfirm">Confirm</button>
-        </form>
-      </div>
-
-    </main>
-    <div id="log">
-      Log History
-      <div id="histCmd"></div>
-    </div>
-  </div>
-
-
-
-  <!-- Map Api-->
-  <script src="js/main.js"></script>
-  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-
-  <script type="text/javascript">
-    var osmSource = new ol.source.OSM();
-    var map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        }),
-        new ol.layer.Tile({
-          source: new ol.source.TileDebug({
-            projection: 'EPSG:3857',
-            tileGrid: osmSource.getTileGrid()
-          })
-        })
-
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 2
-      })
-    });
-  </script>
-
-
-  <!-- Show help -->
-  <script>
-    function showHelp() {
-      var popup = document.getElementById("myHelp");
-      popup.classList.toggle("show");
-    }
-    function showLogin() {
-      var popup = document.getElementById("myLogin");
-      popup.classList.toggle("show");
-    }
-    
-
-  </script>
-</body>
-
-</html>
+</script>
