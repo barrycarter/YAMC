@@ -34,3 +34,15 @@ cp /root/BCAPPS/bclib.pl /usr/local/lib/
 # creates a symlink so that /sites/YAMC is same as /root/YAMC
 
 ln -s /root /sites
+
+# for https
+
+yum -y install yum-utils
+
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+
+yum install epel-release
+
+sudo yum install certbot
+
+yum install openssl openssl-devel

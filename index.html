@@ -29,7 +29,11 @@
 <script src="gametiles.js"></script>
 
 <script>
-var ws = new WebSocket("ws://167.99.95.147:8000");
+
+// TODO: This will be ws.terramapadventure.com once nameservers update
+
+# var ws = new WebSocket("ws://167.99.95.147:8000");
+var ws = new WebSocket("wss://ws.terramapadventure.com:443");
 console.log(ws);
 
 var output = document.getElementById("response");
