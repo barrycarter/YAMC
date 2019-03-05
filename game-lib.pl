@@ -137,10 +137,10 @@ sub tell_msg {
   my($hashref) = @_;
   my(%hash) %$hashref;
   $hash{timestamp} = stardate();
-  broadcast(\%hash);
+  broadcast_msg(\%hash);
 }
 
-=item broadcast(\%hash)
+=item broadcast_msg(\%hash)
 
 Placeholder function to broadcast 'msg' key to all connected users
 
@@ -174,7 +174,7 @@ sub tell_user {
   # TODO: for broadcast, make it clear which user is being told something
   # if global $globopts{websocket} is set, use broadcast instead
   if ($globopts{websocket}) {
-    broadcast($str);
+    broadcast_msg($str);
   } else {
     debug("BETA");
     print "$str\n";
