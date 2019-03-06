@@ -69,46 +69,6 @@ sub process_msg {
   debug("RES: $res, $@");
 }
 
-sub get_user_info {
-
-  my($user) = @_;
-  my(%user);
-
-  my(@user) = sqlite3hashlist("SELECT * FROM users WHERE username='$user'", $dbfile);
-
-  if ($#user == -1) {$user{null} = 1; return %user;}
-
-  for $i (@user) {$user{$i->{variable}} = $i->{value};}
-
-  return %user;
-}
-
-# convert message to JSON
-
-sub convert_message_json {
-  my($user, $guiq, $message) = @_;
-  my(%hash) = ("user" => $user, "to_gui" => $guiq, "message" => $message);
-  return JSON::to_json(\%hash);
-}
-
-# TODO: everything, this is a placeholder function
-
-sub tile_energy_cost {
-  my($x,$y) = @_;
-  return(get_pixel_value($x,$y));
-}
-
-# get info on the tile (but does not tell if a player is standing on tile)
-
-sub tile_info {
-  my($x,$y) = @_;
-  my($pix) = get_pixel_value($x,$y);
-
-  my(@list) = sqlite3hashlist("SELECT variable, value FROM land WHERE x=$x AND y=$y UNION SELECT 'pixel_value', $pix", $dbfile);
-
-  return \@list;
-}
-
 # sets up listening websocket (program-specific subroutine
 
 sub setup_websocket {
