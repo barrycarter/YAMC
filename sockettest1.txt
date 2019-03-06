@@ -1,4 +1,6 @@
+cmd=create user fred hamburger
+user=fred&cmd=n
 # should fail unless uer jason exists
-user=jason&message=i
+# user=jason&message=i
 # creates a different user
-user=jason&message=create user fred hamburger
+# message=create user fred hamburger

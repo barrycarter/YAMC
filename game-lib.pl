@@ -150,12 +150,20 @@ sub tell_user {
 
 =item parse_command(\%hash)
 
-Parses the input hash's "cmd" key as a command.
+Input message: cmd = command to parse (like "info file 1 2 3 4")
+
+Parses the input message into full command for eval
 
 Example: "a b c d" first checks if function command_a_b_c_d exists and
-returns "command_a_b_c_d()"; if not, checks if command_a_b_c exists
-and returns "command_a_b_c(d)", then command_a_b(c,d), then
-command_a(b,c,d) and finally command_null(a,b,c,d). Returns as "str" in hash
+returns "command_a_b_c_d" with no arguments; if not, checks if
+command_a_b_c exists and returns "command_a_b_c" with argument "d",
+then command_a_b with arguments "c,d", then command_a with arguments
+"b,c,d" and finally command_ with arguments "a,b,c,d"
+
+Returns:
+
+cmd = the command (without the command_ prefix)
+args = comma separated arguments
 
 =cut
 
@@ -163,8 +171,10 @@ sub parse_command {
 
   my($hashref) = @_;
   my(%hash) = %$hashref;
+  debug(var_dump("PARSE_COMMAND_HASH", $hashref));
   my(%ret);
   my($cmd) = $hash{"cmd"};
+  debug("PARSE_COMMAND(... $cmd ...)");
 
   # if command is alissed, used alias
   if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
@@ -172,12 +182,9 @@ sub parse_command {
   # convert spaces to _
   $cmd=~s/\s/_/g;
 
-  debug("CMD: $cmd");
   my(@args) = ();
 
   while ($cmd) {
-
-    debug("CHECKING: command_$cmd");
 
     if (defined(&{"command_$cmd"})) {last;}
 
@@ -191,9 +198,8 @@ sub parse_command {
     unshift(@args, $1);
   };
 
-  $cmd = "command_$cmd";
-
-  $ret{str} = "$cmd(".join(", ",@args).")";
+  $ret{cmd} = $cmd;
+  $ret{args} = join(", ",@args);
   return \%ret;
 }
 
@@ -206,6 +212,7 @@ parse_form format
 
 sub str2hashref {
   my($string) = @_;
+  debug("STR2HASHREF($string)");
   my(%hash) = parse_form($string);
   return \%hash;
 }

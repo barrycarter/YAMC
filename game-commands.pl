@@ -73,6 +73,7 @@ sub command_tileinfo {
 
 sub command_create {
   my($keyword, $username, $pw) = @_;
+  debug("COMMAND_CREATE($keyword, $username, $pw) called");
 
   unless ($user{null}) {
     tell_user(convert_message_json($user, false, "User $username already exists"));

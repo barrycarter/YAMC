@@ -34,42 +34,49 @@ sub process_msg {
   my($msg) = @_;
   debug("PROCESS_MSG($msg)");
 
+  # does the message contain illegal characters?
   if ($msg=~/([^a-z0-9_:,\s\"\{\}])/i) {
     tell_user("Input *$msg* contained invalid characters: $1");
     return;
   }
 
-  # eval in case of error
+  # can the message be converted to JSON?
   eval {$hash = JSON::from_json($msg)};
   if ($@) {tell("Not a JSON string: $msg"); return;}
-  
-  my($fullcmd) = $hash->{message};
-  our($user) = $hash->{user};
-  debug("FULLCMD: $fullcmd");
-  my(%code) = %{parse_command(str2hashref("cmd=$fullcmd"))};
-  debug("CODE", %code);
-  debug("CODE: $code{str}");
 
-  # check user info and store in global hash
+  # do one level of unfolding
+  %hash = %$hash;
+
+  debug("HASH",%hash);
+
+  # TODO: GUI won't normally give us user
+  our($user) = $hash{user};
+  # get info on the user
   our(%user) = get_user_info($user);
 
-  # these commands can be called even if no user is defined
-  if ($no_user_required{$cmd}) {
+  # convert the user's command to a function
+  my(%code) = %{parse_command(str2hashref("cmd=$hash{cmd}"))};
+
+  # build the eval string
+  my($eval) = "command_$code{cmd}($code{args})";
+
+  # if the command can be called sans user, do so now
+  if ($no_user_required{$code{cmd}}) {
     eval($eval);
     return;
   }
 
+  # if there's no user and the command needs a user, alert user
   if ($user{null}) {
     tell_user(convert_message_json("$user", false, "User $user does not exist: 'create $user password' to create"));
     return;
   }
 
-  debug("eval($eval)");
+  # all checks pass, eval the function
   my($res) = eval($eval);
-  debug("RES: $res, $@");
 }
 
-# sets up listening websocket (program-specific subroutine
+# sets up listening websocket (program-specific subroutine)
 
 sub setup_websocket {
 

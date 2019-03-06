@@ -59,7 +59,7 @@ cmdLine.addEventListener("keydown", command);
 
 function command(e) {
   if (e.key == "Enter") {
-    var hash = {message: cmdLine.value, user: "barry"};
+    var hash = {cmd: cmdLine.value, user: "barry"};
     ws.send(JSON.stringify(hash));
     cmdLine.value = "";
   }
