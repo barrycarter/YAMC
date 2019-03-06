@@ -6,23 +6,14 @@
 
 use Net::WebSocket::Server;
 use IO::Socket::SSL;
+
 # TODO: get a local copy of bclib.pl
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
 
-my $ssl_server = IO::Socket::SSL->new(
-                  Listen        => 5,
-                  LocalPort     => 443,
-                  Proto         => 'tcp',
-                  SSL_cert_file => '/etc/letsencrypt/live/ws.terramapadventure.com/cert.pem',
-                  SSL_key_file  => '/etc/letsencrypt/live/ws.terramapadventure.com/privkey.pem'
-                ) or die "failed to listen: $!";
-
-Net::WebSocket::Server->new(
-                    listen => $ssl_server,
-                    on_connect => \&connection,
-                )->start;
+our($ws) = setup_websocket();
+$ws->start;
 
 # TODO: when someone connects, broadcast to all connected
 sub connection {
@@ -48,18 +39,16 @@ sub process_msg {
     return;
   }
 
-  my $hash;
+  # eval in case of error
   eval {$hash = JSON::from_json($msg)};
   if ($@) {tell("Not a JSON string: $msg"); return;}
+  
   my($fullcmd) = $hash->{message};
   our($user) = $hash->{user};
   debug("FULLCMD: $fullcmd");
-  my(%code) = %{parse_command($fullcmd)};
+  my(%code) = %{parse_command(str2hashref("cmd=$fullcmd"))};
   debug("CODE", %code);
   debug("CODE: $code{str}");
-
-  warn("TESTING");
-  return;
 
   # check user info and store in global hash
   our(%user) = get_user_info($user);
@@ -120,5 +109,25 @@ sub tile_info {
   return \@list;
 }
 
+# sets up listening websocket (program-specific subroutine
 
+sub setup_websocket {
+
+  my($dir) = "/etc/letsencrypt/live/ws.terramapadventure.com";
+  my($ws);
+
+  if (-d $dir) {
+    my($ssl_server) = IO::Socket::SSL->new(
+ Listen => 5, LocalPort => 443, Proto => 'tcp', 
+ SSL_cert_file => "$dir/cert.pem", SSL_key_file => "$dir/privkey.pem"
+);
+    $ws = Net::WebSocket::Server->new(listen => $ssl_server, on_connect => \&connection);
+  } else {
+    warn("INSECURE: no $dir, listening insecurely");
+    $ws = Net::WebSocket::Server->new(listen=>8000,on_connect => \&connection);
+  }
+
+  return $ws;
+
+}
 

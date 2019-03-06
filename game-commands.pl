@@ -14,10 +14,10 @@ require "/sites/YAMC/game-lib.pl";
 
 our(%command_aliases) = (
  "i" => "inventory",
- "e" => "east",
- "w" => "west",
- "s" => "south",
- "n" => "north"
+ "e" => "move east",
+ "w" => "move west",
+ "s" => "move south",
+ "n" => "move north"
 );
 
 # can be called without user
@@ -45,6 +45,14 @@ TODO: return rectangle of values on client request
 TODO: assume argument defaults if player/client doesnt specify
 
 =cut
+
+=item command_()
+
+The do-nothing command to call when player sends an invalid command
+
+=cut
+
+sub command_ {return;}
 
 sub command_puttile {
   my($thing, $x, $y) = @_;
@@ -150,7 +158,9 @@ sub command_show_rectangle {
   tell_user(JSON::to_json(\%reply_hash));
 }
 
-sub command_east {
+sub command_move {
+
+  my($dir) = @_;
 
   # TODO: worry about torus rollover?
   sqlite3("UPDATE users SET value=value+1 WHERE username='$user' AND variable = 'x'", $dbfile);

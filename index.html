@@ -30,10 +30,19 @@
 
 <script>
 
-// TODO: This will be ws.terramapadventure.com once nameservers update
+// determine which websocket we connect to by looking at #
 
-// var ws = new WebSocket("ws://167.99.95.147:8000");
-var ws = new WebSocket("wss://ws.terramapadventure.com:443");
+var url = window.location.href;
+var tag = url.substring(url.indexOf('#')+1, url.length);
+
+var ws;
+
+if (tag == "local") {
+ ws = new WebSocket("ws://127.0.0.1:8000");
+} else {
+ ws = new WebSocket("wss://ws.terramapadventure.com:443");
+}
+
 console.log(ws);
 
 var output = document.getElementById("response");
@@ -50,7 +59,7 @@ cmdLine.addEventListener("keydown", command);
 
 function command(e) {
   if (e.key == "Enter") {
-    var hash = {message: cmdLine.value, user: "barrycarter"};
+    var hash = {message: cmdLine.value, user: "barry"};
     ws.send(JSON.stringify(hash));
     cmdLine.value = "";
   }

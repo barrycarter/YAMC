@@ -17,17 +17,6 @@ our($dbfile) = "/sites/DB/yamc.db";
 		 "people" => 10, "leaves" => 10, "grass" => 10, 
 		 "energy" => 10, "houses" => 0, "roads" => 0
 		 );
-		 
-# command aliases
-
-our(%command_aliases) = (
- "i" => "inventory",
- "e" => "east",
- "w" => "west",
- "s" => "south",
- "n" => "north"
-);
-
 # these commands can be called without user
 
 our(%no_user_required) = list2hash("create");
@@ -126,20 +115,6 @@ sub tile_energy_cost {
   return 1;
 }
 
-=item tell_msg(\%hash)
-
-Tells the hash's "msg" key to .... (for now, it just gets broadcast
-with a timestamp, but will have many options in the future)
-
-=cut
-
-sub tell_msg {
-  my($hashref) = @_;
-  my(%hash) %$hashref;
-  $hash{timestamp} = stardate();
-  broadcast_msg(\%hash);
-}
-
 =item broadcast_msg(\%hash)
 
 Placeholder function to broadcast 'msg' key to all connected users
@@ -148,45 +123,30 @@ Placeholder function to broadcast 'msg' key to all connected users
 
 sub broadcast_msg {
   my($hashref) = @_;
-  my(%hash) %$hashref;
+  my(%hash) = %$hashref;
   my($msg) = $hash{msg};
+  debug("BRODCAST_MSG(... $msg ...)");
   for $i ($ws->connections) {$i->send_utf8($msg);}
 }
 
 # TODO: both tell_ functions should preserve HTML and use <br> or <p>
 
-# TODO: all of the subroutines below are the same for now, but will be
-# customized when the time comes
-
-# tell error: tell the user something went wrong and terminate
-sub tell_error {
-  my($error) = @_;
-  print "ERROR: $error\n";
-  exit(0);
-}
-
 # tell user: tell the user something and continue
 sub tell_user {
   my($str) = @_;
+  debug("TELL_USER($str)");
   $str=~s/\\n/\n/g;
   
   # TODO: allow more variation here and maybe merge debug/error into this
   # TODO: for broadcast, make it clear which user is being told something
   # if global $globopts{websocket} is set, use broadcast instead
   if ($globopts{websocket}) {
-    broadcast_msg($str);
+    broadcast_msg(str2hashref("msg=$str"));
   } else {
     debug("BETA");
     print "$str\n";
   }
 }
-
-# TODO: only do this if debugging is turned on
-sub tell_debug {
-  my($str) = @_;
-  print "DEBUG: $str\n";
-}
-
 
 =item parse_command(\%hash)
 
@@ -206,8 +166,12 @@ sub parse_command {
   my(%ret);
   my($cmd) = $hash{"cmd"};
 
+  # if command is alissed, used alias
+  if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
+
   # convert spaces to _
   $cmd=~s/\s/_/g;
+
   debug("CMD: $cmd");
   my(@args) = ();
 
@@ -215,15 +179,13 @@ sub parse_command {
 
     debug("CHECKING: command_$cmd");
 
-    # if command is alissed, used alias
-    if ($command_aliases{$cmd}) {$cmd = $command_aliases{$cmd};}
-
     if (defined(&{"command_$cmd"})) {last;}
 
-    # if $cmd has no more _ and isn't defined, drop out of looop
+    # if $cmd has no more _ and isn't defined, drop out of loop
     unless ($cmd=~s/_([^_]*?)$//) {
       unshift(@args,$cmd);
       $cmd="";
+      last;
     }
 
     unshift(@args, $1);
@@ -233,6 +195,59 @@ sub parse_command {
 
   $ret{str} = "$cmd(".join(", ",@args).")";
   return \%ret;
+}
+
+=item string2hashref
+
+Convert the given string to a reference to a hash, following the
+parse_form format
+
+=cut
+
+sub str2hashref {
+  my($string) = @_;
+  my(%hash) = parse_form($string);
+  return \%hash;
+}
+
+sub get_user_info {
+
+  my($user) = @_;
+  my(%user);
+
+  my(@user) = sqlite3hashlist("SELECT * FROM users WHERE username='$user'", $dbfile);
+
+  if ($#user == -1) {$user{null} = 1; return %user;}
+
+  for $i (@user) {$user{$i->{variable}} = $i->{value};}
+
+  return %user;
+}
+
+# convert message to JSON
+
+sub convert_message_json {
+  my($user, $guiq, $message) = @_;
+  my(%hash) = ("user" => $user, "to_gui" => $guiq, "message" => $message);
+  return JSON::to_json(\%hash);
+}
+
+# TODO: everything, this is a placeholder function
+
+sub tile_energy_cost {
+  my($x,$y) = @_;
+  return(get_pixel_value($x,$y));
+}
+
+# get info on the tile (but does not tell if a player is standing on tile)
+
+sub tile_info {
+  my($x,$y) = @_;
+  my($pix) = get_pixel_value($x,$y);
+
+  my(@list) = sqlite3hashlist("SELECT variable, value FROM land WHERE x=$x AND y=$y UNION SELECT 'pixel_value', $pix", $dbfile);
+
+  return \@list;
 }
 
 return 1;
