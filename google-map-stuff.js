@@ -15,6 +15,10 @@ var rect = new google.maps.Rectangle({strokeColor: '#00ffff', map: map, fillOpac
 function changeGmap(e) {
   var buttonStr = e.target.id
 
+  // solar or landuse map
+  if (buttonStr == "solar") {solar_energy_tiles(map); return;}
+  if (buttonStr == "landuse") {land_use_tiles(map); return;}
+
   // get opacity of tile 0 (representative)
   o = tiles[0].getOpacity();
 

@@ -1,3 +1,6 @@
+function solar_energy_tiles(map) {
+
+
 var bounds = [];
 var tiles = [];
 
@@ -352,3 +355,6 @@ tiles[31].setOpacity(0.5);
 
 tiles[31].setMap(map);
 
+return tiles;
+
+}

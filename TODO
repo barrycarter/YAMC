@@ -21,3 +21,5 @@ contain only a minimal set of files required to run the game (probably
 not, and, since we're not using node.js anymore, probably not worth
 trying)
 
+TODO: switch between solar and land use map tilings
+

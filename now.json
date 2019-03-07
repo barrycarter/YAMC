@@ -1,10 +1,6 @@
 {
 	"name": "terramapadventure",
 	"version": 1.0,
-	"repository": {
-		"type": "git",
-		"url": ""
-	},
 	"keywords": [
 		"y"
 	],
