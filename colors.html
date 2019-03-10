@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head></head><body>
+
+
+
+<script src="game-lib.js"></script>
+
+<div id="tab" style="display:table;"></div>
+
+<script>
+
+var tab = document.getElementById('tab');
+
+tab.innerHTML += "<table>";
+
+for (var i=0; i < land.length; i++) {
+ var str = "<tr><td bgcolor='"+"#ff0000"+"'>"+land[i].type+"</td></tr>\n";
+ tab.innerHTML += str;
+ console.log(str);
+}
+
+tab.innerHTML += "</table>\n";
+
+console.log(tab.innerHTML);
+
+</script>
+
+<table>
+<tr><td bgcolor='#ff0000'>water</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>snow/ice</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>barren</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>grassland</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>forest</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>wetland</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>cropland</td></tr>
+  colors.html:18:2
+<tr><td bgcolor='#ff0000'>urban</td></tr>
+  colors.html:18:2
+</table>
+
+
+</body></html>

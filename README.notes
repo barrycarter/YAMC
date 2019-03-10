@@ -278,4 +278,11 @@ and out, to see both the grid and the google map change
 http://terramapadventure.herokuapp.com/index-ws.html: control opacity
 by hitting "o" and SHIFT-"o"
 
+Scale
+=====
+
+at zoom level 8, a slippy tiles has at least 1.4 degrees latitude per tile
+at zoom level 13, a slippy tile has at least 0.04 degrees latitude per tile
+our game starting zoom is 10
+
 

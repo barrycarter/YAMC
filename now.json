@@ -1,9 +1,6 @@
 {
 	"name": "terramapadventure",
 	"version": 1.0,
-	"keywords": [
-		"y"
-	],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
