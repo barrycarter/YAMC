@@ -22,7 +22,10 @@ our(%command_aliases) = (
 
 # can be called without user
 
-our(%no_user_required) = list2hash("exit", "reload", "create");
+# TODO: we may not want info commands available to nonusers in final
+# product (but adding now for testing)
+
+our(%no_user_required) = list2hash("exit", "create", "info_tile", "info_tiles");
 
 =item notes
 
@@ -63,17 +66,26 @@ sub command_puttile {
 
 sub command_info_tile {
   my($x, $y) = @_;
-  debug("command_info_tile($x,$y)");
   my($val) = get_pixel_value($x, $y);
-  debug("VAL: $val");
   # wrap it up for the client
   my(%hash1) = %{str2hashref("x=$x&y=$y&landtype=$val")};
-  debug(var_dump("hash1", \%hash1));
   my(%hash2) = ("tag" => "landtype");
   $hash2{"data"} = \%hash1;
-  debug(var_dump("hash2", \%hash2));
-  debug("JSON", JSON::to_json(\%hash2));
   return \%hash2;
+}
+
+sub command_info_tiles {
+  my($x1, $y1, $x2, $y2) = @_;
+
+  my(@res) = ();
+  for $i ($x1..$x2) {
+    for $j ($y1..$y2) {
+      push(@res, command_info_tile($i, $j));
+    }
+  }
+
+  debug(JSON::to_json(\@res));
+  return \@res;
 }
 
 # create a new user with a given password

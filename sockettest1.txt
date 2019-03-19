@@ -1,4 +1,5 @@
-cmd=info tile 123 456
+cmd=info tiles 0 0 15 15
+# cmd=info tile 123 456
 # cmd=create user fred hamburger
 # user=fred&cmd=n
 # should fail unless uer jason exists

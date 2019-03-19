@@ -1,4 +1,3 @@
-
 function javascriptsucksballs(map) {
 
 var tiles = [];
