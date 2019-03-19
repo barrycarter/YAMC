@@ -12,6 +12,10 @@ require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
 
+# background ourselves unless --nodetach
+# NOTE: this has to come before we open the websocket, else IO issues
+unless ($globopts{"nodetach"}) {if (fork()) {exit;}}
+
 our($ws) = setup_websocket();
 $ws->start;
 

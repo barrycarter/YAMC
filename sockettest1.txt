@@ -1,5 +1,6 @@
-cmd=create user fred hamburger
-user=fred&cmd=n
+cmd=info tile 123 456
+# cmd=create user fred hamburger
+# user=fred&cmd=n
 # should fail unless uer jason exists
 # user=jason&message=i
 # creates a different user

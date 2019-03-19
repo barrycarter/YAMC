@@ -6,10 +6,11 @@
 require "/usr/local/lib/bclib.pl";
 
 # header of the TCL/Expect script we are outputting
-open(A, ">/tmp/socket.tcl");
+open(A, ">/tmp/socket.tcl")||die("Can't open /tmp/socket.tcl, $!");
 print A << "MARK";
 #!/bin/expect
 spawn ws ws://127.0.0.1:8000/
+# spawn ws wss://127.0.0.1:443/
 MARK
 ;
 
@@ -41,5 +42,7 @@ while (<>) {
 print A "expect \"999\"\n";
 
 close(A);
+
+debug("Done writing to /tmp/socket.tcl");
 
 system("chmod +x /tmp/socket.tcl; /tmp/socket.tcl");

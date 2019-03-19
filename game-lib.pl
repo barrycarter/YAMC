@@ -19,7 +19,10 @@ our($dbfile) = "/sites/DB/yamc.db";
 		 );
 # these commands can be called without user
 
-our(%no_user_required) = list2hash("create");
+# TODO: we may not want info commands available to nonusers in final
+# product (but adding now for testing)
+
+our(%no_user_required) = list2hash("create", "info_tile");
 
 # since all of our queries are to single file, allow 1 arg call
 

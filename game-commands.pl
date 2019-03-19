@@ -10,31 +10,6 @@
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 
-=item commands
-
-The commands accepted by the client are in messages.txt
-
-The commands accepted here are coded below, but listed here for convenience
-
-info tile x y: provide basic info on given tile (immutable)
-info tiles x1 y1 x2 y2: basic info on all tiles in rectangle
-
-info user username: provide info on given user
-info users: given info on all users
-
-info land x y: detailed info (mutable) of given tile
-info lands x1 y1 x2 y2: detailed info on all tiles in rectangle
-
-login username password: logs in the given user
-logout: logs out the current user
-
-n/e/s/w: moves in a given direction
-
-tile put [road|
-
-=cut
-
-
 # command aliases
 
 our(%command_aliases) = (
@@ -86,12 +61,19 @@ sub command_puttile {
   command_tileinfo($x,$y);
 }
 
-# TODO: this should be a subcommand of info
-
-sub command_tileinfo {
+sub command_info_tile {
   my($x, $y) = @_;
-  my(@val) = tile_info($x, $y);
-  tell_user(JSON::to_json(\@val));
+  debug("command_info_tile($x,$y)");
+  my($val) = get_pixel_value($x, $y);
+  debug("VAL: $val");
+  # wrap it up for the client
+  my(%hash1) = %{str2hashref("x=$x&y=$y&landtype=$val")};
+  debug(var_dump("hash1", \%hash1));
+  my(%hash2) = ("tag" => "landtype");
+  $hash2{"data"} = \%hash1;
+  debug(var_dump("hash2", \%hash2));
+  debug("JSON", JSON::to_json(\%hash2));
+  return \%hash2;
 }
 
 # create a new user with a given password
