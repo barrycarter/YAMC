@@ -1,0 +1,22 @@
+Postion of one user
+{tag: "user", data: {"username": "foo", "x": 123, "y": 456}}
+
+Position of all users
+{tag: "users", data: [array of line 2]}
+
+landtype for one tile
+{tag: "landtype", data: {"x": 123, "y": 456, "landtype": 3}}
+
+landtype for many tiles
+{tag: "landtypes", array of line 8}
+
+landdata for one tile
+{tag: "landtype", data: {"x": 123, "y": 456, {owner: "foo", roads: 1,  housing: 3}}}
+
+landdata for many tiles (same as before)
+
+   arr2str([1,2,3], ",")
+=> '1,2,3'   arr2str([1,2,3])
+=> '1,2,3'   console.log("Hello Anthony");
+Hello Anthony
+=> undefined    

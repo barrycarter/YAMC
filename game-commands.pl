@@ -10,6 +10,31 @@
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 
+=item commands
+
+The commands accepted by the client are in messages.txt
+
+The commands accepted here are coded below, but listed here for convenience
+
+info tile x y: provide basic info on given tile (immutable)
+info tiles x1 y1 x2 y2: basic info on all tiles in rectangle
+
+info user username: provide info on given user
+info users: given info on all users
+
+info land x y: detailed info (mutable) of given tile
+info lands x1 y1 x2 y2: detailed info on all tiles in rectangle
+
+login username password: logs in the given user
+logout: logs out the current user
+
+n/e/s/w: moves in a given direction
+
+tile put [road|
+
+=cut
+
+
 # command aliases
 
 our(%command_aliases) = (
@@ -121,10 +146,12 @@ sub command_help {
 i - inventory
 * create user <username> <password> - create a new user
 * n(orth), e(ast), w(est), s(outh) - move in cardinal direction
-* info user [user] - information about given user (default: you)
+* info user username - information about given use
 * info users - information about all users (+)
-* info tile [tile] - information about tile (default: tile you are on)
-* info tiles [x1 y1 x2 y2] - information about all tiles in rectangle (default: all tiles in game)
+* info tile tile - information about til
+* info tiles x1 y1 x2 y2 - information about all tiles in rectangle (default: all tiles in game)
+* info land x y - detailed information about given tile
+* info lands x1 y1 x2 y2 - detailed information about all tiles in rectangle
 * claim tile [tile] - claim tile (default: tile you are on)
 * bridge (n|e|s|w) - build bridge on tile in given direction and move there
 * put tile (road|person|etc) - place item on given tile (default: tile you are on)
