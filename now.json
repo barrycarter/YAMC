@@ -1,7 +1,6 @@
 {
 	"name": "terramapadventure",
 	"version": 1.0,
-	"author": "",
 	"license": "MIT",
 	"devDependencies": {
 		"nodemon": "^1.18.9"
