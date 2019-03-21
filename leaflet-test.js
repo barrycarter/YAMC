@@ -1,18 +1,17 @@
 var map;
-var ajaxRequest;
-var plotlist;
-var plotlayers=[];
 
 function initmap() {
-  // set up the map
-  map = new L.Map('map');
+  map = new L.Map('map', {crs: L.CRS.EPSG4326});
+  // map = new L.Map('map');
+  // map = new L.Map('map', {crs: L.CRS.Simple});
 
-  // create the tile layer with correct attribution
   var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-  var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});
-
-  // start the map in South-East England
-  map.setView(new L.LatLng(51.3, 0.7),9);
+  var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 20});
+  map.setView(new L.LatLng(0,0),3);
   map.addLayer(osm);
+
+  var imageUrl = 'http://data.barrycarter.info/grid.png';
+  imageBounds = [[-89, -179], [89, 179]];
+  L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
 }
