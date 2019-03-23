@@ -14,8 +14,6 @@ var myOptions = {
 };
 var map = new google.maps.Map(document.getElementById('google_map'), myOptions);
 
-var tiles = javascriptsucksballs(map);
-
 var rect = new google.maps.Rectangle({
 	strokeColor: '#00ffff',
 	map: map,
