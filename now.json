@@ -1,9 +1,6 @@
 {
 	"name": "terramapadventure",
 	"version": 1.0,
-	"devDependencies": {
-		"nodemon": "^1.18.9"
-	},
 	"dependencies": {
 		"express": "^4.16.4",
 		"ws": "^6.1.3",
