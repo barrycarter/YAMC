@@ -1,26 +1,19 @@
-const gmapButtons = document.querySelectorAll('.gmap');
-for (var i = 0; i < gmapButtons.length; i++) {
-	gmapButtons[i].addEventListener('click', changeGmap);
+function setup_google_maps() {
+	let gmapButtons = document.querySelectorAll('.gmap');
+
+	for (var i = 0; i < gmapButtons.length; i++) {
+		gmapButtons[i].addEventListener('click', changeGmap);
+	}
+
+	var rect = new google.maps.Rectangle({
+		strokeColor: '#c90000',
+		map: map,
+		fillOpacity: 0
+	});
 }
 
-var myLatLng = new google.maps.LatLng(36.1041666666, -5.5458333333);
-var myOptions = {
-	zoom: 10,
-	center: myLatLng,
-	mapTypeId: google.maps.MapTypeId.ROADMAP,
-	scaleControl: true,
-	rotateControl: true,
-	overviewMapControl: true
-};
-var map = new google.maps.Map(document.getElementById('google_map'), myOptions);
-
-var rect = new google.maps.Rectangle({
-	strokeColor: '#00ffff',
-	map: map,
-	fillOpacity: 0
-});
-
 function changeGmap(e) {
+	console.log('changeGmap(', e, ') called');
 	var buttonStr = e.target.id;
 
 	// cap O = more opaque, small o = less opaque

@@ -1,3 +1,30 @@
+// The purpose of this function is to convert x and y pixels to latitude and longitude
+// What is ret ? Let's use a naming more simple. @Barry
+function XY2LatLon(obj) {
+  let ret = {};
+  ret.lon = (2*obj.x-43199)/240;
+  ret.lat = (21599-2*obj.y)/240;
+  return ret;
+}
+
+function LatLon2XY(obj) {
+  return {x: (43199+240*obj.lon)/2, y: (21599-240*obj.lat)/2}
+}
+
+// {tag: "user", data: {"username": "foo", "x": 123, "y": 456}}
+
+function recv_msg (msg) {
+  var obj = JSON.parse(msg);
+
+  if (obj.tag == "user") {update_user(obj); return;}
+  
+  if (obj.tag == "users") {obj.data.map(user => update_user(user)); return;}
+} 
+
+function update_user(obj) {userinfo[obj.data.username] = obj.data;}
+
+function arr2str (arr, jc=",") {return arr.join(jc);}
+
 function dump(obj) {
   var out = '';
   for (var i in obj) {
