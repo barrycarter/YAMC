@@ -32,71 +32,69 @@
 
 
 <label for="command">Command</label>
-<input type="text" name="command" id="command">
-<p>
+<input type="text" name="command" id="command"><p>
 
-  <div id="response"></div>
+<div id="response"></div>
 
-  <canvas id="game-canvas" width=1200px height=450px></canvas>
-  <!-- <script src="google-map-stuff.js"></script> -->
-  <script src="gametiles.js"></script>
+<canvas id="game-canvas" width=1200px height=450px></canvas>
+<!-- <script src="google-map-stuff.js"></script> -->
+<script src="gametiles.js"></script>
+
+<script>
+
+// setup view
+const mapDiv = document.querySelector('#google_map');
+view.map = new google.maps.Map(mapDiv, myOptions);
+updateView(view);
+
+// setup buttons
+
+let buttons = document.querySelectorAll('button');
+for (var i = 0; i < buttons.length; i++) {buttons[i].addEventListener('click', viewController);}
+
+console.log(myOptions);
+
+// rect.setMap(map);
+
+let socket = new WebSocket("wss://ws.terramapadventure.com:443/");
+
+socket.onerror = function(evt) {
+  console.log("<error>",dump(evt),"</error>");
+}
+
+let tileinfo = {};
+let userinfo = {};
+let tiledata = {};
+
+console.log(userinfo);
+recv_msg('{"tag": "user", "data": {"username": "foo", "x": 123, "y": 456}}');
+console.log(userinfo);
+
+var output = document.getElementById("response");
+var tbox = document.querySelector('#box');
+tbox.disabled = true;
+
+socket.onopen = function () {console.log("socket is open");}
+
+socket.onmessage = function (event) {
+  console.log(event);
+  tbox.innerHTML += event.data+"\n";
+  }
+
+var cmdLine = document.getElementById("command")
+cmdLine.addEventListener("keydown", command);
+
+function command(e) {
+  if (e.key == "Enter") {
+    console.log("ALPHA",cmdLine.value);
+    // TODO: don't hardcode my name
+    var hash = {message: cmdLine.value, user: "barrycarter"};
+    console.log("BETA",JSON.stringify(hash));
+    ws.send(JSON.stringify(hash));
+    cmdLine.value = "";
+  }
+}
 
 
 
-  <script>
-    // setup view
-    const mapDiv = document.querySelector('#google_map');
-    view.map = new google.maps.Map(mapDiv, myOptions);
-    updateView(view);
-
-    // setup buttons
-
-    let buttons = document.querySelectorAll('button');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener('click', viewController);
-    }
-
-    console.log(myOptions);
-
-    // determine which websocket we connect to by looking at #
-
-    var url = window.location.href;
-    var tag = url.substring(url.indexOf('#') + 1, url.length);
-
-    var ws;
-
-    if (tag == "local") {
-      ws = new WebSocket("ws://127.0.0.1:8000");
-    } else {
-      ws = new WebSocket("wss://ws.terramapadventure.com:443");
-    }
-
-    console.log(ws);
-
-    let tileinfo = {};
-    let userinfo = {};
-    let tiledata = {};
-
-    var output = document.getElementById("response");
-    var tbox = document.querySelector('#box');
-    tbox.disabled = true;
-
-    ws.onmessage = function (event) {
-      console.log(event);
-      tbox.innerHTML += event.data + "\n";
-    }
-
-    var cmdLine = document.getElementById("command")
-    cmdLine.addEventListener("keydown", command);
-
-    function command(e) {
-      if (e.key == "Enter") {
-        var hash = {
-          cmd: cmdLine.value,
-          user: "barry"
-        };
-        ws.send(JSON.stringify(hash));
-        cmdLine.value = "";
-      }
-    }
-  </script>
+</script>

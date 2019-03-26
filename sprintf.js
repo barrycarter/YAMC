@@ -1,4 +1,3 @@
-// https://github.com/alexei/sprintf.js#readme
 /* global window, exports, define */
 
 !function() {

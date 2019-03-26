@@ -1,19 +1,22 @@
-function setup_google_maps() {
-	let gmapButtons = document.querySelectorAll('.gmap');
+function setup_google_maps () {
 
-	for (var i = 0; i < gmapButtons.length; i++) {
-		gmapButtons[i].addEventListener('click', changeGmap);
-	}
+  let gmapButtons = document.querySelectorAll('.gmap');
 
-	var rect = new google.maps.Rectangle({
-		strokeColor: '#c90000',
-		map: map,
-		fillOpacity: 0
-	});
+  for (var i = 0; i < gmapButtons.length; i++) {
+  	gmapButtons[i].addEventListener('click', changeGmap);
+  } 
+
+
+var rect = new google.maps.Rectangle({
+	strokeColor: '#c90000',
+	map: map,
+	fillOpacity: 0
+  });
 }
 
 function changeGmap(e) {
-	console.log('changeGmap(', e, ') called');
+
+  console.log("changeGmap(",e,") called");
 	var buttonStr = e.target.id;
 
 	// cap O = more opaque, small o = less opaque

@@ -16,7 +16,9 @@ require "/sites/YAMC/game-commands.pl";
 # NOTE: this has to come before we open the websocket, else IO issues
 unless ($globopts{"nodetach"}) {if (fork()) {exit;}}
 
+debug("About to setup websocket");
 our($ws) = setup_websocket();
+debug("About to start websocket");
 $ws->start;
 
 # TODO: when someone connects, broadcast to all connected
@@ -90,7 +92,7 @@ sub setup_websocket {
   if (-d $dir) {
     my($ssl_server) = IO::Socket::SSL->new(
  Listen => 5, LocalPort => 443, Proto => 'tcp', 
- SSL_cert_file => "$dir/cert.pem", SSL_key_file => "$dir/privkey.pem"
+ SSL_cert_file => "$dir/fullchain.pem", SSL_key_file => "$dir/privkey.pem"
 );
     $ws = Net::WebSocket::Server->new(listen => $ssl_server, on_connect => \&connection);
   } else {
@@ -98,6 +100,7 @@ sub setup_websocket {
     $ws = Net::WebSocket::Server->new(listen=>8000,on_connect => \&connection);
   }
 
+  debug("WS IS: $ws");
   return $ws;
 
 }
