@@ -31,7 +31,7 @@ sub connection {
 sub message {
   my($conn, $msg) = @_;
   # processes the msg
-  process_msg($msg);
+  tell_user(JSON::to_json(process_msg($msg)));
 }
 
 # TODO: client should warn if disconnected
@@ -65,10 +65,14 @@ sub process_msg {
 
   # build the eval string
   my($eval) = "command_$code{cmd}($code{args})";
+  debug("EVAL = $eval");
 
   # if the command can be called sans user, do so now
   if ($no_user_required{$code{cmd}}) {
-    return eval($eval);
+    debug("NO USER REQUIRED");
+    my($res) = eval($eval);
+    debug("RES: $res");
+    return $res;
   }
 
   # if there's no user and the command needs a user, alert user
@@ -78,10 +82,11 @@ sub process_msg {
   }
 
   # all checks pass, eval the function
+  debug("ABOUT TO EVAL: $eval");
   my($res) = eval($eval);
   debug("RES IS: $res");
+  unless ($res) {return;}
   tell_user(JSON::to_json($res));
-
 }
 
 # sets up listening websocket (program-specific subroutine)
