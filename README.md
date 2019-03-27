@@ -90,7 +90,7 @@ while (1) {
 * Google Maps: http://test.barrycarter.info/bc-image-overlay-nokml.pl?url=lcc.png
 * NASA (and others) classify lands into 16 different categories: https://eoimages.gsfc.nasa.gov/images/imagerecords/61000/61004/lcc_key.jpg 
 * Maps: https://visibleearth.nasa.gov/view.php?id=61004 
-Lists of other types of map: https://visibleearth.nasa.gov/ 
+* Lists of other types of map: https://visibleearth.nasa.gov/ 
 
 
 
