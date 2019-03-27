@@ -1,9 +1,11 @@
 # :earth_africa: TERRA MAP ADVENTURE
+
 *Currently a work in progress.*
+
 **First text-adventure game played on a real world map.**
 
 
-![text-adventure game played on a real world map](https://i.imgflip.com/2x1nda.gif)
+[![text-adventure game played on a real world map](https://i.imgflip.com/2x1nda.gif)]()
 
 
 
