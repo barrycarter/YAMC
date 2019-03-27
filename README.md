@@ -121,10 +121,10 @@ Reach out to Barry Carter at one of the following places!
 * We are grateful to our previous team members who previously contributed to Terra Map Adventure project: Noragne & Pedro
 
 * *Inspiration*
-https://www.facebook.com/FarmVille/
-https://en.wikipedia.org/wiki/M.U.L.E.
-https://civilization.com/
-https://glitch.com/~dive-the-game
+1. https://www.facebook.com/FarmVille/
+1. https://en.wikipedia.org/wiki/M.U.L.E.
+1. https://civilization.com/
+1. https://glitch.com/~dive-the-game
 
 
 ## :minidisc: LICENSE
