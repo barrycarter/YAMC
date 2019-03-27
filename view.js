@@ -32,84 +32,61 @@ function updateView(view, oldView) {
     tiles[view.type][i].setOpacity(view.opacity);
 
   }
-}
 
-let rectWidth = gc.width / (2 * view.size + 1);
-let rectHeight = gc.height / (2 * view.size + 1);
+  let rectWidth = gc.width / (2 * view.size + 1);
+  let rectHeight = gc.height / (2 * view.size + 1);
 
-let px = Math.round((25 * (10 / (2 * view.size + 1)) * gc.width) / 1600);
-ctx.font = `${px}px Times`;
+  let px = Math.round((25 * (10 / (2*view.size + 1)) * gc.width) / 1600);
+	ctx.font = `${px}px Times`;
 
-for (let i = view.x - view.size; i <= view.x + view.size; i++) {
-	for (let j = view.y - view.size; j <= view.y + view.size; j++) {
-		let lx = rectWidth * (i - view.x + view.size);
-		let ly = rectHeight * (j - view.y + view.size);
-		let landType = Math.floor(Math.random() * 8);
-		let color = '#' + land[landType].color.map(toHex).join('');
-		let pos = '(' + i + ', ' + j + ')';
+  for (let i = view.x - view.size; i <= view.x + view.size; i++) {
+    for (let j = view.y - view.size; j <= view.y + view.size; j++) {
 
-		ctx.fillStyle = color;
-		ctx.fillRect(lx, ly, rectWidth, rectHeight);
-		ctx.fillStyle = '#000000';
-		ctx.fillText(pos, lx, ly);
+      let lx = rectWidth * (i - view.x + view.size);
+      let ly = rectHeight * (j - view.y + view.size);
+      let landType = Math.floor(Math.random() * 8);
+      let color = '#' + land[landType].color.map(toHex).join('');
+      let pos = '(' + i + ', ' + j + ')';
 
-		// leftmost rect has x = 0, rightmost rect has x = gc.width-rect size
-		// gc.width * di / 2 / view.size
+      ctx.fillStyle = color;
+      ctx.fillRect(lx, ly, rectWidth, rectHeight);
+      ctx.fillStyle = '#000000';
+      ctx.fillText(pos, lx, ly);
 
-		if (!tileinfo[pos]) {
-			tileinfo[pos] = Math.floor(Math.random() * 8);
-		}
-	}
+
+      // leftmost rect has x =0, rightmost rect has x = gc.width-rect size
+      //    gc.width * di / 2 / view.size
+
+
+      if (!tileinfo[pos]) {
+        tileinfo[pos] = Math.floor(Math.random() * 8);
+      }
+
+      /*
+            let color = '#' + land[tileinfo[pos]].color.map(toHex).join('');
+            ctx.fillStyle = color;
+            ctx.fillRect((i - istart) * width, (j - jstart) * height, width, height);
+            ctx.fillStyle = '#000000';
+            tx = (i - istart + 0.5) * width;
+            ty = (j - jstart + 0.5) * height;
+            t = `${land[lt[pos]].type} 2\u231B`;
+            ctx.fillText(t, tx, ty);
+      
+            console.log(i, j);
+      
+      */
+    }
+  }
+
+
+
+
+
+
+
 }
 
 function viewController(e) {
-<<<<<<< HEAD
-	let buttonStr = e.target.id;
-
-	let oldView = {};
-	Object.assign(oldView, view);
-
-	//TODO: consider using switch here
-	if (buttonStr == 'minus') {
-		view.size++;
-	}
-	if (buttonStr == 'plus') {
-		view.size--;
-	}
-	if (buttonStr == 'west') {
-		view.x--;
-	}
-	if (buttonStr == 'east') {
-		view.x++;
-	}
-	if (buttonStr == 'north') {
-		view.y--;
-	}
-	if (buttonStr == 'south') {
-		view.y++;
-	}
-	if (buttonStr == 'solar') {
-		view.type = 'solar';
-	}
-	if (buttonStr == 'landuse') {
-		view.type = 'landuse';
-	}
-	if (buttonStr == 'darker') {
-		view.opacity += 0.1;
-	}
-	if (buttonStr == 'lighter') {
-		view.opacity -= 0.1;
-	}
-	view.opacity = Math.min(Math.max(view.opacity, 0), 1);
-	if (view.size < 1) {
-		view.size = 1;
-	}
-
-	console.log('OLDVIEW', dump(oldView), '/OLDVIEW');
-	console.log('VIEW', dump(view), '/VIEW');
-
-	updateView(view, oldView);
-=======
 
   let buttonStr = e.target.id;
 
@@ -126,11 +103,12 @@ function viewController(e) {
   if (buttonStr == 'landuse') { view.type = "landuse"; }
   if (buttonStr == 'darker') { view.opacity += 0.1; }
   if (buttonStr == 'lighter') { view.opacity -= 0.1; }
+
   view.opacity = Math.min(Math.max(view.opacity, 0), 1);
+  if (view.size < 1) { view.size = 1; }
 
   console.log("OLDVIEW", dump(oldView), "/OLDVIEW");
   console.log("VIEW", dump(view), "/VIEW");
 
   updateView(view, oldView);
->>>>>>> dd761c048167a5d1edbd497b1174b62afc281bf7
 }

@@ -197,6 +197,7 @@ sub parse_command {
 
   $ret{cmd} = $cmd;
   $ret{args} = join(", ",@args);
+  debug("PARSE_COMMAND RETURNS: $ret{cmd} | $ret{args}");
   return \%ret;
 }
 

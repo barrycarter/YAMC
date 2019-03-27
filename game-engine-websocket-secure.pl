@@ -48,7 +48,7 @@ sub process_msg {
 
   # can the message be converted to JSON?
   eval {$hash = JSON::from_json($msg)};
-  if ($@) {tell("Not a JSON string: $msg"); return;}
+  if ($@) {tell_user("Not a JSON string: $msg"); return;}
 
   # do one level of unfolding
   %hash = %$hash;
@@ -68,8 +68,7 @@ sub process_msg {
 
   # if the command can be called sans user, do so now
   if ($no_user_required{$code{cmd}}) {
-    eval($eval);
-    return;
+    return eval($eval);
   }
 
   # if there's no user and the command needs a user, alert user
@@ -80,6 +79,9 @@ sub process_msg {
 
   # all checks pass, eval the function
   my($res) = eval($eval);
+  debug("RES IS: $res");
+  tell_user(JSON::to_json($res));
+
 }
 
 # sets up listening websocket (program-specific subroutine)
