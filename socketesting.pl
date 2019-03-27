@@ -7,12 +7,13 @@ require "/usr/local/lib/bclib.pl";
 
 # header of the TCL/Expect script we are outputting
 open(A, ">/tmp/socket.tcl")||die("Can't open /tmp/socket.tcl, $!");
-print A << "MARK";
-#!/bin/expect
-spawn ws ws://127.0.0.1:8000/
-# spawn ws wss://127.0.0.1:443/
-MARK
-;
+print A "#!/bin/expect\n";
+
+if (-d "/etc/letsencrypt/live/ws.terramapadventure.com") {
+  print A "spawn ws wss://127.0.0.1:443/\n";
+} else {
+  print A "spawn ws ws://127.0.0.1:8000/\n";
+}
 
 while (<>) {
 

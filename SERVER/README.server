@@ -1,9 +1,16 @@
 This is the README/notes for how I set up 167.99.95.147 a VPS that
 *may* host terramapadventure.com
 
-# yum installs
+# see yum.sh and cpan.sh for yum and cpan stuff
 
-yum -y install git bzip2 cpan gcc
+# yum one off commands
+
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+
+# go command to get ws useful tool to test websockets
+
+go get -u github.com/hashrocket/ws
+cp /root/go/bin/ws /usr/local/bin/
 
 # this pulls the repo terramapadventure repo locally
 
@@ -34,15 +41,3 @@ cp /root/BCAPPS/bclib.pl /usr/local/lib/
 # creates a symlink so that /sites/YAMC is same as /root/YAMC
 
 ln -s /root /sites
-
-# for https
-
-yum -y install yum-utils
-
-yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
-
-yum install epel-release
-
-sudo yum install certbot
-
-yum install openssl openssl-devel

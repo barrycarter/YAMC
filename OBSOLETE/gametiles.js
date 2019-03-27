@@ -1,3 +1,13 @@
+
+
+/*
+const buttons = document.querySelectorAll('button');
+for (var i = 0; i < buttons.length; i++) {
+	buttons[i].addEventListener('click', changeCanvas);
+}
+
+*/
+
 function changeCanvas(e) {
 	var buttonStr = e.target.id;
 	if (buttonStr == 'minus') {
