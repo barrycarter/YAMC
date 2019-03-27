@@ -2,30 +2,32 @@
 *Currently a work in progress.*
 **First text-adventure game played on a real world map.**
 
-![text-adventure game played on a real world map](https://telegra.ph/file/263a4eae7e19223a10120.mp4)
+
+![text-adventure game played on a real world map](https://i.imgflip.com/2x1nda.gif)
+
 
 
 :wrench: :hammer: Build with the following:
 
-* Front End Development
-HTML5, CSS3, JavaScript
-
-* Back End Development
-Pearl5
-
-* Database
-SQLite
+Front End Development | Back End Development | Database | Misc
+------------ | ------------- | ------------- | -------------
+HTML5, CSS3, JavaScript | Pearl5 | SQLite | Websocket
 
 
 :couple: :couple: **Are you interested to contribute directly in our distributed team?**
+
 :tada: We’re excited to have you as part of our small team! 
+
 :running: Join us in CodeBuddies server in Discord at [Terra Map Adventure channel #project-tma](https://discord.gg/R4vBfV8) 
+
 
 :fork_and_knife: If you just want to use the codebase for learning purpose, feel free to create your own fork of the code and do the changes in your fork.
 
 
+
 ## :muscle: MOTIVATION
 Developing a fun, entertaining and educating game. Terra Map Adventure’s purpose to raise the philanthropy mindset and spirit by prioritizing collaboration and barter mechanism for mutual prosperity. It is intended as a fun project in a study group to learn programming and collaborating remotely as a team.
+
 
 
 ## :computer: HOW TO PLAY?
@@ -36,9 +38,11 @@ Developing a fun, entertaining and educating game. Terra Map Adventure’s purpo
 * The harvesting aim to provide the player a shelter to live, and food to eat.
 
  
+ 
 ## :sunrise_over_mountains: WHERE TO PLAY?
 * Website http://terramapadventure.com/
 * Demo site for testing http://terramapadventure.herokuapp.com/
+
 
 
 ## :camera: SCREENSHOTS
@@ -48,6 +52,7 @@ Developing a fun, entertaining and educating game. Terra Map Adventure’s purpo
 
 ## :mag_right: FEATURES
 The first game in the software development using real world map from Google Maps database.
+
 
 
 ## :floppy_disk: CODE EXAMPLE
@@ -70,11 +75,13 @@ while (1) {
 ```
 
 
+
 ## :busts_in_silhouette: TEAM
 * Initiator & Project Manager: Barry Carter
 * Front End Engineer: Anthony, Doha Helmy
 * Back End Engineer: Barry Carter
 * Researcher, Documentation, User Testing: Eri Hariono
+
 
 
 ## :bookmark_tabs: RESOURCES
@@ -84,30 +91,34 @@ while (1) {
 Lists of other types of map: https://visibleearth.nasa.gov/ 
 
 
+
 ## :bookmark: TECHNICAL REMARKS
 * World map 43200x21600 image representing earth land types, cylindrical projection.
 * Pixel to latitude/longitude translation:
-x pixels go from 0 to 43199 (for 43200 pixels total)
-y pixels go from 0 to 21599 (for 21600 pixels total)
-each pixel is 1/120 degree wide and 1/120 degree high
-x pixel to lon: (2x-43199)/240 [center of pixel]
-lon to x pixel: (43199+240x)/2
-y pixel to lat: (21599-2x)/240
-lat to y pixel: (21599-240x)/2
+  - x pixels go from 0 to 43199 (for 43200 pixels total)
+  - y pixels go from 0 to 21599 (for 21600 pixels total)
+  - each pixel is 1/120 degree wide and 1/120 degree high
+  - x pixel to lon: (2x-43199)/240 [center of pixel]
+  - lon to x pixel: (43199+240x)/2
+  - y pixel to lat: (21599-2x)/240
+  - lat to y pixel: (21599-240x)/2
+
 
 
 ## :relaxed: SUPPORT
 Reach out to Barry Carter at one of the following places!
 * Twitter at @BarryCarter2019
 * Discord at @barrycarter#1894
+* GitHub at @BarryCarter 
 * Email to yamc@barrycarter.info
 * Repository at https://github.com/barrycarter/YAMC
 
 
-## :gift_heart: ACKNOWLEDGMENTS
-We are grateful to our previous team members who previously contributed to Terra Map Adventure project: Noragne & Pedro
 
-*Inspiration*
+## :gift_heart: ACKNOWLEDGMENTS
+* We are grateful to our previous team members who previously contributed to Terra Map Adventure project: Noragne & Pedro
+
+* *Inspiration*
 https://www.facebook.com/FarmVille/
 https://en.wikipedia.org/wiki/M.U.L.E.
 https://civilization.com/
