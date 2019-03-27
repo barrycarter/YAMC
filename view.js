@@ -31,12 +31,41 @@ function updateView(view, oldView) {
 	}
 }
 
+let rectWidth = gc.width / (2 * view.size + 1);
+let rectHeight = gc.height / (2 * view.size + 1);
+
+let px = Math.round((25 * (10 / (2 * view.size + 1)) * gc.width) / 1600);
+ctx.font = `${px}px Times`;
+
+for (let i = view.x - view.size; i <= view.x + view.size; i++) {
+	for (let j = view.y - view.size; j <= view.y + view.size; j++) {
+		let lx = rectWidth * (i - view.x + view.size);
+		let ly = rectHeight * (j - view.y + view.size);
+		let landType = Math.floor(Math.random() * 8);
+		let color = '#' + land[landType].color.map(toHex).join('');
+		let pos = '(' + i + ', ' + j + ')';
+
+		ctx.fillStyle = color;
+		ctx.fillRect(lx, ly, rectWidth, rectHeight);
+		ctx.fillStyle = '#000000';
+		ctx.fillText(pos, lx, ly);
+
+		// leftmost rect has x = 0, rightmost rect has x = gc.width-rect size
+		// gc.width * di / 2 / view.size
+
+		if (!tileinfo[pos]) {
+			tileinfo[pos] = Math.floor(Math.random() * 8);
+		}
+	}
+}
+
 function viewController(e) {
 	let buttonStr = e.target.id;
 
 	let oldView = {};
 	Object.assign(oldView, view);
 
+	//TODO: consider using switch here
 	if (buttonStr == 'minus') {
 		view.size++;
 	}
@@ -68,6 +97,9 @@ function viewController(e) {
 		view.opacity -= 0.1;
 	}
 	view.opacity = Math.min(Math.max(view.opacity, 0), 1);
+	if (view.size < 1) {
+		view.size = 1;
+	}
 
 	console.log('OLDVIEW', dump(oldView), '/OLDVIEW');
 	console.log('VIEW', dump(view), '/VIEW');
