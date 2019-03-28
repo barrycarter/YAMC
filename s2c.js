@@ -6,13 +6,14 @@ let s2c = {
 
   "": function() {},
 
-  test: function() {},
+  test: function() {return "test called"},
 
-  test_1:function() {},
+  test_1:function(a, b, c) {
+    console.log(arguments);
+    console.log("B = ",b);
+    return "";
+  }
 };
-
-console.log(s2c.test);
-console.log(s2c['test']);
 
 function determine_function(str) {
 
@@ -27,10 +28,6 @@ function determine_function(str) {
 
     cmd = arr.slice(0,i).join("_");
 
-    console.log("CMD",cmd,"/CMD");
-    console.log("S2C.cmd",s2c.cmd,"/S2C");
-
-
     // if this IS a command, return it and args
     if (s2c[cmd]) {
       return [cmd, arr.slice(i, arr.length)];
@@ -43,6 +40,22 @@ function determine_function(str) {
   return;
 }
 
-console.log(determine_function("test 1 2 3"));
+arr = determine_function("test 1 2 3");
+
+console.log(arr[1]);
+
+let f = arr[0]
+console.log(f);
+console.log(s2c[f]());
+console.log(s2c[arr[0]]());
+console.log(s2c[arr[0]]([1,2,3]));
+console.log(s2c[arr[0]](arr[1]));
+
+s2c[arr[0]].apply(null, arr[1]);
+
+// console.log(s2c[arr[0]](arr[1]));
+
+// console.log(determine_function("test 1 2 3"));
+// xconsole.log(determine_function("tessfdast 1 2 3"));
 
 
