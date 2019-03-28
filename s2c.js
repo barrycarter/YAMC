@@ -4,18 +4,25 @@
 
 let s2c = {
 
-  "": function() {},
+  "": function() {
+    console.log("null(",arguments,")");
+    return "null";
+  },
 
-  test: function() {return "test called"},
+
+  test: function() {
+    console.log("test(",arguments,")");
+    return "1";
+  },
 
   test_1:function(a, b, c) {
-    console.log(arguments);
+    console.log("test_1(",arguments,")");
     console.log("B = ",b);
-    return "";
+    return 2;
   }
 };
 
-function determine_function(str) {
+function run_function(str) {
 
   // we first check to see if the whole thing is a command
   let arr = str.split(" ");
@@ -24,24 +31,28 @@ function determine_function(str) {
 
   // find the biggest part that is a function
 
-  for (let i= arr.length-1; i >= 0; i--) {
+  let i = 0;
+
+  for (i= arr.length-1; i >= 0; i--) {
 
     cmd = arr.slice(0,i).join("_");
 
-    // if this IS a command, return it and args
-    if (s2c[cmd]) {
-      return [cmd, arr.slice(i, arr.length)];
-    }
-
+    // if this IS a command, break out of loop and run it
+    if (s2c[cmd]) {break;}
   }
-    
-  // should never reach this point, since the empty function is defined
-  console.log("Unreachable code point reached");
-  return;
+
+  // run the function and return whatever it returns
+  return s2c[cmd].apply(null, arr.slice(i, arr.length));
+
+  // return [cmd, arr.slice(i, arr.length)];
+
 }
 
-arr = determine_function("test 1 2 3");
+console.log(run_function("test 1 2 3"));
+run_function("test 2 3 4");
+run_function("nada 1 2 3");
 
+/*
 console.log(arr[1]);
 
 let f = arr[0]
@@ -50,8 +61,9 @@ console.log(s2c[f]());
 console.log(s2c[arr[0]]());
 console.log(s2c[arr[0]]([1,2,3]));
 console.log(s2c[arr[0]](arr[1]));
-
 s2c[arr[0]].apply(null, arr[1]);
+
+*/
 
 // console.log(s2c[arr[0]](arr[1]));
 
