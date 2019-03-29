@@ -33,11 +33,11 @@ Developing a fun, entertaining and educating game. Terra Map Adventure’s purpo
 
 
 ## :computer: HOW TO PLAY?
-* Each player decide which location s/he want to manage the resources among the 8 type of lands.
-* Arriving at the designated land, the player start to look for collaboration or barter if there is any human(s).
-* If the player(s) can find the human(s) to partner with, s/he will join with him/her/them to harvest vegetation (wood, food, leaves, grass, etc.) and/or collect existing natural resources (sand, soil, animals, minerals, oxygen, water, etc.).
-* If the player(s) find no humans exist, s/he will seek energy and/or animal(s) to help him/her harvest vegetation (wood, food, leaves, grass, etc.) and/or collect existing natural resources (sand, soil, minerals, oxygen, water, etc.).
-* The harvesting aim to provide the player a shelter to live, and food to eat.
+1. The players travel on the world map to find different kinds of resources.
+2. The players themselves don't need food or energy, but they can use it to obtain resources.
+3. They can use resources to build roads or housing, ultimately to benefit the people who live on the world.
+4. The people that the player finds are homeless and not working. By assigning them work, the players gives them a job, a home, and a sense of purpose in improving their world.
+5. For each tile the player gets, the player can have the assistance of one people. If the player wants more people to help, then the player needs to go to an urban area to get some people.
 
  
  
@@ -53,7 +53,7 @@ Developing a fun, entertaining and educating game. Terra Map Adventure’s purpo
 
 
 ## :mag_right: FEATURE
-The first game in the software development using real world map from Google Maps database.
+The first text-based game in the software development using real world map from Google Maps database.
 
 
 
