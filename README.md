@@ -118,7 +118,7 @@ Reach out to Barry Carter at one of the following places!
 
 
 ## :gift_heart: ACKNOWLEDGMENTS
-* We are grateful to our team members who previously contributed to Terra Map Adventure project: [Noragne](https://github.com/noragne) & Pedro
+* We are grateful to our team members who previously contributed to Terra Map Adventure project: [Noragne](https://github.com/noragne) & [Pedro Almeida](https://github.com/pmqa)
 
 * *Inspiration*
 1. https://www.facebook.com/FarmVille/
