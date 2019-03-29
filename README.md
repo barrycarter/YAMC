@@ -13,7 +13,7 @@
 
 Front End Development | Back End Development | Database | Misc
 ------------ | ------------- | ------------- | -------------
-HTML5, CSS3, JavaScript | Pearl5 / Node.js | SQLite3 | Websocket
+HTML5, CSS3, JavaScript | Pearl 5 / Node.js | SQLite3 | Websocket
 
 
 :couple: :couple: **Are you interested to contribute directly in our distributed team?**
