@@ -13,7 +13,7 @@
 
 Front End Development | Back End Development | Database | Misc
 ------------ | ------------- | ------------- | -------------
-HTML5, CSS3, JavaScript | Pearl5 | SQLite | Websocket
+HTML5, CSS3, JavaScript | Pearl5 / Node.js | SQLite3 | Websocket
 
 
 :couple: :couple: **Are you interested to contribute directly in our distributed team?**
@@ -47,12 +47,12 @@ Developing a fun, entertaining and educating game. Terra Map Adventure’s purpo
 
 
 
-## :camera: SCREENSHOTS
-![text-adventure game played on a real world map](https://i.imgur.com/zvI4eew.png)
+## :camera: SCREENSHOT
+[![text-adventure game played on a real world map](https://i.postimg.cc/023yDrFT/screencapture-terramaptools-6-barrycarter1-repl-co-2019-03-26-02.png)](https://postimg.cc/nC4xtVH2)
 
 
 
-## :mag_right: FEATURES
+## :mag_right: FEATURE
 The first game in the software development using real world map from Google Maps database.
 
 
@@ -79,10 +79,10 @@ while (1) {
 
 
 ## :busts_in_silhouette: TEAM
-* Initiator & Project Manager: Barry Carter
-* Front End Engineer: Anthony, Doha Helmy
-* Back End Engineer: Barry Carter
-* Researcher, Documentation, User Testing: Eri Hariono
+* Initiator & Project Manager: [Barry Carter](https://github.com/barrycarter)
+* Front End Engineer: [Anthony](https://github.com/47analogy), [Doha Helmy](https://github.com/dohahelmy)
+* Back End Engineer: [Barry Carter](https://github.com/barrycarter), [Smill Vásquez](https://github.com/svasquez)
+* Researcher, Documentation, User Testing: [Eri Hariono](https://github.com/hanacaraka)
 
 
 
@@ -118,7 +118,7 @@ Reach out to Barry Carter at one of the following places!
 
 
 ## :gift_heart: ACKNOWLEDGMENTS
-* We are grateful to our previous team members who previously contributed to Terra Map Adventure project: Noragne & Pedro
+* We are grateful to our team members who previously contributed to Terra Map Adventure project: [Noragne](https://github.com/noragne) & Pedro
 
 * *Inspiration*
 1. https://www.facebook.com/FarmVille/
