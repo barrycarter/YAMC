@@ -6,3 +6,4 @@
 # node_modules/
 # the puppeteer module contains node_modules/puppeteer/.local-chromium/linux-624492/chrome-linux/chrome which is 212.47 MB which is too big for github + we probably don't need this module at all
 node_modules/puppeteer/
+node-server/node_modules
