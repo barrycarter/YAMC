@@ -37,7 +37,10 @@ my(%landtype) = ( "0,0,255" => 0, "0,255,0" => 1, "255,255,0" => 2,
 # compressed)
 
 open(A, "bzcat /mnt/villa/user/20190319/lcc.txt.bz2|");
-open(B, "bzcat /mnt/villa/user/20190319/solar.txt.bz2|");
+# open(A, "/mnt/villa/user/20190319/lcc.txt");
+# open(B, "bzcat /mnt/villa/user/20190319/solar.txt.bz2|");
+open(B, "/mnt/villa/user/20190319/solar.txt");
+# open(C, "> /home/barrycarter/20190125/TEST/landsolar.bin");
 
 # this could be <A> or <B> too, but for symmetry doing do
 
@@ -48,9 +51,15 @@ while (!eof(A)) {
 
   if ($lcc=~/^\#/ && $solar=~/^\#/) {next;}
 
+  debug("LCC: $lcc");
+  debug("SOLAR: $solar");
+
+  $byte++;
+
   unless ($lcc=~/\(([\s\d\,]+)\)/) {die "BAD LINE: $lcc"; next;}
   $lcc = $1;
   $lcc=~s/\s//g;
+  $lcc = $landtype{$lcc};
 
   unless ($solar=~/\(([\s\d\,]+)\)/) {die "BAD LINE: $solar"; next;}
   $solar = $1;
@@ -59,7 +68,9 @@ while (!eof(A)) {
   $solar = $solar{$solar};
   unless (length($solar)) {die "NO TRANSLATION: *$solar*"; next;}
 
-  debug("$lcc / $solar");
+  my($writebyte) = 8*$solar + $lcc;
+
+  print chr($writebyte);
 
 };
 

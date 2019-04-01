@@ -3,14 +3,10 @@
 
 package c2s;
 
-
-
-
-
-
-
-
-
+sub tile_info {
+  my($i, $j) = @_;
+  return ["set_tile_fixed", $i, $j, get_pixel_value($i,$j)];
+}
 
 # all perl libs must return true
 

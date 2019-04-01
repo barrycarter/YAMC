@@ -1,8 +1,11 @@
 // functions that the server can call on the client
 
-// determine which function is being called (and run it)
-
 let s2c = {
+
+ set_tile_fixed: function(arr) {
+    [key, val] = arr;
+    tile_fixed[key] = val;
+  }
 
   "": function() {
     console.log("null(",arguments,")");
@@ -22,10 +25,13 @@ let s2c = {
   }
 };
 
-function run_function(str) {
+// determine which function is being called (and run it)
+
+// note parameter is array, not string
+
+function run_function(arr) {
 
   // we first check to see if the whole thing is a command
-  let arr = str.split(" ");
   let args = [];
   let cmd = "";
 
@@ -48,9 +54,12 @@ function run_function(str) {
 
 }
 
-console.log(run_function("test 1 2 3"));
-run_function("test 2 3 4");
-run_function("nada 1 2 3");
+run_function(["test", 2, 3, 4]);
+run_function(["test", 1, 3, 4]);
+
+// console.log(run_function("test 1 2 3"));
+// run_function("test 2 3 4");
+// run_function("nada 1 2 3");
 
 /*
 console.log(arr[1]);

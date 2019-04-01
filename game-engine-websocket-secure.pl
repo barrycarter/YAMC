@@ -11,6 +11,7 @@ use IO::Socket::SSL;
 require "/usr/local/lib/bclib.pl";
 require "/sites/YAMC/game-lib.pl";
 require "/sites/YAMC/game-commands.pl";
+require "/sites/YAMC/c2s.pl";
 
 # background ourselves unless --nodetach
 # NOTE: this has to come before we open the websocket, else IO issues
@@ -30,8 +31,11 @@ sub connection {
 # this happens when we get a message
 sub message {
   my($conn, $msg) = @_;
+
+  process_msg($msg);
+
   # processes the msg
-  tell_user(JSON::to_json(process_msg($msg)));
+#  tell_user(JSON::to_json(process_msg($msg)));
 }
 
 # TODO: client should warn if disconnected
@@ -41,7 +45,7 @@ sub process_msg {
   debug("PROCESS_MSG($msg)");
 
   # does the message contain illegal characters?
-  if ($msg=~/([^a-z0-9_:,\s\"\{\}])/i) {
+  if ($msg=~/([^a-z0-9_:,\s\"\{\}\[\]])/i) {
     tell_user("Input *$msg* contained invalid characters: $1");
     return;
   }
@@ -49,6 +53,10 @@ sub process_msg {
   # can the message be converted to JSON?
   eval {$hash = JSON::from_json($msg)};
   if ($@) {tell_user("Not a JSON string: $msg"); return;}
+
+  debug("CMD: $hash{cmd}");
+
+  debug(parse_command($hash{cmd}));
 
   # do one level of unfolding
   %hash = %$hash;
