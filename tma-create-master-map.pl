@@ -14,9 +14,19 @@ for ($i=1; $i <= 15; $i++) {
   # hue range: 0 = red = highest; 3/4 = dark violet = lowest
   my($h) = 3/4 - 3*($i-1)/56;
   my($rgb) = hsv2rgb($h, 1, 1, "format=decimal");
-  $rgb=~s/00/0/g;
+#  debug("RGB: *$rgb*");
+
+  $rgb=~s/^00,/0,/g;
+  $rgb=~s/,00,/,0,/g;
+  $rgb=~s/,00$/,0/g;
+
+  debug("$i -> $rgb");
   $solar{$rgb} = $i;
 }
+
+# debug(%solar);
+
+# die "TESTING";
 
 # color to landtype
 
