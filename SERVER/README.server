@@ -41,3 +41,9 @@ cp /root/BCAPPS/bclib.pl /usr/local/lib/
 # creates a symlink so that /sites/YAMC is same as /root/YAMC
 
 ln -s /root /sites
+
+# 5 Apr 2019: attempt to install
+# https://github.com/codercom/code-server in /root/build
+# (actually no, requires vscode)
+
+

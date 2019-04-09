@@ -8,6 +8,8 @@ var server = http.createServer();
 server.listen(port);
 var wss = new WebSocketServer({ server: server });
 
+fs.wr
+
 wss.on('connection', function(ws) {
 	var id = setInterval(function() {
 		ws.send(JSON.stringify(new Date()), function() {});
