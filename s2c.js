@@ -3,7 +3,8 @@
 let s2c = {
 
  set_tile_fixed: function(arr) {
-    [key, val] = arr;
+    [i, j, val] = arr;
+    let key = i+","+j;
     tile_fixed[key] = val;
   }
 

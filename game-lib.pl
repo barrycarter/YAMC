@@ -147,6 +147,8 @@ sub tell_user {
 
 =item parse_command(\%hash)
 
+Parameter = array
+
 Input message: cmd = command to parse (like "info file 1 2 3 4")
 
 Parses the input message into full command for eval
