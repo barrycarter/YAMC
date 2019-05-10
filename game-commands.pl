@@ -85,6 +85,7 @@ sub command_info_tiles {
   }
 
   debug(JSON::to_json(\@res));
+  debug("Returning", \@res);
   return \@res;
 }
 

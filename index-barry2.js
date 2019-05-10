@@ -1,13 +1,14 @@
 var WebSocketServer = require('ws').Server;
 var http = require('http');
 var fs = require('fs');
-var util = require('util');
 var port = 5000;
 var sqlite3 = require('sqlite3').verbose();
 
 var server = http.createServer();
 server.listen(port);
 var wss = new WebSocketServer({ server: server });
+
+fs.wr
 
 wss.on('connection', function(ws) {
 	var id = setInterval(function() {

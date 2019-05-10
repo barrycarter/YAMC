@@ -53,6 +53,10 @@ function updateView(view, oldView) {
       ctx.fillStyle = '#000000';
       ctx.fillText(pos, lx, ly);
 
+      // if tile_fixed is unknown, ask server
+      if (!tile_fixed[pos]) {
+	send_msg(JSON.stringify({cmd: ['tile', 'info', i, j]}));
+      }
 
       // leftmost rect has x =0, rightmost rect has x = gc.width-rect size
       //    gc.width * di / 2 / view.size

@@ -11,6 +11,15 @@ function LatLon2XY(obj) {
   return {x: Math.round((43199+240*obj.lon)/2), y: Math.round((21599-240*obj.lat)/2)}
 }
 
+function send_msg(msg) {
+  console.log("SENDING: ",msg);
+  if (socket.readyState == 1) {
+    socket.send(msg);
+    return;
+  }
+  setTimeout(function() {send_msg(msg)}, 1000);
+}
+
 // {tag: "user", data: {"username": "foo", "x": 123, "y": 456}}
 
 function recv_msg (msg) {

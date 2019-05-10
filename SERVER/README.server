@@ -41,3 +41,13 @@ cp /root/BCAPPS/bclib.pl /usr/local/lib/
 # creates a symlink so that /sites/YAMC is same as /root/YAMC
 
 ln -s /root /sites
+
+# 5 Apr 2019: attempt to install
+# https://github.com/codercom/code-server in /root/build
+# (actually no, requires vscode)
+
+# TODO: run certbot renew daily, just as a one off on 1 May 2019 (but
+# failed?)
+
+# nginx is a lightweight server for the tilemaps on this server
+

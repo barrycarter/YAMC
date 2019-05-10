@@ -3,9 +3,9 @@
 
 
 // set up arrays to cache data
-let tileinfo = {};
+let tile_fixed = {};
 let userinfo = {};
-let tiledata = {};
+let tile_live = {};
 
 // the tile canvas
 let gc = document.querySelector('#game-canvas');
@@ -48,8 +48,6 @@ let rect = new google.maps.Rectangle({
   }
 });
 
-updateView(view);
-
 // setup buttons
 
 let buttons = document.querySelectorAll('button');
@@ -86,6 +84,8 @@ socket.onmessage = function (event) {
   tbox.innerHTML += event.data + "\n";
   recv_msg(event.data);
 }
+
+updateView(view);
 
 var cmdLine = document.getElementById("command")
 cmdLine.addEventListener("keydown", command);
