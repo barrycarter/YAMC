@@ -1,0 +1,27 @@
+GOOD clone: function clone() {
+    [native code]
+}
+arrayBuffer: function arrayBuffer() {
+    [native code]
+}
+blob: function blob() {
+    [native code]
+}
+formData: function formData() {
+    [native code]
+}
+json: function json() {
+    [native code]
+}
+text: function text() {
+    [native code]
+}
+type: cors
+url: https://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=98203
+redirected: false
+status: 200
+ok: true
+statusText: OK
+headers: [object Headers]
+bodyUsed: false
+
