@@ -16,13 +16,26 @@
   <div id="map"></div>
   <script src="MAPS/leaflet.js"></script>
   <script src="bclib.js"></script>
-  <script src="index.js"></script>
+  <!-- <script src="index.js"></script> -->
+  <script src="geoserverLayer.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const layer1 = new GeoServerLayer({
+      GeoServerRoot: 'http://ws.terramapadventure.com:8080/geoserver',
+      layerName: 'TMA-YAMC:ne_10m_admin_0_countries',
+    });
+
+    layer1.getFeature({
+      lat: 35,
+      lng: -106.5,
+      featureName: 'NAME_EN'
+    });
+
+    console.log(layer1);
+  </script>
 </body>
 
 </html>
-
-
 
 <!-- Latitude: <input type='text' id='latitude' value='-6.2' /> <br />
 Longitude: <input type='text' id='longitude' value='106.8' /> <br />
