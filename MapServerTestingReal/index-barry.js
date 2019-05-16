@@ -4,9 +4,15 @@ function query(e) {
 	let lat = parseFloat(document.getElementById('latitude').value);
 	let lng = parseFloat(document.getElementById('longitude').value);
 
+<<<<<<< HEAD
+  let url = `http://ws.terramapadventure.com:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetPropertyValue&bbox=${lat -
+    1},${lng - 1},${lat + 1},${lng +
+				 1}&typeNames=TMA-YAMC:ne_10m_admin_1_states_provinces&valueReference=name_en&outFormat=application/json`;
+=======
 	let url = `http://ws.terramapadventure.com:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetPropertyValue&bbox=${lat -
 		1},${lng - 1},${lat + 1},${lng +
 		1}&typeNames=TMA-YAMC:ne_10m_admin_1_states_provinces&valueReference=name_en`;
+>>>>>>> 24cd7bdfa49758a8ef81dacb903613a5336af2f5
 
 	console.log(url);
 
