@@ -1,0 +1,172 @@
+<!-- this version works but loads a new image from OWS each time = bad? -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+  <link rel="stylesheet" href="MAPS/leaflet.css" />
+</head>
+
+<body>
+  <script src="MAPS/leaflet.js"></script>
+  <script src="bclib.js"></script>
+  <script src="geoserverLayer.js"></script>
+  <script src="axios.min.js"></script>
+  <!-- Need a player class -->
+
+  Latitude: <input type='text' id='lat' value='' /> <br />
+  Longitude: <input type='text' id='lng' value='' /> <br />
+  Country: <div id='country'></div>
+
+  <button id='submit' onsubmit='query'>Press Me</button> <br />
+  <script>
+    document.getElementById('submit').addEventListener('click', query);
+
+    function query(e) {
+
+      const layer1 = new GeoServerLayer({
+        GeoServerRoot: 'http://ws.terramapadventure.com:8080/geoserver',
+        layerName: 'TMA-YAMC:ne_10m_admin_0_countries',
+      });
+
+      layer1.getFeature({
+        lat: parseFloat(document.getElementById('lat').value),
+        lng: parseFloat(document.getElementById('lng').value),
+        featureName: 'NAME_EN'
+      }).then(function (result) {
+        document.getElementById('country').textContent = result
+      }, function (err) {
+        console.log("fucking error")
+      });
+    }
+  </script>
+</body>
+
+</html>
+
+<!-- Latitude: <input type='text' id='latitude' value='-6.2' /> <br />
+Longitude: <input type='text' id='longitude' value='106.8' /> <br />
+<button id='submit' onsubmit='query'>Press Me</button> <br />
+
+<link rel="stylesheet" href="MAPS/leaflet.css" />
+<script src="MAPS/leaflet.js"></script>
+<script src="bclib.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<style>
+  html,
+  body,
+  #map {
+    height: 100%;
+  }
+</style>
+<div id="map"></div>
+
+<script>
+  /*
+
+fetch('https://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=98203')
+.then(function (res) {
+  res.json().then(dataAsJson => {
+    console.log(dataAsJson);
+  });
+});
+
+*/
+
+
+
+
+
+
+  /*
+  fetch('https://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=98203').then
+   (function(x) {x.json().then()
+     console.log("GOOD", var_dump(x.json()))}).catch
+   (function(x) {console.log("BAD", x)});
+
+  */
+
+
+  function query(e) {
+    console.log("button pressed");
+
+    let lat = parseFloat(document.getElementById('latitude').value);
+    let lng = parseFloat(document.getElementById('longitude').value);
+
+    let url =
+      `http://ws.terramapadventure.com:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetPropertyValue&bbox=${lat-1},${lng-1},${lat+1},${lng+1}&typeNames=TMA-YAMC:ne_10m_admin_1_states_provinces&valueReference=name_en`;
+
+    console.log(url);
+
+    // fetch(url).then(
+    //   function fu1(x) {
+    //     x.blob().then
+
+    //     function fu2(y) {
+    //       console.log("FINALLY", y)
+    //     }
+    //   }).catch(
+    //   function fu3(z) {
+    //     console.log("BAD", z)
+    //   }
+    // )
+
+    axios
+      .get(url)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log('nope')
+      })
+
+    console.log(e, lat, lng);
+  }
+
+  document.getElementById('submit').addEventListener('click', query);
+
+  // map = L.map('map', {crs: L.CRS.Simple});
+  // map.fitBounds([[-90, -180], [90, 180]]);
+  // map.on('zoomend', redraw_map);
+  // map.on('moveend', redraw_map);
+
+
+  function redraw_map() {
+
+    // TODO: this is bad
+
+    map.eachLayer(function (layer) {
+      layer.remove()
+    });
+    map.eachLayer(function (layer) {
+      layer.remove()
+    });
+
+    let mapBounds = map.getBounds().toBBoxString();
+
+    // TODO: fix height and width
+    let url =
+      `http://ows.terrestris.de/osm/service//wms?request=GetMap&service=WMS&version=1.1.1&layers=OSM-WMS&styles=default&srs=EPSG%3A4326&bbox=${mapBounds}&width=1600&height=800&format=image%2Fpng`;
+
+    td(url, "URL");
+
+    L.imageOverlay(url, map.getBounds(), {
+      opacity: 0.5
+    }).addTo(map);
+
+    url =
+      `http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fjpeg&TRANSPARENT=true&LAYERS=TMA-YAMC%3ABeck_KG_V1_present_0p0083&exceptions=application%2Fvnd.ogc.se_inimage&SRS=EPSG%3A4326&STYLES=&WIDTH=1600&HEIGHT=900&BBOX=${mapBounds}`;
+
+    L.imageOverlay(url, map.getBounds(), {
+      opacity: 0.5
+    }).addTo(map);
+
+    // other interesting URLs
+
+
+
+  }
+</script> -->
