@@ -1,4 +1,4 @@
-/** 
+/** MAP
 May 16th, 2019
 Create layers for GeoServer: 
 get maps from GeoServer using 'tiled' mode → this is faster for both the client and the server.
