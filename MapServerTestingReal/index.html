@@ -25,13 +25,19 @@
       layerName: 'TMA-YAMC:ne_10m_admin_0_countries',
     });
 
-    layer1.getFeature({
+    let data = layer1.getFeature({
       lat: 35,
       lng: -106.5,
       featureName: 'NAME_EN'
     });
 
-    console.log(layer1);
+    data.then(function (result) {
+      console.log(result)
+    }, function (error) {
+      console.log(error)
+    });
+
+    console.log(data);
   </script>
 </body>
 

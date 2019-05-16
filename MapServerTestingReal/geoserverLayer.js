@@ -43,10 +43,10 @@ class GeoServerLayer {
 
 		let featureName = hash.featureName;
 
-		axios
+		return axios
 			.get(url)
 			.then(res => {
-				console.log(res.data.features[0].properties[hash.featureName]);
+				return res.data.features[0].properties[hash.featureName];
 			})
 			.catch(err => {
 				console.log('nope');
