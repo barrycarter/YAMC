@@ -52,7 +52,7 @@ class PlayerBoard extends Component {
         <span>
           Location:
           {this.state.location.map(info => {
-            return info.properties['NAME_EN']
+            return info.properties['NAME']
           })}
         </span>
         <form onSubmit={this.handleSubmitLocation}>
