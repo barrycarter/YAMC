@@ -21,10 +21,21 @@ git pull https://github.com/barrycarter/YAMC.git
 
 # this pulls bcapps locally though I only need part of it
 
-mkdir /root/BCAPPS
-cd /root/BCAPPS
-git init
-git pull https://github.com/barrycarter/bcapps.git
+# as of 3/28/20, doing this separately from /root/BCGIT which I'm not
+# sure why I created (also changing pull to clone)
+
+# from /root (but bcapps is now a symlink to big mounted dir)
+
+# after the first time must cd to directory and "git pull"
+
+git clone https://github.com/barrycarter/bcapps.git
+
+# BCAPPS is symlink to big drive
+
+# mkdir /root/BCAPPS
+# cd /root/BCAPPS
+# git init
+# git pull https://github.com/barrycarter/bcapps.git
 
 # push this large file from my local machine (not in git, too big)
 
@@ -45,3 +56,6 @@ ln -s /root /sites
 # 5 Apr 2019: attempt to install
 # https://github.com/codercom/code-server in /root/build
 # (actually no, requires vscode)
+
+# 28 Mar 2020: adding symlinks to make CSPICE compile and work
+
