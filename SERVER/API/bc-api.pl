@@ -11,9 +11,16 @@ print "Content-type: text/plain\n\n";
 
 my(%query) = str2hash($ENV{QUERY_STRING});
 
+my(%result);
+
 if ($query{f} eq "time") {
-    print JSON::to_json(bcapi_time(%query));
+    $result{input} = \%query;
+    $result{output} = bcapi_time(%query);
+    print JSON::to_json(%result);
+#    print JSON::to_json(bcapi_time(%query));
 }
+
+# print "Hello Bob\n";
 
 # bcapi_time(%query);
 
@@ -26,10 +33,18 @@ if ($query{f} eq "time") {
 # TODO: properly document this
 
 # gives time in a given timezone
+# tz = time zone
 
 sub bcapi_time {
 
     my(%hash) = @_;
+
+    $hash{tz}=~s/[^a-z0-9\/]//isg;
+
+    $ENV{TZ} = $hash{tz};
+
+    $hash{date} = `date`;
+    chomp($hash{date});
 
     return \%hash;
 }
