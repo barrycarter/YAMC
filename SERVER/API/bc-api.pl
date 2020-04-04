@@ -16,8 +16,39 @@ my(%result);
 if ($query{f} eq "time") {
     $result{input} = \%query;
     $result{output} = bcapi_time(%query);
-    print JSON::to_json(%result);
+    print JSON::to_json(\%result);
 #    print JSON::to_json(bcapi_time(%query));
+}
+
+if ($query{f} eq "terminator") {
+    $result{input} = \%query;
+    $result{output} = bcapi_terminator(%query);
+    print JSON::to_json(\%result);
+}
+
+
+=item bcapi_terminator(%hash)
+
+Given the following, return a terminator of a planet assuming the
+light source is the Sun:
+
+i: naif_id
+t: time in unix seconds
+n: number of points
+u: if 0, penumbral terminator
+
+=cut
+
+sub bcapi_terminator {
+
+    my(%hash) = @_;
+
+    # remove bad characters
+    for $i (keys %hash) {$hash{$i}=~s/\D//g;}
+
+    my($out, $err, $res) = cache_command("/home/user/bin/bc-terminator -i $hash{i} -t $hash{t} -n $hash{n} -u $hash{u}");
+
+    print "RESULT: $out, ERR: $err, RES: $res";
 }
 
 # print "Hello Bob\n";
@@ -38,14 +69,17 @@ if ($query{f} eq "time") {
 sub bcapi_time {
 
     my(%hash) = @_;
+    my(%ret);
 
-    $hash{tz}=~s/[^a-z0-9\/]//isg;
+    if ($hash{tz}=~s/[^a-z0-9\/]//isg) {
+	$ret{error} .= "Invalid characters in your timezone were removed";
+    }
 
     $ENV{TZ} = $hash{tz};
 
-    $hash{date} = `date`;
-    chomp($hash{date});
+    $ret{date} = `date`;
+    chomp($ret{date});
 
-    return \%hash;
+    return \%ret;
 }
 
